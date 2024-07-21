@@ -12,11 +12,11 @@ class InputFieldWidget extends StatelessWidget {
 
   const InputFieldWidget({
     super.key,
-    required this.hintText,
+    this.hintText = '',
     required this.controller,
     required this.context,
     required this.validation,
-    required this.keyboardType ,
+    this.keyboardType  = TextInputType.text,
     this.icon,
     this.obsecured = false,           
   }

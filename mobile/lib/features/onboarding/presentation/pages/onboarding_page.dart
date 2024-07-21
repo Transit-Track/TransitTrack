@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:transittrack/features/authentication/presentation/pages/login_page.dart';
-import 'package:transittrack/features/home/presentation/pages/home_page.dart';
+import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/features/onboarding/domain/onboarding_entity.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -91,7 +91,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     Center(
                       child: Text(
                         onboardingItems[index].description,
-                        style: const TextStyle(fontFamily: 'Laila', fontSize: 18),
+                        style:
+                            const TextStyle(fontFamily: 'Laila', fontSize: 18),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -106,12 +107,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget getStarted(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final pres = await SharedPreferences.getInstance();
-        pres.setBool('onboarding', true);
-        
-        if (!mounted) return;
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginPage()));
+        // final pres = await SharedPreferences.getInstance();
+        // pres.setBool('onboarding', true);
+
+        // if (!mounted) return;
+        (context).pushReplacementNamed(AppPath.login);
+        // Navigator.pushReplacement(
+        //     context, MaterialPageRoute(builder: (context) => LoginPage()));
       },
       child: Container(
         width: 150,

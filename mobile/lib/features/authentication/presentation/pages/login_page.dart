@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
+import 'package:transittrack/core/utils/validation.dart';
 import 'package:transittrack/core/widget/button_widget.dart';
 import 'package:transittrack/core/widget/forward_widget.dart';
 import 'package:transittrack/features/authentication/presentation/widget/input_field_widget.dart';
@@ -13,17 +14,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GlobalKey _formKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   var _isObsecured;
 
-  String? phoneNumberValidation(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Phone Number can not be empty';
-    }
-  }
+
 
   @override
   void initState() {
@@ -42,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
-            padding: const EdgeInsets.fromLTRB(30.0, 150, 30, 0),
+            padding: const EdgeInsets.fromLTRB(30.0, 100, 30, 0),
             child: Container(
                 height: 450,
                 child: Form(
@@ -87,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                               icon: !_isObsecured
                                   ? const Icon(Icons.visibility)
                                   : const Icon(Icons.visibility_off)),
-                          validation: null,
+                          validation: passWordValidation,
                           keyboardType: TextInputType.visiblePassword,
                         ),
                         const SizedBox(
@@ -97,7 +94,9 @@ class _LoginPageState extends State<LoginPage> {
                             context: context,
                             text: 'Log In',
                             onClick: () {
+                              if (_formKey.currentState!.validate()){
                               (context).goNamed(AppPath.home);
+                              }
                             }),
                         GestureDetector(
                           onTap: () {
@@ -123,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text("Don't you have an account? "),
-                               Text(
+                              Text(
                                 "Sign Up",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
+import 'package:transittrack/core/utils/validation.dart';
 import 'package:transittrack/core/widget/button_widget.dart';
-import 'package:transittrack/core/widget/forward_widget.dart';
 import 'package:transittrack/features/authentication/presentation/widget/input_field_widget.dart';
 
 class SignupPage extends StatefulWidget {
@@ -19,12 +19,6 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   var _isObsecured;
-
-  String? phoneNumberValidation(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Phone Number can not be empty';
-    }
-  }
 
   @override
   void initState() {
@@ -44,7 +38,7 @@ class _SignupPageState extends State<SignupPage> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
-            padding: const EdgeInsets.fromLTRB(30.0, 150, 30, 0),
+            padding: const EdgeInsets.fromLTRB(30.0, 100, 30, 0),
             child: Container(
                 height: 510,
                 child: Form(
@@ -96,7 +90,7 @@ class _SignupPageState extends State<SignupPage> {
                               icon: !_isObsecured
                                   ? const Icon(Icons.visibility)
                                   : const Icon(Icons.visibility_off)),
-                          validation: null,
+                          validation: passWordValidation,
                           keyboardType: TextInputType.visiblePassword,
                         ),
                         const SizedBox(
@@ -106,7 +100,9 @@ class _SignupPageState extends State<SignupPage> {
                             context: context,
                             text: 'Sign Up',
                             onClick: () {
-                              (context).goNamed(AppPath.login);
+                              if (_formKey.currentState!.validate()) {
+                                (context).goNamed(AppPath.login);
+                              }
                             }),
                         GestureDetector(
                           onTap: () {
