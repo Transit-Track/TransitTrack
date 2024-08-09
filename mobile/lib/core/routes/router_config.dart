@@ -16,7 +16,7 @@ import 'package:transittrack/features/tickets/presentation/pages/ticket_page.dar
 
 class AppRouter {
   static final GoRouter router =
-      GoRouter(initialLocation: AppPath.home, routes: <GoRoute>[
+      GoRouter(initialLocation: AppPath.onboarding, routes: <GoRoute>[
     GoRoute(
         path: AppPath.onboarding,
         name: AppPath.onboarding,
@@ -27,7 +27,7 @@ class AppRouter {
         path: AppPath.login,
         name: AppPath.login,
         builder: (BuildContext context, GoRouterState state) {
-          return LoginPage();
+          return const LoginPage();
         }),
        GoRoute(
         path: AppPath.signup,

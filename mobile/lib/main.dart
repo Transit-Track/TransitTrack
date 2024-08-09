@@ -6,15 +6,16 @@ import 'package:transittrack/core/routes/router_config.dart';
 import 'package:transittrack/core/utils/multiple_bloc_provider.dart';
 import './env/env.dart';
 import 'package:transittrack/firebase_options.dart';
+import 'core/injections/injection.dart' as di;
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await di.init();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   final prefs = await SharedPreferences.getInstance();
   final onboarding = prefs.getBool('onboarding') ?? false;
-
   runApp(MultipleBlocProvider(
     child: MyApp(
       onboarding: onboarding,

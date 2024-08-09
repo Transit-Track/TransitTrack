@@ -1,7 +1,7 @@
 import 'package:transittrack/features/authentication/domain/entities/userCredential.dart';
 
 class UserCredentialModel extends UserCredential {
-  UserCredentialModel({
+  const  UserCredentialModel({
     required super.id,
     required  super.fullName,
     required super.phoneNumber,

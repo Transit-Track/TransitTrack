@@ -54,3 +54,16 @@ class SignOutEvent extends AuthenticationEvent {
   @override
   List<Object> get props => [];
 }
+
+class ChangePasswordEvent extends AuthenticationEvent {
+  final String confirmPassword;
+  final String newPassword;
+
+  ChangePasswordEvent({
+    required this.confirmPassword,
+    required this.newPassword,
+  });
+
+  @override
+  List<Object> get props => [confirmPassword, newPassword];
+}
