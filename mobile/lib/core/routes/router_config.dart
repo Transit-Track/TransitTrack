@@ -8,7 +8,7 @@ import 'package:transittrack/features/authentication/presentation/pages/otp_veri
 import 'package:transittrack/features/authentication/presentation/pages/signup_page.dart';
 import 'package:transittrack/features/favorite/presentation/pages/favorite_page.dart';
 import 'package:transittrack/features/home/presentation/pages/home_page.dart';
-import 'package:transittrack/features/home/presentation/pages/location.dart';
+import 'package:transittrack/features/home/presentation/pages/test.dart';
 import 'package:transittrack/features/notification/presentation/pages/notification_page.dart';
 import 'package:transittrack/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:transittrack/features/profile/presentation/pages/profile_page.dart';
@@ -16,7 +16,7 @@ import 'package:transittrack/features/tickets/presentation/pages/ticket_page.dar
 
 class AppRouter {
   static final GoRouter router =
-      GoRouter(initialLocation: AppPath.onboarding, routes: <GoRoute>[
+      GoRouter(initialLocation: AppPath.home, routes: <GoRoute>[
     GoRoute(
         path: AppPath.onboarding,
         name: AppPath.onboarding,

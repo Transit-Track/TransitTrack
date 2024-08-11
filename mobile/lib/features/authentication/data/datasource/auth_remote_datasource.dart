@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'package:transittrack/core/error/failure.dart';
 import 'package:transittrack/features/authentication/data/model/user_credential_model.dart';
