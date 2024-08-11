@@ -39,6 +39,7 @@ dependencies:
   flutter_lints: ^4.0.0
   flutter_google_places_hoc081098: ^2.0.0
   envied: ^0.5.4+1
+  uuid: ^4.4.2
 
 dev_dependencies:
   build_runner: ^2.4.11
