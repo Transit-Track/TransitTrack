@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                           context: context,
                           text: 'Search',
                           onClick: () {
-                            (context).goNamed(AppPath.test);
+                            (context).goNamed(AppPath.realTimeVehicleTrackingPage);
                           }),
                     ),
                     const SizedBox(height: 16),
