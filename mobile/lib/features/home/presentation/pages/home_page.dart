@@ -169,7 +169,6 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () {
                               setState(() {
                                 destinationPressed = true;
-
                                 searchNearbyBuses(_destinationController.text,
                                     9.0205, 38.7468, 500.0);
                               });
@@ -191,9 +190,11 @@ class _HomePageState extends State<HomePage> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                   onTap: () {
-                                    destinationPressed = false;
-                                    _destinationController.text =
-                                        state.nearByBusesList[index].name;
+                                    setState(() {
+                                      destinationPressed = false;
+                                      _destinationController.text =
+                                          state.nearByBusesList[index].name;
+                                    });
                                   },
                                   child: ListTile(
                                     title: Text(
@@ -211,7 +212,8 @@ class _HomePageState extends State<HomePage> {
                           context: context,
                           text: 'Search',
                           onClick: () {
-                            (context).goNamed(AppPath.realTimeVehicleTrackingPage);
+                            (context)
+                                .goNamed(AppPath.realTimeVehicleTrackingPage);
                           }),
                     ),
                     const SizedBox(height: 16),

@@ -30,7 +30,7 @@ class GoogleMapDataSourceImpl implements GoogleMapDatasource {
   Future<List<LocationModel>> getPlacAutoCompleteSuggestion(
       String input) async {
     var uuid = Uuid();
-    final String apiKey = "googleApiKey";
+    final String apiKey = Env.googleApiKey;
     String token = uuid.v4();
 
     final listOfLocations = <LocationModel>[];
@@ -65,9 +65,9 @@ class GoogleMapDataSourceImpl implements GoogleMapDatasource {
   Future<List<NearByModel>> getNearbyBusStations(
       String input, double longitude, double latitude, double radius) async {
     List<NearByModel> nearbyBusStations = [];
-    const String apiKey = "googleApiKey";
-    const String baseUrl =
-        "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cruise&location=-33.8670522%2C151.1957362&radius=1500&type=bus_station&key=${apiKey}";
+    String apiKey = Env.googleApiKey;
+    String baseUrl =
+        "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cruise&location=-33.8670522%2C151.1957362&radius=1500&type=bus_station&key=$apiKey";
 
     final response = await http.post(
       Uri.parse(baseUrl),
