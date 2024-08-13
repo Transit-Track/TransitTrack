@@ -4,6 +4,7 @@ import 'package:transittrack/core/network/network.dart';
 import 'package:transittrack/features/home/data/datasource/remote/google_map_datasource.dart';
 import 'package:transittrack/features/home/data/datasource/remote/remote_datasource.dart';
 import 'package:transittrack/features/home/data/model/location_model.dart';
+import 'package:transittrack/features/home/data/model/nearby_model.dart';
 import 'package:transittrack/features/home/domain/entities/bus.dart';
 import 'package:transittrack/features/home/domain/repositories/home_repository.dart';
 
@@ -37,5 +38,20 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<Either<Failure, List<Bus>>> getBuses() {
     // TODO: implement getBuses
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<NearByModel>>> getNearbyBusStations(String input, double longitude, double latitude, double radius) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final response =
+            await googleMapDatasource.getNearbyBusStations(input, longitude, latitude, radius);
+        return Right(response);
+      } catch (e) {
+         return Left(ServerFailure());
+      }
+    } else {
+      return Left(NetworkFailure());
+    }
   }
 }

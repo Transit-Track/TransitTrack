@@ -12,3 +12,16 @@ final class GetLocationEvent extends HomeEvent {
 
   const GetLocationEvent({required this.input});
 }
+
+final class GetNearbyBusesEvent extends HomeEvent {
+  final String input;
+  final double longitude;
+  final double latitude;
+  final double radius;
+
+  const GetNearbyBusesEvent(
+      {required this.input,
+      required this.longitude,
+      required this.latitude,
+      required this.radius});
+}

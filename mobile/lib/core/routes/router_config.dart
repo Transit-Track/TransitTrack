@@ -65,7 +65,7 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return const NotificationPage();
         }),
-         GoRoute(
+        GoRoute(
         path: AppPath.profile,
         name: AppPath.profile,
         builder: (BuildContext context, GoRouterState state) {

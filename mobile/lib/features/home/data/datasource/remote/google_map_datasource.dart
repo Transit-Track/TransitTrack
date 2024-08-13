@@ -3,12 +3,16 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:transittrack/env/env.dart';
 import 'package:transittrack/features/home/data/model/location_model.dart';
+import 'package:transittrack/features/home/data/model/nearby_model.dart';
 import 'package:transittrack/features/home/domain/entities/bus.dart';
 import 'package:http/http.dart' as http;
+import 'package:uuid/uuid.dart';
 
 abstract class GoogleMapDatasource {
   Future<List<LocationModel>> getPlacAutoCompleteSuggestion(String input);
   Future<List<Bus>> getBuses();
+  Future<List<NearByModel>> getNearbyBusStations(
+      String input, double longitude, double latitude, double radius);
 }
 
 class GoogleMapDataSourceImpl implements GoogleMapDatasource {
@@ -25,8 +29,9 @@ class GoogleMapDataSourceImpl implements GoogleMapDatasource {
   @override
   Future<List<LocationModel>> getPlacAutoCompleteSuggestion(
       String input) async {
-    final String apiKey = Env.googleApiKey;
-    const String token = "1234567890";
+    var uuid = Uuid();
+    final String apiKey = "googleApiKey";
+    String token = uuid.v4();
 
     final listOfLocations = <LocationModel>[];
 
@@ -38,14 +43,13 @@ class GoogleMapDataSourceImpl implements GoogleMapDatasource {
       var response = await http.get(Uri.parse(request));
       var data = json.decode(response.body);
 
-      if (kDebugMode) {
-        print(data);
-      }
+      // if (kDebugMode) {
+      //   print(data);
+      // }
 
       if (response.statusCode == 200) {
-        print(json.decode(response.body));
-        final result = json.decode(response.body)['data']['predictions'];
-        print(result);
+        final result = data['predictions'];
+
         for (var location in result) {
           listOfLocations.add(LocationModel.fromJson(location));
         }
@@ -56,5 +60,34 @@ class GoogleMapDataSourceImpl implements GoogleMapDatasource {
       print(e.toString());
     }
     return listOfLocations;
+  }
+
+  Future<List<NearByModel>> getNearbyBusStations(
+      String input, double longitude, double latitude, double radius) async {
+    List<NearByModel> nearbyBusStations = [];
+    const String apiKey = "googleApiKey";
+    const String baseUrl =
+        "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cruise&location=-33.8670522%2C151.1957362&radius=1500&type=bus_station&key=${apiKey}";
+
+    final response = await http.post(
+      Uri.parse(baseUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': apiKey,
+        'X-Goog-FieldMask': 'places.displayName',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body)["results"];
+      print('Response data: $data');
+      for (var location in data) {
+        nearbyBusStations.add(NearByModel.fromJson(location));
+      }
+    } else {
+      print('Request failed with status: ${response.statusCode}');
+    }
+
+    return nearbyBusStations;
   }
 }

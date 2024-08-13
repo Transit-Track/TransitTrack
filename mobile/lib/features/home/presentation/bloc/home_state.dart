@@ -9,6 +9,7 @@ sealed class HomeState extends Equatable {
 
 final class HomeInitial extends HomeState {}
 
+// location based search state
 final class LocationLoadingState extends HomeState {}
 
 final class LocationLoadedState extends HomeState {
@@ -23,4 +24,18 @@ final class LocationErrorState extends HomeState {
   const LocationErrorState(this.message);
 }
 
-// final class HomeInitial extends HomeState {}
+// nearby bus search state
+
+final class NearByBusesLoadingState extends HomeState {}
+
+final class NearByBusesLoadedState extends HomeState {
+  final List<NearByEntity> nearByBusesList;
+
+  const NearByBusesLoadedState({required this.nearByBusesList});
+}
+
+final class NearByBusesErrorState extends HomeState {
+  final String message;
+
+  const NearByBusesErrorState(this.message);
+}
