@@ -10,5 +10,5 @@ class AppPath {
   static const profile = '/profile';
   static const favorite = '/favorite';
   static const ticket = '/ticket';
-  static const realTimeVehicleTrackingPage = '/realTimeVehicleTrackingPage';
+  static const test = '/test';
 }
