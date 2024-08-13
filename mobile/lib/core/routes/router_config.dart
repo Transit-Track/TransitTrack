@@ -8,7 +8,7 @@ import 'package:transittrack/features/authentication/presentation/pages/otp_veri
 import 'package:transittrack/features/authentication/presentation/pages/signup_page.dart';
 import 'package:transittrack/features/favorite/presentation/pages/favorite_page.dart';
 import 'package:transittrack/features/home/presentation/pages/home_page.dart';
-import 'package:transittrack/features/home/presentation/pages/test.dart';
+import 'package:transittrack/features/home/presentation/pages/real_time_vehicle_tracking_page.dart';
 import 'package:transittrack/features/notification/presentation/pages/notification_page.dart';
 import 'package:transittrack/features/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:transittrack/features/profile/presentation/pages/profile_page.dart';
@@ -84,10 +84,10 @@ class AppRouter {
           return const FavoritePage();
         }),
          GoRoute(
-        path: AppPath.test,
-        name: AppPath.test,
+        path: AppPath.realTimeVehicleTrackingPage,
+        name: AppPath.realTimeVehicleTrackingPage,
         builder: (BuildContext context, GoRouterState state) {
-          return const TestPage();
+          return const RealTimeVehicleTrackingPage();
         })
   ]);
 }
