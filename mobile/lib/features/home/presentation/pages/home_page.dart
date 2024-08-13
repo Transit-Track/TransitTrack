@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
@@ -7,6 +8,7 @@ import 'package:transittrack/core/widgets/button_widget.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
 import 'package:transittrack/core/widgets/custom_navbar_widget.dart';
 import 'package:transittrack/features/home/presentation/bloc/home_bloc.dart';
+import 'package:geocoding/geocoding.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,19 +21,12 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _startController = TextEditingController();
   final TextEditingController _destinationController = TextEditingController();
   final String token = "1234567546";
-
-  // var uuid = Uuid();
-  List<dynamic> listOfLocation = [];
+  bool startPressed = false;
+  bool destinationPressed = false;
 
   @override
   void initState() {
     super.initState();
-    _startController.addListener(() {
-      _onChange(_startController.text);
-    });
-    _destinationController.addListener(() {
-      _onChange(_destinationController.text);
-    });
   }
 
   @override
@@ -41,38 +36,18 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  _onChange(String place) {
-    palceSuggestion(place);
+  void searchNearbyBuses(
+      String input, double longitude, double latitude, double radius) async {
+    context.read<HomeBloc>().add(GetNearbyBusesEvent(
+        input: input,
+        longitude: longitude,
+        latitude: latitude,
+        radius: radius));
   }
 
   void palceSuggestion(String input) async {
     context.read<HomeBloc>().add(GetLocationEvent(input: input));
   }
-
-  // void palceSuggestion(String input) async {
-  //   const String apiKey = "";
-  //   try {
-  //     String baseUrl =
-  //         "https://maps.googleapis.com/maps/api/place/autocomplete/json";
-  //     String request = '$baseUrl?input=$input&key=$apiKey&sessiontoken=$token';
-  //     var response = await http.get(Uri.parse(request));
-  //     var data = json.decode(response.body);
-
-  //     if (kDebugMode) {
-  //       print(data);
-  //     }
-
-  //     if (response.statusCode == 200) {
-  //       setState(() {
-  //         listOfLocation = json.decode(response.body)['predictions'];
-  //       });
-  //     } else {
-  //       throw Exception('Failed to load data');
-  //     }
-  //   } catch (e) {
-  //     print(e.toString());
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +56,13 @@ class _HomePageState extends State<HomePage> {
         if (state is LocationErrorState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.message)));
+        } else if (state is NearByBusesErrorState) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.message)));
+        } else if (state is LocationLoadedState) {
+          startPressed = true;
+        } else if (state is NearByBusesLoadedState) {
+          destinationPressed = true;
         }
       },
       child: SafeArea(
@@ -89,112 +71,163 @@ class _HomePageState extends State<HomePage> {
           appBar: const CustomAppBarWidget(),
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 20, 8, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(28.0),
-                    child: SizedBox(
-                      height: 500,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            controller: _startController,
-                            decoration: InputDecoration(
-                              labelText: 'Start',
-                              hintText: 'Enter your starting location',
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              prefixIcon: Icon(
-                                Icons.location_on,
-                                color: secondary,
-                              ),
-                          suffixIcon: IconButton(icon: const Icon(Icons.search), onPressed: () {
-
-                          },)
-                            ),
-                          
+              padding: EdgeInsets.fromLTRB(20.w, 40.h, 20.w, 0),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      controller: _startController,
+                      decoration: InputDecoration(
+                          labelText: 'Start',
+                          hintText: 'Enter start location',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          prefixIcon: Icon(
+                            Icons.location_on,
+                            color: secondary,
                           ),
-                          Visibility(
-                            visible: _startController.text.isNotEmpty,
-                            child: Expanded(
-                                child: ListView.builder(
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.search),
+                            onPressed: () {
+                              setState(() {
+                                palceSuggestion(_startController.text);
+                              });
+                            },
+                          )),
+                    ),
+                    BlocBuilder<HomeBloc, HomeState>(
+                      builder: (context, state) {
+                        if (state is LocationLoadingState) {
+                          return const SizedBox(
+                            height: 0,
+                          );
+                        } else if (state is LocationLoadedState) {
+                          if (state.locationList.isEmpty) {
+                            return const SizedBox(
+                              height: 0,
+                            );
+                          }
+                          return Visibility(
+                            visible: startPressed,
+                            child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: listOfLocation.length,
+                              itemCount: state.locationList.length,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
-                                    onTap: () {
-                                      print(
-                                          '$index -----------------------------------------------------');
+                                    onTap: () async {
+                                      setState(() {
+                                        _startController.text =
+                                            state.locationList[index].name;
+                                        startPressed = false;
+                                      });
+
+                                      List<Location> locations =
+                                          await locationFromAddress(
+                                              state.locationList[index].name);
+                                      // print(
+                                      //     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${locations}");
+                                      // print(
+                                      //     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${locations[0].latitude}");
+                                      // print(
+                                      //     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${locations[0].longitude}");
                                     },
                                     child: ListTile(
-                                      title: Text(_startController.text =
-                                          listOfLocation[index]['description']),
+                                      title:
+                                          Text(state.locationList[index].name),
                                     ));
                               },
-                            )),
-                          ),
-                          const SizedBox(height: 20),
-                          TextFormField(
-                            controller: _destinationController,
-                            decoration: InputDecoration(
-                              labelText: 'Destination',
-                              prefixIcon: Icon(
-                                Icons.location_on,
-                                color: secondary,
-                              ),
-                              hintText: 'Enter your destination',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
                             ),
-                            onChanged: (value) {
-                              setState(() {});
+                          );
+                        } else if (state is LocationErrorState) {
+                          return const SizedBox(
+                            height: 0,
+                          );
+                        }
+                        return const SizedBox(
+                          height: 0,
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: _destinationController,
+                      decoration: InputDecoration(
+                          labelText: 'Destination',
+                          prefixIcon: Icon(
+                            Icons.location_on,
+                            color: secondary,
+                          ),
+                          hintText: 'Enter your destination',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.search),
+                            onPressed: () {
+                              setState(() {
+                                destinationPressed = true;
+
+                                searchNearbyBuses(_destinationController.text,
+                                    9.0205, 38.7468, 500.0);
+                              });
+                            },
+                          )),
+                    ),
+                    BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
+                      if (state is NearByBusesLoadingState) {
+                        return const SizedBox(height: 0);
+                      } else if (state is NearByBusesErrorState) {
+                        return const SizedBox(height: 0);
+                      } else if (state is NearByBusesLoadedState) {
+                        return Visibility(
+                          visible: destinationPressed,
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: state.nearByBusesList.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                  onTap: () {
+                                    destinationPressed = false;
+                                    _destinationController.text =
+                                        state.nearByBusesList[index].name;
+                                  },
+                                  child: ListTile(
+                                    title: Text(
+                                        state.nearByBusesList[index].name!),
+                                  ));
                             },
                           ),
-                          Visibility(
-                            visible: _destinationController.text.isNotEmpty,
-                            child: Expanded(
-                                child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: 5,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                    onTap: () {},
-                                    child: ListTile(
-                                      title: Text(
-                                          listOfLocation[index]['description']),
-                                    ));
-                              },
-                            )),
-                          ),
-                          const SizedBox(height: 30),
-                          ButtonWidget(
-                              context: context,
-                              text: 'Search',
-                              onClick: () {
-                                (context).goNamed(AppPath.test);
-                              })
+                        );
+                      }
+                      return const SizedBox(height: 0);
+                    }),
+                    const SizedBox(height: 30),
+                    Center(
+                      child: ButtonWidget(
+                          context: context,
+                          text: 'Search',
+                          onClick: () {
+                            (context).goNamed(AppPath.test);
+                          }),
+                    ),
+                    const SizedBox(height: 16),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Text('Nearby Station Stops',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          // Wrap(children: ListView.builder(itemBuilder: itemBuilder),)
                         ],
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text('Nearby Station Stops',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        // Wrap(children: ListView.builder(itemBuilder: itemBuilder),)
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
