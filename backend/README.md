@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 The `clean_backend` folder follows the Clean Architecture design pattern. It contains the backend code for the TransitTrack project. This folder is organized in a way that promotes separation of concerns and maintainability. It includes different subfolders for different components of the backend, such as controllers, models, services, and repositories. Each component has its own responsibility and can be easily modified or replaced without affecting other parts of the system. This folder structure helps to keep the codebase clean and scalable.
+=======
+The `clear_backend` folder follows the Clear Architecture design pattern. It contains the backend code for the TransitTrack project. This folder is organized in a way that promotes separation of concerns and maintainability. It includes different subfolders for different components of the backend, such as controllers, models, services, and repositories. Each component has its own responsibility and can be easily modified or replaced without affecting other parts of the system. This folder structure helps to keep the codebase clean and scalable.
+>>>>>>> 241787c (clear architecture)
 
 - **app/**: The main application directory.
   - **api/**: Contains the API routes and endpoints.
@@ -18,7 +22,11 @@ The `clean_backend` folder follows the Clean Architecture design pattern. It con
 
 
 ### Getting started, 
+<<<<<<< HEAD
 1. **clone the repository**
+=======
+1. ** Clone the repository**
+>>>>>>> 241787c (clear architecture)
     ```sh
     git clone <repo-url>
     cd project 
@@ -35,7 +43,13 @@ MONGODB_URL=mongodb://localhost:27017
 
 4. **run the application**
 ```sh
+<<<<<<< HEAD
 cd backend/the_app
 uvicorn app.main:app --reload
 
 ```
+=======
+uvicorn app.main:app --reload
+
+```
+>>>>>>> 241787c (clear architecture)
