@@ -1,7 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
-import 'package:transittrack/env/env.dart';
 import 'package:transittrack/features/home/data/model/location_model.dart';
 import 'package:transittrack/features/home/data/model/nearby_model.dart';
 import 'package:transittrack/features/home/domain/entities/bus.dart';
@@ -43,10 +40,6 @@ class GoogleMapDataSourceImpl implements GoogleMapDatasource {
       var response = await http.get(Uri.parse(request));
       var data = json.decode(response.body);
 
-      // if (kDebugMode) {
-      //   print(data);
-      // }
-
       if (response.statusCode == 200) {
         final result = data['predictions'];
 
@@ -67,7 +60,7 @@ class GoogleMapDataSourceImpl implements GoogleMapDatasource {
     List<NearByModel> nearbyBusStations = [];
     const String apiKey = "";
     const String baseUrl =
-        "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cruise&location=-33.8670522%2C151.1957362&radius=1500&type=bus_station&key=${apiKey}";
+        "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cruise&location=-33.8670522%2C151.1957362&radius=1500&type=bus_station&key=$apiKey";
 
     final response = await http.post(
       Uri.parse(baseUrl),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
+// import 'package:flutter_google_maps_webservices/places.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
@@ -8,7 +10,6 @@ import 'package:transittrack/core/widgets/button_widget.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
 import 'package:transittrack/core/widgets/custom_navbar_widget.dart';
 import 'package:transittrack/features/home/presentation/bloc/home_bloc.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:transittrack/features/home/presentation/pages/dummy_data.dart';
 import 'package:transittrack/features/home/presentation/widgets/card_widget.dart';
 
@@ -46,6 +47,21 @@ class _HomePageState extends State<HomePage> {
         latitude: latitude,
         radius: radius));
   }
+
+  // void _searchPlaces() async {
+  //   final places = GoogleMapsPlaces(apiKey: 'YOUR_API_KEY');
+  //   final response = await places.searchNearbyWithRadius(
+  //       Location(longitude: 78.0205, latitude: 87.7468, timestamp: DateTime.now()), 500.0,
+  //       type: 'restaurant');
+    
+  //   if (response.isOkay) {
+  //     for (var result in response.results) {
+  //       print(result.name);
+  //     }
+  //   } else {
+  //     print('Error: ${response.errorMessage}');
+  //   }
+  // }
 
   void palceSuggestion(String input) async {
     context.read<HomeBloc>().add(GetLocationEvent(input: input));
@@ -86,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                           hintText: 'Enter start location',
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.location_on,
                             color: secondary,
                           ),
@@ -126,9 +142,9 @@ class _HomePageState extends State<HomePage> {
                                         startPressed = false;
                                       });
 
-                                      List<Location> locations =
-                                          await locationFromAddress(
-                                              state.locationList[index].name);
+                                      // List<Location> locations =
+                                      //     await locationFromAddress(
+                                      //         state.locationList[index].name);
                                       // print(
                                       //     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${locations}");
                                       // print(
@@ -158,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                       controller: _destinationController,
                       decoration: InputDecoration(
                           labelText: 'Destination',
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.location_on,
                             color: secondary,
                           ),
@@ -259,7 +275,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          bottomNavigationBar: CustomNavbarWidget(),
+          bottomNavigationBar: const CustomNavbarWidget(),
         ),
       ),
     );
