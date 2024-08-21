@@ -31,4 +31,8 @@ class Token(BaseModel):
 
 class LoginRequest(BaseModel):
     phone_number: str
+<<<<<<< HEAD:backend/the_app/core/models/user_model.py
     password: str
+=======
+    password: str
+>>>>>>> 9be142d (change database to local):backend/models.py
