@@ -3,10 +3,10 @@ String? phoneNumberValidation(String? value) {
     return 'Phone Number can not be empty';
   }
 
-  var pattern = r'^(?:\+251|0)?[1-9][0-9]{8}$';
+  var pattern = r'^(?:\+251|0)?[1-9][0-9]{8}$|^(?:\+254|07)[0-9]{8}$';
   RegExp regExp = RegExp(pattern);
   if (!regExp.hasMatch(value)) {
-    return 'Invalid Ethiopian phone number format use +251';
+    return 'Invalid phone number, use +251 or 07(+254)';
   }
 
   return null;
@@ -31,14 +31,15 @@ String? passWordValidation(String? value) {
 }
 
 String? emailValidation(String? value) {
-  if (value != null) {
-    String pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
-    RegExp regExp = RegExp(pattern);
-    if (!regExp.hasMatch(value)) {
-      return 'Enter a valid email address';
-    }
+  if (value == null || value.isEmpty) {
+    return null;
   }
 
+  String pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+  RegExp regExp = RegExp(pattern);
+  if (!regExp.hasMatch(value)) {
+    return 'Enter a valid email address';
+  }
   return null;
 }
 

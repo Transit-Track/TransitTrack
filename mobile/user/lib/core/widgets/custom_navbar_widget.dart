@@ -17,7 +17,7 @@ class _CustomNavbarWidgetState extends State<CustomNavbarWidget> {
   Widget build(BuildContext context) {
     List<Function> pages = [
       () => (context).goNamed(AppPath.home),
-      () => (context).goNamed(AppPath.favorite),
+      () => (context).goNamed(AppPath.my_route),
       () => (context).goNamed(AppPath.ticket),
       () => (context).goNamed(AppPath.profile),
     ];
@@ -28,8 +28,9 @@ class _CustomNavbarWidgetState extends State<CustomNavbarWidget> {
           _currentIndex = newIndex;
         });
         pages[newIndex]();
+        setState(() {});
       },
-      items: [
+      items: const [
         BottomNavigationBarItem(
             activeIcon: Icon(Icons.home, color: primary),
             icon: Icon(
@@ -40,13 +41,13 @@ class _CustomNavbarWidgetState extends State<CustomNavbarWidget> {
             tooltip: 'Home',
             backgroundColor: white),
         BottomNavigationBarItem(
-          activeIcon: Icon(Icons.favorite, color: primary),
+          activeIcon: Icon(Icons.route, color: primary),
           icon: Icon(
-            Icons.favorite_outline,
+            Icons.route,
             color: black,
           ),
-          label: 'Favorite',
-          tooltip: 'Favorite',
+          label: 'My Route',
+          tooltip: 'My Route',
         ),
         BottomNavigationBarItem(
           activeIcon: Icon(Icons.airplane_ticket, color: primary),

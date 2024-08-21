@@ -16,39 +16,39 @@ class InputFieldWidget extends StatelessWidget {
     required this.controller,
     required this.context,
     required this.validation,
-    this.keyboardType  = TextInputType.text,
+    this.keyboardType = TextInputType.text,
     this.icon,
-    this.obsecured = false,           
-  }
-  );
+    this.obsecured = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      obscureText: obsecured,
-      keyboardType: keyboardType,
-      controller: controller,
-      validator: validation,
-      cursorColor: Theme.of(context).primaryColor,
-      decoration: InputDecoration(
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-          hintText: hintText,
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(50))
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-            borderSide: BorderSide(
-              color: Colors.grey,
+    return SizedBox(
+      width: 400,
+      child: TextFormField(
+        obscureText: obsecured,
+        keyboardType: keyboardType,
+        controller: controller,
+        validator: validation,
+        cursorColor: Theme.of(context).primaryColor,
+        decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+            hintText: hintText,
+            border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(50))),
+            focusedBorder: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+              borderSide: BorderSide(
+                color: Colors.grey,
+              ),
             ),
-          ),
-          suffixIcon: icon
-          ),
-      style: GoogleFonts.laila(
-        fontSize: 13,
-        fontWeight: FontWeight.w500,
-        color: const Color(0xFF363636),
+            suffixIcon: icon),
+        style: GoogleFonts.laila(
+          fontSize: 13,
+          fontWeight: FontWeight.w500,
+          color: const Color(0xFF363636),
+        ),
       ),
     );
   }

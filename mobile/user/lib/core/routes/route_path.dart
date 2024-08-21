@@ -8,8 +8,9 @@ class AppPath {
   static const changePassword = '/changePassword';
   static const notification = '/notification';
   static const profile = '/profile';
-  static const favorite = '/favorite';
+  static const my_route = '/my_route';
   static const ticket = '/ticket';
   static const test = '/test';
   static const realTimeVehicleTracking = '/realTimeVehicleTracking';
+  static const payment = '/payment';
 }
