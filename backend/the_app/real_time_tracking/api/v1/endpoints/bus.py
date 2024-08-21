@@ -1,0 +1,14 @@
+from fastapi import APIRouter, Depends
+
+from real_time_tracking.repositories.bus_repo import BusRepository
+from real_time_tracking.services.bus_service import BusService
+
+bus = APIRouter()
+
+busService = BusService(BusRepository())
+def get_busService():
+    return busService
+
+@bus.get("/search_bus_by_route")
+def getBuses(start_station, end_station, bus_service: BusService = Depends(get_busService)):
+    return bus_service.search_bus_by_route(start_station, end_station)
