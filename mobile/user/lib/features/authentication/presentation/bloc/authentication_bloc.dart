@@ -52,6 +52,8 @@ class AuthenticationBloc
       password: event.password,
     ));
 
+    print('resulttttttttttttttttttttttttttt $result');
+
     result.fold(
       (failure) => emit(LoginErrorState(message: failure.errorMessage)),
       (user) => emit(LoggedInState(user: user)),

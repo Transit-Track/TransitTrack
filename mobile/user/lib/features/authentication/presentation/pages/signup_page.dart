@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
+import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/utils/validation.dart';
 import 'package:transittrack/core/widgets/button_widget.dart';
 import 'package:transittrack/features/authentication/presentation/bloc/authentication_bloc.dart';
@@ -22,19 +23,14 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  var _isObsecured;
-
-  @override
-  void initState() {
-    super.initState();
-    _isObsecured = true;
-  }
+  var _isObsecured = true;
 
   @override
   void dispose() {
     _fullNameController.dispose();
     _phoneNumberController.dispose();
     _passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,6 +46,12 @@ class _SignupPageState extends State<SignupPage> {
           );
         } else if (state is SignUpSuccessState) {
           (context).goNamed(AppPath.login);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Sign Up Successful'),
+              backgroundColor: success,
+            ),
+          );
         }
       },
       child: Scaffold(
@@ -89,7 +91,7 @@ class _SignupPageState extends State<SignupPage> {
                           height: 15.h,
                         ),
                         InputFieldWidget(
-                          hintText: 'Email',
+                          hintText: 'Email(Optional)',
                           controller: _emailController,
                           context: context,
                           validation: emailValidation,
@@ -138,17 +140,20 @@ class _SignupPageState extends State<SignupPage> {
                                 text: 'Sign Up',
                                 onClick: () {
                                   if (_formKey.currentState!.validate()) {
-                                    (context).goNamed(AppPath.login);
+                                    // Bloc
+                                    context.read<AuthenticationBloc>().add(
+                                          SignUpEvent(
+                                              fullName:
+                                                  _fullNameController.text,
+                                              password:
+                                                  _passwordController.text,
+                                              phoneNumber:
+                                                  _phoneNumberController.text,
+                                              email: _emailController.text),
+                                        );
+                                  } else {
+                                    setState(() {});
                                   }
-
-                                  // Bloc
-                                  context.read<AuthenticationBloc>().add(
-                                        SignUpEvent(
-                                            fullName: _fullNameController.text,
-                                            password: _passwordController.text,
-                                            phoneNumber:
-                                                _passwordController.text),
-                                      );
                                 });
                           },
                         ),

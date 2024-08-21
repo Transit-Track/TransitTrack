@@ -47,6 +47,12 @@ class _LoginPageState extends State<LoginPage> {
             ),
           );
         } else if (state is LoggedInState) {
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   const SnackBar(
+          //     content: Text('Succesfluy Loged in'),
+          //     backgroundColor: Colors.green,
+          //   ),
+          // );
           (context).goNamed(AppPath.home);
         }
       },
@@ -87,8 +93,9 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: 'Phone Number',
                           controller: _phoneNumberController,
                           context: context,
-                          validation: phoneNumberValidation,
-                          keyboardType: TextInputType.phone,
+                          validation: null,
+                          // validation: phoneNumberValid/ation,
+                          // keyboardType: TextInputType.phone,
                         ),
                         SizedBox(
                           height: 20.h,
@@ -107,7 +114,8 @@ class _LoginPageState extends State<LoginPage> {
                               icon: !_isObsecured
                                   ? const Icon(Icons.visibility)
                                   : const Icon(Icons.visibility_off)),
-                          validation: passWordValidation,
+                          validation: null,
+                          // validation: passWordValidation,
                           keyboardType: TextInputType.visiblePassword,
                         ),
                         const SizedBox(
@@ -126,7 +134,6 @@ class _LoginPageState extends State<LoginPage> {
                                 text: 'Log In',
                                 onClick: () {
                                   if (_formKey.currentState!.validate()) {
-                                    (context).goNamed(AppPath.home);
                                     // Bloc
                                     context.read<AuthenticationBloc>().add(
                                           LogInEvent(

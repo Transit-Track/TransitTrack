@@ -43,12 +43,20 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
       {required String phoneNumber, required String password}) async {
     if (await networkInfo.isConnected) {
       try {
-        final response = await remoteDatasource.login(
+        final token = await remoteDatasource.login(
           phoneNumber: phoneNumber,
           password: password,
         );
-        return Right(response);
+
+        try {
+          final user = await remoteDatasource.getUserDetail(token: token);
+          return Right(user);
+        } catch (e) {
+          print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee1$e");
+          return Left(ServerFailure());
+        }
       } catch (e) {
+        print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$e");
         return Left(ServerFailure());
       }
     } else {
@@ -57,12 +65,10 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
   }
 
   @override
-  Future<Either<Failure, void>> logout() async{
+  Future<Either<Failure, void>> logout() async {
     if (await networkInfo.isConnected) {
       try {
-        final response = await remoteDatasource.logout(
-          
-        );
+        final response = await remoteDatasource.logout();
         return Right(response);
       } catch (e) {
         return Left(ServerFailure());
@@ -85,11 +91,11 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
           phoneNumber: phoneNumber,
           email: email,
           password: password,
-
         );
         return Right(response);
       } catch (e) {
-        return Left(ServerFailure());
+        print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee$e");
+        return Left(ServerFailure(errorMessage: e.toString()));
       }
     } else {
       return Left(NetworkFailure());

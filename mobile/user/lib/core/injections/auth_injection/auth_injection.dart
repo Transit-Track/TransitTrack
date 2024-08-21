@@ -20,7 +20,7 @@ class AuthInjection {
 
     //! Data
     sl.registerLazySingleton<AuthenticationRemoteDatasource>(
-        () => AuthenticationRemoteDataSourceImpl(client: sl()));
+        () => AuthenticationRemoteDataSourceImpl(client: sl(), secureStorage: sl()));
 
     //! Repository
     sl.registerLazySingleton<AuthenticationRepository>(() =>
