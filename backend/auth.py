@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 import bcrypt
 
-from models import UserCreate, UserInDB, Token
+from models import *
 from database import db
 from utils import get_user_by_phone, create_access_token, authenticate_user
 
