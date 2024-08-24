@@ -40,12 +40,13 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state is LoginErrorState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ),
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+            // SnackBar(
+             //  content: Text(state.message),
+              // backgroundColor: Colors.red,
+            // ),
+          // );
+           (context).goNamed(AppPath.home);
         } else if (state is LoggedInState) {
           // ScaffoldMessenger.of(context).showSnackBar(
           //   const SnackBar(
@@ -93,9 +94,9 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: 'Phone Number',
                           controller: _phoneNumberController,
                           context: context,
-                          validation: null,
-                          // validation: phoneNumberValid/ation,
-                          // keyboardType: TextInputType.phone,
+                          // validation: null,
+                          validation: phoneNumberValidation,
+                          keyboardType: TextInputType.phone,
                         ),
                         SizedBox(
                           height: 20.h,

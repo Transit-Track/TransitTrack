@@ -38,12 +38,13 @@ class _SignupPageState extends State<SignupPage> {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
         if (state is SignupErrorState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ),
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+            // SnackBar(
+              // content: Text(state.message),
+              // backgroundColor: Colors.red,
+            // ),
+          // );
+          (context).goNamed(AppPath.login);
         } else if (state is SignUpSuccessState) {
           (context).goNamed(AppPath.login);
           ScaffoldMessenger.of(context).showSnackBar(
@@ -52,6 +53,7 @@ class _SignupPageState extends State<SignupPage> {
               backgroundColor: success,
             ),
           );
+          
         }
       },
       child: Scaffold(

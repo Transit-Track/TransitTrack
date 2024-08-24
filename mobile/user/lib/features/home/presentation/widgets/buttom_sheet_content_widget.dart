@@ -4,9 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/button_widget.dart';
+import 'package:transittrack/features/home/domain/entities/bus.dart';
 
 class ButtomSheetContentWidget extends StatefulWidget {
-  const ButtomSheetContentWidget({super.key});
+  final Bus bus;
+  const ButtomSheetContentWidget({super.key, required this.bus});
 
   @override
   State<ButtomSheetContentWidget> createState() =>
@@ -89,6 +91,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
               ),
             ],
           ),
+         
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -101,7 +104,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                     width: 100.w,
                     text: 'Buy',
                     onClick: () {
-                      (context).goNamed(AppPath.payment);
+                      (context).goNamed(AppPath.payment, extra: {'bus': widget.bus});
                     }),
               )
             ],
@@ -158,9 +161,9 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                               _isCollapsed = !_isCollapsed;
                             });
                           },
-                          child: const Center(
+                          child: Center(
                             child: Icon(
-                              Icons.arrow_drop_down,
+                              _isCollapsed ? Icons.arrow_drop_down : Icons.arrow_drop_up,
                               color: white,
                             ),
                           ),

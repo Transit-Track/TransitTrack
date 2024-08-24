@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/features/home/presentation/pages/dummy_data.dart';
@@ -67,27 +68,29 @@ class _RealTimeVehicleTrackingPageState
     addCustomMarker();
     updateLocation(driver.latitude, driver.longitude);
 
-    for (int i = 0; i < polylineCoordinates.length; i++) {
-      markers.add(Marker(
-        markerId: MarkerId('$i'),
-        position: polylineCoordinates[i],
-        infoWindow: InfoWindow(
-            title: 'Bus Location',
-            snippet:
-                'Lat: ${currentLocation.latitude}, Lng: ${currentLocation.longitude}'),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-      ));
-
-      setState(() {
-        _polyLines.add(Polyline(
-          polylineId: PolylineId('polyline'),
-          color: Colors.blue,
-          points: polylineCoordinates,
-          width: 5,
-        ));
-      });
-    }
+   getPolylinepoints();
+   
     super.initState();
+  }
+  
+  void getPolylinepoints() async {
+    PolylinePoints polylinePoints = PolylinePoints();
+
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      googleApiKey: "",
+      request: PolylineRequest(
+          origin: PointLatLng(startingPoint.latitude, startingPoint.longitude),
+          destination: PointLatLng(destination.latitude, destination.longitude),
+          mode: TravelMode.driving),
+    );
+
+    print(result.points);
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+      setState(() {});
+    }
   }
 
   @override
@@ -152,8 +155,8 @@ class _RealTimeVehicleTrackingPageState
               controller: _panelController,
               minHeight: 100.h,
               maxHeight: MediaQuery.of(context).size.height * 0.5,
-              panel: const ButtomSheetContentWidget(),
-              borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
+              panel: ButtomSheetContentWidget(bus: buses[0]),
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(50)),
             ),
           ],
         ));

@@ -63,6 +63,27 @@ class _TestState extends State<Test> {
     getPolylinepoints();
     getCurentLocation();
   }
+  
+  //  for (int i = 0; i < polylineCoordinates.length; i++) {
+  //    markers.add(Marker(
+  //       markerId: MarkerId('$i'),
+  //       position: polylineCoordinates[i],
+  //       infoWindow: InfoWindow(
+  //           title: 'Bus Location',
+  //           snippet:
+  //               'Lat: ${currentLocation.latitude}, Lng: ${currentLocation.longitude}'),
+  //       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+  //     ));
+
+  //     setState(() {
+  //       _polyLines.add(Polyline(
+  //         polylineId: PolylineId('polyline'),
+  //         color: Colors.blue,
+  //         points: polylineCoordinates,
+  //         width: 5,
+  //       ));
+  //     });
+  //   }
 
   void getPolylinepoints() async {
     PolylinePoints polylinePoints = PolylinePoints();
