@@ -9,6 +9,8 @@ class CardWidget extends StatelessWidget {
   final String numberOfStops;
   final String busNumber;
   final String busType;
+  final String imageUrl;
+
 
   const CardWidget({
     super.key,
@@ -18,6 +20,7 @@ class CardWidget extends StatelessWidget {
     required this.numberOfStops,
     required this.busNumber,
     required this.busType,
+    required this.imageUrl,
   });
 
   @override
@@ -69,7 +72,7 @@ class CardWidget extends StatelessWidget {
                   Text(
                     stationName,
                     style: TextStyle(
-                      fontSize: 20.sp,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

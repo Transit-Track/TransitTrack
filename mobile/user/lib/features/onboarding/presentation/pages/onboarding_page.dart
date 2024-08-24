@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:transittrack/core/routes/route_path.dart';
+import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/features/onboarding/domain/onboarding_entity.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -120,7 +121,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         width: 150,
         height: 65,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
+          color: primary,
           borderRadius: BorderRadius.circular(100),
         ),
         child: const Center(

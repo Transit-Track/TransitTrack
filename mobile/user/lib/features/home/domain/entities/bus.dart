@@ -4,32 +4,44 @@ class Bus extends Equatable {
   final String id;
   final String number;
   final List<String> routes;
-  final String location;
+  final String longitude;
+  final String latitude;
   final String start;
   final String destination;
-  final String time;
+  final String arrivalTime;
   final String price;
+  final String stationName;
+  final String distance;
+  final String imageUrl;
 
   const Bus({
     required this.id,
     required this.number,
     required this.routes,
-    required this.location,
+    required this.longitude,
+    required this.latitude,
     required this.start,
     required this.destination,
-    required this.time,
+    required this.arrivalTime,
     required this.price,
+    required this.stationName,
+    required this.imageUrl,
+    required this.distance,
   });
-  
+
   @override
   List<Object?> get props => [
         id,
         number,
         routes,
-        location,
+        longitude,
+        latitude,
         start,
         destination,
-        time,
+        arrivalTime,
         price,
+        imageUrl,
+        stationName,
+        distance,
       ];
 }

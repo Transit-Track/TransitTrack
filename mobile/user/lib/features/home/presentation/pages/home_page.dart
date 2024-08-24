@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
-// import 'package:flutter_google_maps_webservices/places.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
@@ -240,7 +238,6 @@ class _HomePageState extends State<HomePage> {
                           Text('Nearby Station Stops',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
-                          // Wrap(children: ListView.builder(itemBuilder: itemBuilder),)
                         ],
                       ),
                     ),
@@ -259,11 +256,12 @@ class _HomePageState extends State<HomePage> {
                               },
                               child: CardWidget(
                                 stationName: buses[index].stationName,
-                                distance: buses[index].distance,
+                                distance: buses[index].destination,
                                 arrivalTime: buses[index].arrivalTime,
-                                numberOfStops: buses[index].numberOfStops,
-                                busNumber: buses[index].busNumber,
-                                busType: buses[index].busType,
+                                numberOfStops: buses[index].price,
+                                busNumber: buses[index].number,
+                                imageUrl: buses[index].imageUrl,
+                                busType: ''
                               ),
                             ),
                           );
