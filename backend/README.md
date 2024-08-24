@@ -35,6 +35,7 @@ MONGODB_URL=mongodb://localhost:27017
 
 4. **run the application**
 ```sh
+cd backend/the_app
 uvicorn app.main:app --reload
 
 ```
