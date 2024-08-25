@@ -9,3 +9,6 @@ class Station(BaseModel):
 
 class StationIn(BaseModel):
     name: str
+    
+class StationOut(BaseModel):
+    name: str
