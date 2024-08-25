@@ -1,3 +1,4 @@
+
 from db import client
 from typing import List
 from real_time_tracking.models.bus_model import Bus

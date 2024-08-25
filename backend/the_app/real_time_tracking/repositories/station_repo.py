@@ -6,6 +6,7 @@ from real_time_tracking.models.location_model import Location
 class StationRepository:
     def __init__(self):
         self.db = db.local.transittrack.stations
+        self.db.create_index([("location", "2dsphere")])
     
     async def get_nearby_station(self, location: Location, radius: int):
         # Validate coordinates
