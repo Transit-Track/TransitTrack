@@ -24,7 +24,7 @@ Future main() async {
   runApp(MultipleBlocProvider(
     child: MyApp(
       onboarding: onboarding,
-      googleApiKey: Env.googleApiKey,
+      googleApiKey: '',
     ),
   ));
 }
@@ -32,31 +32,35 @@ Future main() async {
 class MyApp extends StatelessWidget {
   final bool onboarding;
   final String googleApiKey;
+
   const MyApp({
     super.key,
     this.onboarding = false,
-    required this.googleApiKey
-
+    required this.googleApiKey,
   });
 
   @override
   Widget build(BuildContext context) {
-     ScreenUtil.init(
-      context,
-      designSize: Size(375, 812), // Set the design size according to your design
-      minTextAdapt: true,
-      splitScreenMode: true,
-    );
-    
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        fontFamily: 'Laila',
-      ),
-      routerConfig: AppRouter.router,
+    return Builder(
+      builder: (context) {
+        ScreenUtil.init(
+          context,
+          designSize: Size(375, 812), // Set the design size according to your design
+          minTextAdapt: true,
+          splitScreenMode: true,
+        );
+
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+            fontFamily: 'Laila',
+          ),
+          routerConfig: AppRouter.router,
+        );
+      },
     );
   }
 }
