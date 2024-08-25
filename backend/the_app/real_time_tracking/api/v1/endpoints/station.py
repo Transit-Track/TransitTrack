@@ -15,7 +15,7 @@ def get_station_service():
 @station.post('/stations', response_model=List[StationOut])
 async def get_nearby_stations(
     locations: List[Location] = Body(..., description="List of locations"),
-    radius: int = Query(..., description="Radius to search for nearby stations"),
+    radius: int = Body(..., description="Radius to search for nearby stations"),
     station_service: StationService = Depends(get_station_service)
 ):
     results = []

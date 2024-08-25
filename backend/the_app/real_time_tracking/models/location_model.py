@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 
 class Location(BaseModel):
-    latitude: float
     longitude: float
+    latitude: float
     
     def to_geojson(self):
         return {
