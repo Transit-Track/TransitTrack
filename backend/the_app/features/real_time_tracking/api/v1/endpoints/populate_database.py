@@ -23,9 +23,9 @@ async def populate_db():
 
 
     locations = [
-    Location(latitude=34.0522, longitude=-118.2437, location_id=1),
-    Location(latitude=40.7128, longitude=-74.0060, location_id=2),
-    Location(latitude=37.7749, longitude=-122.4194, location_id=3)
+    Location(longitude=34.0522, latitude=-118.2437, location_id=1),
+    Location(longitude=40.7128, latitude=-74.0060, location_id=2),
+    Location(longitude=37.7749, latitude=-122.4194, location_id=3)
     ]
 
     
