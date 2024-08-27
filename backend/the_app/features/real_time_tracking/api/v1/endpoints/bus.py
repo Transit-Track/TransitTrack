@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 
-from real_time_tracking.repositories.bus_repo import BusRepository
-from real_time_tracking.services.bus_service import BusService
+from features.real_time_tracking.repositories.bus_repo import BusRepository
+from features.real_time_tracking.services.bus_service import BusService
 
 bus = APIRouter()
 

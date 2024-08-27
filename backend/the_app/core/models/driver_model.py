@@ -1,5 +1,5 @@
 # entities/driver.py
-from real_time_tracking.models.location_model import Location
+from .location_model import Location
 from pydantic import BaseModel
 
 

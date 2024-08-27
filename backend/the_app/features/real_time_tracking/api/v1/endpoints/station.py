@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Query
 
-from real_time_tracking.models.location_model import Location
-from real_time_tracking.repositories.station_repo import StationRepository
-from real_time_tracking.services.station_service import StationService
+from core.models.location_model import Location
+from features.real_time_tracking.repositories.station_repo import StationRepository
+from features.real_time_tracking.services.station_service import StationService
 
 station = APIRouter()
 

@@ -1,4 +1,4 @@
-from real_time_tracking.repositories.driver_repo import DriverRepository
+from features.real_time_tracking.repositories.driver_repo import DriverRepository
 
 class DriverService:
     def __init__(self, repo: DriverRepository):

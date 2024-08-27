@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from core.config.db import client as db
-from real_time_tracking.models.location_model import Location
+from core.models.location_model import Location
 
 
 class StationRepository:

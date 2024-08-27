@@ -1,4 +1,4 @@
-from real_time_tracking.models.routes_model import Route
+from .routes_model import Route
 from .driver_model import Driver
 from pydantic import BaseModel
  

@@ -1,4 +1,4 @@
-from real_time_tracking.repositories.station_repo import StationRepository
+from features.real_time_tracking.repositories.station_repo import StationRepository
 class StationService:
     def __init__(self, repo: StationRepository):
         self.repo = repo

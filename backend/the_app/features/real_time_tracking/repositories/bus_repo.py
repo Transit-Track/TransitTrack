@@ -1,4 +1,4 @@
-from real_time_tracking.repositories.route_repo import RouteRepository
+from features.real_time_tracking.repositories.route_repo import RouteRepository
 from core.config.db import client as db
 
 class BusRepository:

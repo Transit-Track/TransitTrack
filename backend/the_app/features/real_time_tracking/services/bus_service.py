@@ -1,4 +1,4 @@
-from real_time_tracking.repositories.bus_repo import BusRepository
+from features.real_time_tracking.repositories.bus_repo import BusRepository
 
 class BusService:
     def __init__(self, repo: BusRepository):

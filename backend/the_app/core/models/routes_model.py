@@ -1,5 +1,5 @@
 from typing import List
-from real_time_tracking.models.station_model import Station
+from .station_model import Station
 from pydantic import BaseModel
 
 

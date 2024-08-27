@@ -1,4 +1,4 @@
-from real_time_tracking.models import routes_model
+from core.models import routes_model
 from core.config.db import client as db
 
 

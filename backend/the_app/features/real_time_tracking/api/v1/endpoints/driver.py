@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 
-from real_time_tracking.models.location_model import Location
-from real_time_tracking.services.driver_service import DriverService
-from real_time_tracking.repositories.driver_repo import DriverRepository
+from core.models.location_model import Location
+from features.real_time_tracking.services.driver_service import DriverService
+from features.real_time_tracking.repositories.driver_repo import DriverRepository
 
 driver = APIRouter()
 

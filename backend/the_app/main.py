@@ -1,6 +1,6 @@
 from fastapi import FastAPI, APIRouter
 
-from real_time_tracking.api.v1.endpoints import station, bus, driver
+from features.real_time_tracking.api.v1.endpoints import station, bus, driver
 
 app = FastAPI()
 app.include_router(bus.bus)
