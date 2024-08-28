@@ -10,7 +10,8 @@ class BusRepository:
         all_buses = await self.db.find().to_list(length=None)
         buses = []
         for bus in all_buses:
-            
+        
             if await self.route_repo.is_route_exist(bus['route_id'], start_station, end_station):
-                buses.append(bus)
+                if bus['capacity'] > 0:
+                    buses.append(bus)
         return buses

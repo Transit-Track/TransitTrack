@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from real_time_tracking.models.location_model import Location
+from core.models.location_model import Location
 
 class Station(BaseModel):
     station_id: int

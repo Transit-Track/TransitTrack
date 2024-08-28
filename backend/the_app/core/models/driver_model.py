@@ -1,21 +1,13 @@
 # entities/driver.py
+from .user_model import User
 from .location_model import Location
 from pydantic import BaseModel
 
-
-
+class Driver(User):
+    driver_id: int
+    license_number: str
+    location: Location
 
 class DriverOnBus(BaseModel):
-    driver_id: int
-    name: str
-    license_number: str
-    phone_number: str
-    location: Location
-    
-class Driver (DriverOnBus):
-    driver_id: int
-    name: str
-    license_number: str
-    password: str
-    phone_number: str
+    phone_number:str
     location: Location

@@ -1,6 +1,8 @@
 
+import base64
 from fastapi import APIRouter
 from typing import List
+import bcrypt
 from core.models.bus_model import Bus
 from core.models.station_model import Station
 from core.models.routes_model import Route
@@ -9,14 +11,13 @@ from core.models.driver_model import Driver, DriverOnBus
 from core.models.location_model import Location
 from core.config.db import client
 
-
 populate = APIRouter()
 @populate.get("/populate")
 async def populate_db():
 
     db = client.local.transittrack
 
-    drivers_collection = db.drivers
+    drivers_collection = db.users.drivers
     buses_collection = db.buses
     routes_collection = db.routes
     stations_collection = db.stations
@@ -115,13 +116,8 @@ async def populate_db():
         station_dict = station.model_dump()
         await stations_collection.insert_one(station_dict)
 
-    for route in routes:
-        route_dict = route.model_dump()
-        routes_collection.insert_one(route_dict)
+  
 
-    for bus in buses:
-        bus_dict = bus.model_dump()
-        await buses_collection.insert_one(bus_dict)
         
     return {"message": "Database populated successfully"}
 
