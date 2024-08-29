@@ -27,7 +27,7 @@ class PaymentService:
         if payment and payment.status == "pending":
             payment_status = self._check_mpesa_payment_status(mpesa_code)
             if payment_status == "success":
-                qr_code = self._generate_qr_code(payment)
+                qr_code = self._generate_qr_code(payment.amount, payment.number_of_tickets, payment.start_station, payment.destination_station)
                 await self.payment_repository.update_payment_status(payment.id, "completed", qr_code)
                 return qr_code
             else:
@@ -70,17 +70,24 @@ class PaymentService:
         else:
             return "failed"
 
-    def _generate_qr_code(self, payment):
+    def _generate_qr_code(self, amount, number_of_tickets, start_station, destination_station):
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_L,
             box_size=10,
             border=4,
         )
-        qr.add_data(f"Payment for {payment.amount} - {payment.mpesa_code}")
+
+        qr_data = f"Payment Amount: {amount}, Tickets: {number_of_tickets}, Start: {start_station}, Destination: {destination_station}"
+        qr.add_data(qr_data)
         qr.make(fit=True)
-        img = qr.make_image(fill='black', back_color='white')
+
+        img = qr.make_image(fill_color='blue', back_color='black')
+
         buffer = io.BytesIO()
         img.save(buffer, format="PNG")
-        qr_code_base64 = base64.b64encode(buffer.getvalue()).decode()
-        return qr_code_base64
+        buffer.seek(0)
+
+        # Convert the image to a base64 string
+        img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+        return img_base64

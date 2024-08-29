@@ -26,6 +26,9 @@ class Payment(BaseModel):
     status: str = "pending"
     qr_code: Optional[str] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
+    start_station: str
+    destination_station : str
+    number_of_tickets: int
 
     class Config:
         allow_population_by_field_name = True
@@ -56,6 +59,7 @@ class Ticket(BaseModel):
     price: float
     expiry_date: datetime
     status: str
+
 
 class Bus(BaseModel):
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
