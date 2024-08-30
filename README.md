@@ -11,7 +11,7 @@ Welcome to the **TransitTrack** repository! 🎉 TransitTrack is an innovative m
 - **Cyber Attack Protection**: Enjoy a secure experience with built-in security features to safeguard against threats.
 
 ## 📁 Folder Structure
-- **mobile/**: Contains the user-side interface built with the Flutter framework for a smooth mobile experience.
+- **mobile/**: Contains the user-side , conductor-side and driver-side interface built with the Flutter framework for a smooth mobile experience.
 - **web/**: Houses the dispatcher-side interface developed using the React library for efficient management.
 - **backend/**: This folder manages server-side logic and database interactions using a Node.js framework and MongoDB for database management.
 
