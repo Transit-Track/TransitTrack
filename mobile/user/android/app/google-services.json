@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "70344907648",
+    "project_id": "transit-track-83262",
+    "storage_bucket": "transit-track-83262.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70344907648:android:9fe06412e3d1fe86ecbf65",
+        "android_client_info": {
+          "package_name": "com.mobile.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaj1GHbvzXvQAhaDOT1cxEirtx6bYucWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
