@@ -21,27 +21,23 @@ class _PaymentPageState extends State<PaymentPage> {
     dynamic transactionInitialisation;
 
     try {
-      transactionInitialisation =
-          await MpesaFlutterPlugin.initializeMpesaSTKPush(
+      transactionInitialisation = await MpesaFlutterPlugin.initializeMpesaSTKPush(
         businessShortCode: "174379",
         transactionType: TransactionType.CustomerPayBillOnline,
         amount: amount,
         partyA: phoneNumber,
         partyB: "174379",
-        callBackURL:
-            Uri(scheme: "https", host: "1234.1234.co.ke", path: "/1234.php"),
+        callBackURL: Uri(scheme: "https", host: "1234.1234.co.ke", path: "/1234.php"),
         accountReference: "Buy bus ticket",
         phoneNumber: phoneNumber,
         baseUri: Uri(scheme: "https", host: "sandbox.safaricom.co.ke"),
         transactionDesc: "purchase",
-        passKey:
-            "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919",
+        passKey: "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919",
       );
 
-      print(
-          "ressssssssssssssult: ---->>>> ${transactionInitialisation.toString()}");
+      print("Transaction result: ${transactionInitialisation.toString()}");
     } catch (e) {
-      print(e.toString());
+      print("Error: $e");
     }
   }
 
@@ -61,102 +57,132 @@ class _PaymentPageState extends State<PaymentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        shape: ShapeBorder.lerp(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-            0.5),
-        backgroundColor: Colors.white,
-        onPressed: () => {(context).goNamed(AppPath.realTimeVehicleTracking)},
-        child: const Icon(Icons.arrow_back),
+      appBar: AppBar(
+        backgroundColor: primary,
+        elevation: 0,
+        leading:  FloatingActionButton(
+          shape: ShapeBorder.lerp(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              0.5),
+          backgroundColor: Colors.white,
+          onPressed: () => {(context).goNamed(AppPath.realTimeVehicleTracking)},
+          child: const Icon(Icons.arrow_back),
+        ),
+        
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                color: primary,
-              ),
-              child: Row(
-                children: [
-                  Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/anbessa.png',
-                        width: 100.w,
-                        height: 80.h,
-                      ),
-                      Text('Anbessa Bus', style: TextStyle(fontSize: 10.sp)),
-                    ],
+      body: Column(
+        children: [
+          // Blue Container for Payment Information and Bus Information
+          Container(
+            padding: EdgeInsets.all(16.w),
+            color: primary,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Payment Information Text
+                Center(
+                  child: Text(
+                    'Payment Information',
+                    style: TextStyle(
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
-                  SizedBox(width: 10.w),
-                  Padding(
-                    padding: EdgeInsets.only(top: 12.h),
-                    child: Column(
+                ),
+                SizedBox(height: 50.h), // Space between Payment Info and Bus Info
+
+                // Bus Information Section
+                Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/anbessa.png',
+                      width: 80.w,
+                      height: 60.h,
+                    ),
+                    SizedBox(width: 16.w),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'Mexico --> Shiro Meda',
-                          textAlign: TextAlign.start,
                           style: TextStyle(
-                            fontSize: 20.sp,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
+                        SizedBox(height: 8.h),
                         Row(
                           children: [
                             Text(
                               '01',
                               style: TextStyle(
-                                fontSize: 20.sp,
+                                fontSize: 16.sp,
+                                color: Colors.white,
                               ),
                             ),
-                            SizedBox(width: 125.w),
+                            SizedBox(width: 100.w),
                             Row(
                               children: [
-                                Image.asset(
-                                  'assets/images/time.png',
-                                  width: 30.w,
-                                  height: 30.h,
+                                Icon(Icons.access_time, color: Colors.white, size: 16.sp),
+                                SizedBox(width: 4.w),
+                                Text(
+                                  '45 min',
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                                Text('45 min')
                               ],
-                            )
+                            ),
                           ],
                         ),
-                        Text('10 stops'),
+                        SizedBox(height: 4.h),
+                        Text(
+                          '10 stops',
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
+                SizedBox(height: 32.h), // Space between Bus Info and Payment Info
+              ],
+            ),
+          ),
+
+          // Payment Methods Section
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 150.h),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: paymentMethodImagePaths.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: PaymentMethodCardWidget(
+                      color: colors[index],
+                      imagePath: paymentMethodImagePaths[index],
+                      onPressed: () {
+                        if (index == 0) {
+                          startTransaction(10.0, '254712345678');
+                        } else {
+                          // Handle other payment methods
+                        }
+                      },
+                    ),
+                  );
+                },
               ),
             ),
-            Positioned(
-              bottom: 0.0,
-              child: SizedBox(
-                height: 300.h,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.all(8.h),
-                        child: PaymentMethodCardWidget(
-                            color: colors[index],
-                            imagePath: paymentMethodImagePaths[index],
-                            onPressed: () {
-                              index == 0
-                                  ? startTransaction(10.0, '254712345678')
-                                  : null;
-                            }),
-                      );
-                    }),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
