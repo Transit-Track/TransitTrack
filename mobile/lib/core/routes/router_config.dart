@@ -4,6 +4,7 @@ import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/features/authentication/presentation/pages/change_password_page.dart';
 import 'package:transittrack/features/authentication/presentation/pages/login_page.dart';
 import 'package:transittrack/features/authentication/presentation/pages/signup_page.dart';
+import 'package:transittrack/features/favorites/presentation/pages/favorites_page.dart';
 import 'package:transittrack/features/home/domain/entities/bus.dart';
 import 'package:transittrack/features/home/presentation/pages/driver.dart';
 import 'package:transittrack/features/my_route/presentation/pages/my_route.dart';
@@ -98,6 +99,13 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return const TrackingPage();
         }),
+      GoRoute(
+  path: AppPath.favorites,
+  name: AppPath.favorites,
+  builder: (BuildContext context, GoRouterState state) {
+    return FavoritesPage();
+  },
+),
        
   ]);
 }

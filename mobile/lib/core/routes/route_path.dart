@@ -1,3 +1,5 @@
+import 'package:transittrack/features/favorites/presentation/pages/favorites_page.dart';
+
 class AppPath {
   static const home = '/';
   static const onboarding = '/onboarding';
@@ -13,4 +15,5 @@ class AppPath {
   static const busTracking = '/busTracking';
   static const realTimeVehicleTracking = '/realTimeVehicleTracking';
   static const payment = '/payment';
+  static const favorites = '/favorites';
 }
