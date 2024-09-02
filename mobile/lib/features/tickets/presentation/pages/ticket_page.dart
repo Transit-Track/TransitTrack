@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
 import 'package:transittrack/features/tickets/domain/entites/ticket_entity.dart';
@@ -61,23 +62,22 @@ class _TicketPageState extends State<TicketPage> {
                       Row(
                         children: [
                           Text('from '),
-                          Icon(Icons.circle, color: primary, size: 12),
+                          Icon(Icons.circle, color: primary, size: 12.sp),
                         ],
                       ),
-                      Container(
-                        width: 2,
-                        height: 40,
-                        color: Colors.grey,
+                      SizedBox(
+                        width: 2.w,
+                        height: 40.h,
                       ),
                       Row(
                         children: [
                           Text('to     '),
-                          Icon(Icons.circle, color: Colors.red, size: 12),
+                          Icon(Icons.circle, color: Colors.red, size: 12.sp),
                         ],
                       ),
                     ],
                   ),
-                  SizedBox(width: 10),
+                  SizedBox(width: 10.w),
                   Expanded(
                     child: Column(
                       children: [
@@ -90,7 +90,7 @@ class _TicketPageState extends State<TicketPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 10.h),
                         TextFormField(
                           controller: _toController,
                           decoration: InputDecoration(
@@ -105,15 +105,17 @@ class _TicketPageState extends State<TicketPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 20), // Spacing between the input section and tickets
+              SizedBox(
+                  height:
+                      20.h), // Spacing between the input section and tickets
               Text(
                 "Your Tickets",
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: 22.sp,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 16.h),
               // The ticket list area
               Expanded(
                 child: ListView.builder(
@@ -131,6 +133,7 @@ class _TicketPageState extends State<TicketPage> {
                           );
                         },
                         child: Card(
+                          color: white,
                           elevation: 5,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
@@ -138,62 +141,61 @@ class _TicketPageState extends State<TicketPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 // Ticket route details
                                 Text(
                                   "From ${ticket.start} To ${ticket.destination}",
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 18.sp,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
-                                SizedBox(height: 10),
                                 // Stops and time row
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "10 Stops",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(Icons.access_time, color: Colors.blue),
-                                        SizedBox(width: 5),
-                                        Text(
-                                          "45 min",
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 8),
+
+                                SizedBox(height: 8.sp),
                                 // Ticket price and amount spent
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "Money Spent: ${ticket.price.toString()}",
-                                      style: TextStyle(fontSize: 16),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Money Spent: ${ticket.price.toString()}",
+                                          style: TextStyle(fontSize: 16.sp),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Image.asset(
+                                                'assets/images/time.png',
+                                                width: 30.w,
+                                                height: 30.w),
+                                            Text(
+                                              "45 min",
+                                              style: TextStyle(fontSize: 16.sp),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                     Text(
                                       "Amount: 3",
-                                      style: TextStyle(fontSize: 16),
+                                      style: TextStyle(fontSize: 16.sp),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 10),
+                                SizedBox(height: 10.h),
                                 // Ticket deadline
                                 Text(
                                   "Deadline: 24hrs",
                                   style: TextStyle(
                                     color: Colors.red,
-                                    fontSize: 14,
+                                    fontSize: 14.sp,
                                   ),
                                 ),
                               ],
