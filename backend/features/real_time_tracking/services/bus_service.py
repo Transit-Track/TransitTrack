@@ -1,5 +1,5 @@
-from real_time_tracking.repositories.bus_repo import BusRepository
-from core.models.bus import Bus
+from features.real_time_tracking.repositories.bus_repo import BusRepository
+from core.models.bus_model import Bus
 
 class BusService:
     def __init__(self, repo: BusRepository):

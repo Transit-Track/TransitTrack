@@ -33,9 +33,31 @@ async def populate_db():
 
     # Sample Station data
     stations = [
-    Station(station_id=1, name="Station A", location=locations[0]),
-    Station(station_id=2, name="Station B", location=locations[1]),
-    Station(station_id=3, name="Station C", location=locations[2])
+    Station(
+        station_id=1,
+        name="Central Station",
+        geoLocation=Location(latitude=10.1, longitude=125.6)
+    ),
+    Station(
+        station_id=2,
+        name="North Station",
+        geoLocation=Location(latitude=10.2, longitude=125.7)
+    ),
+    Station(
+        station_id=3,
+        name="South Station",
+        geoLocation=Location(latitude=10.3, longitude=125.8)
+    ),
+    Station(
+        station_id=4,
+        name="East Station",
+        geoLocation=Location(latitude=10.4, longitude=125.9)
+    ),
+    Station(
+        station_id=5,
+        name="West Station",
+        geoLocation=Location(latitude=10.5, longitude=126.0)
+    )
     ]
 
 
@@ -60,8 +82,16 @@ async def populate_db():
     route = Route(
     route_id=1,
     stations=[
-        Station(station_id=1, name="Station A", location=locations[0]),
-        Station(station_id=2, name="Station B", location=locations[1])
+         Station(
+        station_id=4,
+        name="East Station",
+        geoLocation=Location(latitude=10.4, longitude=125.9)
+    ),
+    Station(
+        station_id=5,
+        name="West Station",
+        geoLocation=Location(latitude=10.5, longitude=126.0)
+    )
     ],
     distance=10.5
     )
@@ -94,12 +124,9 @@ async def populate_db():
     )
     ]
 
-    
-
-        
-
     for station in stations:
         station_dict = station.model_dump()
+        station_dict['geoLocation'] = station.geoLocation.to_geojson()
         await stations_collection.insert_one(station_dict)
 
     for route in routes:
