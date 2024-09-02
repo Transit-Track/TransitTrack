@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
 import 'package:transittrack/core/widgets/custom_navbar_widget.dart';
+import 'package:transittrack/features/authentication/presentation/pages/change_password_page.dart';
+import 'package:transittrack/features/profile/presentation/pages/send_feedback_page.dart';
+import 'package:transittrack/features/profile/presentation/pages/update_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -31,11 +34,20 @@ class _ProfilePageState extends State<ProfilePage> {
                 backgroundImage: AssetImage('assets/images/avatar_placeholder.png'),
               ),
               const SizedBox(height: 10),
-              const Text(
-                'Edit Profile',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () {
+                  // Navigate to Edit Profile page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UpdateProfilePage()),
+                  );
+                },
+                child: const Text(
+                  'Edit Profile',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
               const SizedBox(height: 30),
@@ -61,6 +73,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 title: const Text('Change Password'),
                 onTap: () {
                   // Navigate to change password page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ChangePasswordPage()),
+                  );
                 },
               ),
               const Divider(),
@@ -71,6 +87,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 title: const Text('Payment History'),
                 onTap: () {
                   // Navigate to payment history page
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(builder: (context) => PaymentHistoryPage()),
+                  // );
                 },
               ),
               const Divider(),
@@ -81,6 +101,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 title: const Text('Send Feedback'),
                 onTap: () {
                   // Navigate to send feedback page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SendFeedbackPage()),
+                  );
                 },
               ),
               const Divider(),

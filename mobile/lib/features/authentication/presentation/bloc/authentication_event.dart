@@ -61,7 +61,7 @@ class ChangePasswordEvent extends AuthenticationEvent {
 
   ChangePasswordEvent({
     required this.confirmPassword,
-    required this.newPassword,
+    required this.newPassword, required String oldPassword,
   });
 
   @override

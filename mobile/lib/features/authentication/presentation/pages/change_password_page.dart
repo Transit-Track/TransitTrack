@@ -16,26 +16,29 @@ class ChangePasswordPage extends StatefulWidget {
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _newPassswordController = TextEditingController();
-  final TextEditingController _confirmNewPassswordController =
+  final TextEditingController _oldPasswordController = TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
+  final TextEditingController _confirmNewPasswordController =
       TextEditingController();
-  bool _isObsecurednew = false;
+  bool _isObsecuredOld = false;
+  bool _isObsecuredNew = false;
   bool _isObsecuredConfirm = false;
 
   @override
   void dispose() {
+    _oldPasswordController.dispose();
+    _newPasswordController.dispose();
+    _confirmNewPasswordController.dispose();
     super.dispose();
-    _newPassswordController.dispose();
-    _confirmNewPassswordController.dispose();
   }
 
   String? confirmPasswordValidation(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Confirm your new Password';
+      return 'Confirm your new password';
     }
 
-    if (value != _newPassswordController.text) {
-      return 'Passwrod mismatch';
+    if (value != _newPasswordController.text) {
+      return 'Password mismatch';
     }
 
     return null;
@@ -52,99 +55,131 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               backgroundColor: Colors.red,
             ),
           );
-        } 
+        }
       },
       child: Scaffold(
-          backgroundColor: Colors.white,
-          body: Padding(
-              padding: const EdgeInsets.fromLTRB(30.0, 100, 30, 0),
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
               child: Container(
-                  height: 450,
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset(
-                            'assets/images/logo.png',
-                            width: 100,
-                            height: 100,
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          const Text(
-                            "Log In",
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          InputFieldWidget(
-                            hintText: 'Enter New Pasword',
-                            controller: _newPassswordController,
+                constraints: BoxConstraints(maxWidth: 400),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/logo.png',
+                        width: 100,
+                        height: 100,
+                      ),
+                      const SizedBox(height: 15),
+                      const Text(
+                        "Change Password",
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 20),
+                      
+                      // Old Password Field
+                      InputFieldWidget(
+                        hintText: 'Enter Old Password',
+                        controller: _oldPasswordController,
+                        context: context,
+                        icon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isObsecuredOld = !_isObsecuredOld;
+                            });
+                          },
+                          icon: !_isObsecuredOld
+                              ? const Icon(Icons.visibility)
+                              : const Icon(Icons.visibility_off),
+                        ),
+                        validation: passWordValidation,
+                        keyboardType: TextInputType.visiblePassword,
+                        obsecured: _isObsecuredOld,
+                      ),
+                      const SizedBox(height: 10),
+
+                      // New Password Field
+                      InputFieldWidget(
+                        hintText: 'Enter New Password',
+                        controller: _newPasswordController,
+                        context: context,
+                        icon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isObsecuredNew = !_isObsecuredNew;
+                            });
+                          },
+                          icon: !_isObsecuredNew
+                              ? const Icon(Icons.visibility)
+                              : const Icon(Icons.visibility_off),
+                        ),
+                        validation: passWordValidation,
+                        keyboardType: TextInputType.visiblePassword,
+                        obsecured: _isObsecuredNew,
+                      ),
+                      const SizedBox(height: 10),
+
+                      // Confirm New Password Field
+                      InputFieldWidget(
+                        hintText: 'Re-enter Password',
+                        controller: _confirmNewPasswordController,
+                        context: context,
+                        icon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isObsecuredConfirm = !_isObsecuredConfirm;
+                            });
+                          },
+                          icon: !_isObsecuredConfirm
+                              ? const Icon(Icons.visibility)
+                              : const Icon(Icons.visibility_off),
+                        ),
+                        validation: confirmPasswordValidation,
+                        keyboardType: TextInputType.visiblePassword,
+                        obsecured: _isObsecuredConfirm,
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Submit Button
+                      BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                        builder: (context, state) {
+                          if (state is ChangePasswordLoadingState) {
+                            return CircularProgressIndicator();
+                          }
+
+                          return ButtonWidget(
                             context: context,
-                            icon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _isObsecurednew = !_isObsecurednew;
-                                  });
-                                },
-                                icon: !_isObsecurednew
-                                    ? const Icon(Icons.visibility)
-                                    : const Icon(Icons.visibility_off)),
-                            validation: passWordValidation,
-                            keyboardType: TextInputType.visiblePassword,
-                          ),
-                          InputFieldWidget(
-                            obsecured: _isObsecuredConfirm,
-                            hintText: 'Re-enter password',
-                            controller: _confirmNewPassswordController,
-                            context: context,
-                            icon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    _isObsecuredConfirm = !_isObsecuredConfirm;
-                                  });
-                                },
-                                icon: !_isObsecuredConfirm
-                                    ? const Icon(Icons.visibility)
-                                    : const Icon(Icons.visibility_off)),
-                            validation: confirmPasswordValidation,
-                            keyboardType: TextInputType.visiblePassword,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                            builder: (context, state) {
-                              if (state is ChangePasswordLoadingState) {
-                                return CircularProgressIndicator();
+                            text: 'Send',
+                            onClick: () {
+                              if (_formKey.currentState!.validate()) {
+                                context.goNamed(AppPath.login);
                               }
 
-                              return ButtonWidget(
-                                  context: context,
-                                  text: 'Send',
-                                  onClick: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      (context).goNamed(AppPath.login);
-                                    }
-
-                                    //Bloc
-                                    context.read<AuthenticationBloc>().add(
-                                          ChangePasswordEvent(
-                                              confirmPassword:
-                                                  _confirmNewPassswordController
-                                                      .text,
-                                              newPassword:
-                                                  _newPassswordController.text),
-                                        );
-                                  });
+                              // Bloc: Trigger the ChangePasswordEvent
+                              context.read<AuthenticationBloc>().add(
+                                    ChangePasswordEvent(
+                                      oldPassword: _oldPasswordController.text,
+                                      confirmPassword: _confirmNewPasswordController.text,
+                                      newPassword: _newPasswordController.text,
+                                    ),
+                                  );
                             },
-                          ),
-                        ]),
-                  )))),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

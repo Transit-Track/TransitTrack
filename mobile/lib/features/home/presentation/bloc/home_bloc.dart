@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transittrack/features/home/domain/entities/bus.dart';
 import 'package:transittrack/features/home/domain/entities/location.dart';
-import 'package:transittrack/features/home/domain/entities/nearby.dart';
 import 'package:transittrack/features/home/domain/usecases/get_arrival_time_usecase.dart';
 import 'package:transittrack/features/home/domain/usecases/get_available_buses_usecase.dart';
 import 'package:transittrack/features/home/domain/usecases/get_place_id_from_coordinates_usecase.dart';

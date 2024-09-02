@@ -1,4 +1,3 @@
-import 'package:transittrack/features/favorites/presentation/pages/favorites_page.dart';
 
 class AppPath {
   static const home = '/';

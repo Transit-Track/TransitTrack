@@ -74,7 +74,7 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
               markers: {
                 Marker(
                     markerId: const MarkerId('_currentLcation'),
-                    position: driverLocation!,
+                    position: driverLocation,
                     infoWindow: const InfoWindow(
                       title: 'Google',
                       snippet: 'Googleplex',
