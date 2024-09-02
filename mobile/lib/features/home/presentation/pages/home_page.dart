@@ -7,7 +7,6 @@ import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/utils/validation.dart';
 import 'package:transittrack/core/widgets/button_widget.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
-import 'package:transittrack/core/widgets/custom_navbar_widget.dart';
 import 'package:transittrack/features/home/presentation/bloc/home_bloc.dart';
 import 'package:transittrack/features/home/presentation/pages/dummy_data.dart';
 import 'package:transittrack/features/home/presentation/widgets/card_widget.dart';
@@ -298,7 +297,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          bottomNavigationBar: const CustomNavbarWidget(),
         ),
       ),
     );

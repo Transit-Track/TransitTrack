@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
-import 'package:transittrack/core/widgets/custom_navbar_widget.dart';
 
 class MyRoute extends StatefulWidget {
   const MyRoute({super.key});
@@ -20,7 +19,6 @@ class _MyRouteState extends State<MyRoute> {
         body: Center(
           child: Text('Favorite Page'),
         ),
-        bottomNavigationBar: CustomNavbarWidget(),
       ),
     );
     ;

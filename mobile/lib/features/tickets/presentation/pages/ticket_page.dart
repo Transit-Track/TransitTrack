@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
-import 'package:transittrack/core/widgets/custom_navbar_widget.dart';
 import 'package:transittrack/features/tickets/domain/entites/ticket_entity.dart';
 import 'package:transittrack/features/tickets/presentation/pages/QR_page.dart';
 
@@ -209,7 +208,6 @@ class _TicketPageState extends State<TicketPage> {
             ],
           ),
         ),
-        bottomNavigationBar: CustomNavbarWidget(),
       ),
     );
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
-import 'package:transittrack/core/widgets/custom_navbar_widget.dart';
 import 'package:transittrack/features/authentication/presentation/pages/change_password_page.dart';
 import 'package:transittrack/features/profile/presentation/pages/send_feedback_page.dart';
 import 'package:transittrack/features/profile/presentation/pages/update_profile_page.dart';
@@ -127,7 +126,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         ),
-        bottomNavigationBar: CustomNavbarWidget(),
       ),
     );
   }
