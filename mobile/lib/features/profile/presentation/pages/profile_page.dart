@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
-import 'package:transittrack/core/widgets/custom_navbar_widget.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -103,7 +102,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         ),
-        bottomNavigationBar: CustomNavbarWidget(),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
+import 'package:transittrack/core/widgets/scaffold_with_nav_bar_widget.dart';
 import 'package:transittrack/features/authentication/presentation/pages/change_password_page.dart';
 import 'package:transittrack/features/authentication/presentation/pages/login_page.dart';
 import 'package:transittrack/features/authentication/presentation/pages/signup_page.dart';
@@ -18,7 +19,54 @@ import 'package:transittrack/features/tickets/presentation/pages/ticket_page.dar
 
 class AppRouter {
   static final GoRouter router =
-      GoRouter(initialLocation: AppPath.home, routes: <GoRoute>[
+      GoRouter(initialLocation: AppPath.home, routes: <RouteBase>[
+    StatefulShellRoute.indexedStack(
+      builder: (BuildContext context, GoRouterState state,
+              StatefulNavigationShell navigationShell) =>
+          ScaffoldWithNavBar(navigationShell: navigationShell),
+      branches: [
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            GoRoute(
+                path: AppPath.home,
+                name: AppPath.home,
+                builder: (BuildContext context, GoRouterState state) {
+                  return const HomePage();
+                }),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            GoRoute(
+                path: AppPath.my_route,
+                name: AppPath.my_route,
+                builder: (BuildContext context, GoRouterState state) {
+                  return const MyRoute();
+                }),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            GoRoute(
+                path: AppPath.ticket,
+                name: AppPath.ticket,
+                builder: (BuildContext context, GoRouterState state) {
+                  return const TicketPage();
+                }),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            GoRoute(
+                path: AppPath.profile,
+                name: AppPath.profile,
+                builder: (BuildContext context, GoRouterState state) {
+                  return const ProfilePage();
+                }),
+          ],
+        ),
+      ],
+    ),
     GoRoute(
         path: AppPath.onboarding,
         name: AppPath.onboarding,
@@ -38,12 +86,6 @@ class AppRouter {
           return const SignupPage();
         }),
     GoRoute(
-        path: AppPath.home,
-        name: AppPath.home,
-        builder: (BuildContext context, GoRouterState state) {
-          return const HomePage();
-        }),
-    GoRoute(
         path: AppPath.changePassword,
         name: AppPath.changePassword,
         builder: (BuildContext context, GoRouterState state) {
@@ -55,25 +97,6 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           return const NotificationPage();
         }),
-    GoRoute(
-        path: AppPath.profile,
-        name: AppPath.profile,
-        builder: (BuildContext context, GoRouterState state) {
-          return const ProfilePage();
-        }),
-    GoRoute(
-        path: AppPath.ticket,
-        name: AppPath.ticket,
-        builder: (BuildContext context, GoRouterState state) {
-          return const TicketPage();
-        }),
-    GoRoute(
-        path: AppPath.my_route,
-        name: AppPath.my_route,
-        builder: (BuildContext context, GoRouterState state) {
-          return const MyRoute();
-        }),
-    
     GoRoute(
         path: AppPath.realTimeVehicleTracking,
         name: AppPath.realTimeVehicleTracking,
@@ -93,19 +116,11 @@ class AppRouter {
           return PaymentPage(bus: bus);
           // return TicketPage();
         }),
-         GoRoute(
+    GoRoute(
         path: AppPath.busTracking,
         name: AppPath.busTracking,
         builder: (BuildContext context, GoRouterState state) {
           return const TrackingPage();
         }),
-      GoRoute(
-  path: AppPath.favorites,
-  name: AppPath.favorites,
-  builder: (BuildContext context, GoRouterState state) {
-    return FavoritesPage();
-  },
-),
-       
   ]);
 }
