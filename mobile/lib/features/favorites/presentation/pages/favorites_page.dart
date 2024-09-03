@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:transittrack/core/widgets/custom_navbar_widget.dart';
 
 class FavoritesPage extends StatelessWidget {
   const FavoritesPage({super.key});
@@ -13,12 +12,12 @@ class FavoritesPage extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          title: Text(
+          title: const Text(
             'TransitTrack',
             style: TextStyle(
               color: Colors.black,
@@ -27,11 +26,11 @@ class FavoritesPage extends StatelessWidget {
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.notifications, color: Colors.black),
+              icon: const Icon(Icons.notifications, color: Colors.black),
               onPressed: () {},
             ),
             IconButton(
-              icon: Icon(Icons.person, color: Colors.black),
+              icon: const Icon(Icons.person, color: Colors.black),
               onPressed: () {},
             ),
           ],
@@ -47,7 +46,7 @@ class FavoritesPage extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Row(
+                      const Row(
                         children: [
                           Text('from '),
                           Icon(Icons.circle, color: Colors.blue, size: 12),
@@ -58,7 +57,7 @@ class FavoritesPage extends StatelessWidget {
                         height: 40,
                         color: Colors.grey,
                       ),
-                      Row(
+                      const Row(
                         children: [
                           Text('to     '),
                           Icon(Icons.circle, color: Colors.red, size: 12),
@@ -66,7 +65,7 @@ class FavoritesPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       children: [
@@ -78,7 +77,7 @@ class FavoritesPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         TextFormField(
                           decoration: InputDecoration(
                             hintText: '',
@@ -92,16 +91,16 @@ class FavoritesPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               // Favorites Text
-              Text(
+              const Text(
                 "Favorites",
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               // Favorites List
               Expanded(
                 child: ListView.builder(
@@ -125,9 +124,9 @@ class FavoritesPage extends StatelessWidget {
                                 height: 80,
                                 fit: BoxFit.cover,
                               ),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               // Station Info
-                              Expanded(
+                              const Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -147,7 +146,7 @@ class FavoritesPage extends StatelessWidget {
                               // Station Number and Route Icon
                               Column(
                                 children: [
-                                  Text(
+                                  const Text(
                                     "83",
                                     style: TextStyle(
                                       fontSize: 24,
@@ -155,12 +154,12 @@ class FavoritesPage extends StatelessWidget {
                                     ),
                                   ),
                                   IconButton(
-                                    icon: Icon(Icons.favorite, color: Colors.black),
+                                    icon: const Icon(Icons.favorite, color: Colors.black),
                                     onPressed: () {},
                                   ),
                                   TextButton(
                                     onPressed: () {},
-                                    child: Text("See Route"),
+                                    child: const Text("See Route"),
                                   ),
                                 ],
                               ),
@@ -176,7 +175,6 @@ class FavoritesPage extends StatelessWidget {
           ),
         ),
         // Bottom Navigation Bar
-        bottomNavigationBar: const CustomNavbarWidget(),
       ),
     );
   }

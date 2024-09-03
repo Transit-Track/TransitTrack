@@ -71,8 +71,8 @@ class _HomePageState extends State<HomePage> {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.errorMessage)));
         } else if (state is AvailableBusesLoadedState) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("loaded....")));
+          // ScaffoldMessenger.of(context)
+          //     .showSnackBar(SnackBar(content: Text("loaded....")));
         }
       },
       child: SafeArea(
@@ -271,7 +271,7 @@ class _HomePageState extends State<HomePage> {
                                 itemBuilder: (context, index) {
                                   return Padding(
                                     padding: EdgeInsets.only(top: 15.h),
-                                    child: GestureDetector(
+                                    child: InkWell(
                                       onTap: () {
                                         (context).goNamed(
                                             AppPath.realTimeVehicleTracking,

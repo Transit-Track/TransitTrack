@@ -45,7 +45,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                 child: Column(
                   children: [
                     Image.asset(
-                      widget.bus.imageUrl,
+                      widget.bus.type == 'anbessa' ? 'assets/images/anbessa.png' : 'assets/images/sheger.png',
                       width: 100.w,
                       height: 80.h,
                     ),
@@ -118,7 +118,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                     text: 'Buy',
                     onClick: () {
                       (context)
-                          .goNamed(AppPath.payment, extra: {'bus': widget.bus});
+                          .push(AppPath.payment, extra: {'bus': widget.bus});
                     }),
               )
             ],

@@ -6,36 +6,38 @@ import 'package:transittrack/features/home/domain/entities/bus.dart';
 class CardWidget extends StatelessWidget {
   final BusEntity bus;
 
-  const CardWidget({
-    super.key,
-    required this.bus
-  });
+  const CardWidget({super.key, required this.bus});
 
   @override
   Widget build(BuildContext context) {
+    print(bus.isMyRoute);
     return Container(
-      height: 100.h,
-      decoration: BoxDecoration(
-        border: Border.all(
+      height: 130.h,
+      decoration: BoxDecoration(color: white, borderRadius: BorderRadius.circular(10), boxShadow: [
+        BoxShadow(
           color: Colors.grey.withOpacity(0.5),
-          width: 1,
+          spreadRadius: 1,
+          blurRadius: 5,
+          offset: const Offset(0, 3), // changes position of shadow
         ),
-        borderRadius: BorderRadius.circular(10),
-      ),
+      ]),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(5.0.w, 10.0.h, 5.0.w, 10.h),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        padding: EdgeInsets.fromLTRB(5.0.w, 5.0.h, 5.0.w, 1.0.h),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, 
             children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
               ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(100)),
                 child: Padding(
                   padding: const EdgeInsets.all(1.0),
                   child: Image.asset(
-                    'assets/images/anbessa.png',
+                    bus.type == 'anbessa'
+                        ? 'assets/images/anbessa.png'
+                        : 'assets/images/sheger.png',
                     width: 50.w,
                     height: 50.h,
                     fit: BoxFit.cover,
@@ -55,37 +57,44 @@ class CardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${bus.start} to ${bus.destination}',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${bus.start} to ${bus.destination}',
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.12,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              bus.number,
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                              ),
+                    ),
+                    SizedBox(
+                      // width: MediaQuery.of(context).size.width * 0.12,
+                      child: Row(
+                        children: [
+                          Text(
+                            bus.number,
+                            style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Icon(
-                              Icons.favorite_border,
-                              color: const Color.fromARGB(255, 54, 54, 54).withOpacity(0.5),
-                            ),
-                          ],
-                        ),
+                          ),
+                          bus.isMyRoute
+                              ? IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.favorite,
+                                    color: primary,
+                                  ),
+                                )
+                              : Icon(
+                                  Icons.favorite_border,
+                                  color: const Color.fromARGB(255, 54, 54, 54)
+                                      .withOpacity(0.5),
+                                ),
+                        ],
                       ),
-                    ],
-                  ),
-                
+                    ),
+                  ],
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

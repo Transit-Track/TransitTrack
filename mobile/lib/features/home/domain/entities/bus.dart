@@ -12,7 +12,8 @@ class BusEntity extends Equatable {
   final String price;
   final String stationName;
   final String distance;
-  final String imageUrl;
+  final String type;
+  final bool isMyRoute;
 
   const BusEntity({
     required this.id,
@@ -25,7 +26,8 @@ class BusEntity extends Equatable {
     required this.arrivalTime,
     required this.price,
     required this.stationName,
-    required this.imageUrl,
+    required this.type,
+    required this.isMyRoute,
     required this.distance,
   });
 
@@ -40,7 +42,8 @@ class BusEntity extends Equatable {
         destination,
         arrivalTime,
         price,
-        imageUrl,
+        type,
+        isMyRoute,
         stationName,
         distance,
       ];

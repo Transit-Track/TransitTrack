@@ -87,9 +87,7 @@ class GoogleMapDataSourceImpl implements GoogleMapDatasource {
 
     final response = await http.get(url);
 
-      print("rrrrrrrrrrrrrrrrrrrrrrr");
     if (response.statusCode == 200) {
-      print("ttttttttttttttttttttttttttttttt");
       final data = json.decode(response.body);
       final location = data['result']['geometry']['location'];
       final lat = location['lat'];

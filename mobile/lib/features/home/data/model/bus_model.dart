@@ -6,7 +6,7 @@ class BusModel extends BusEntity {
     required super.distance,
     required super.id,
     required super.destination,
-    required super.imageUrl,
+    required super.type,
     required super.latitude,
     required super.longitude,
     required super.number,
@@ -14,6 +14,7 @@ class BusModel extends BusEntity {
     required super.routes,
     required super.start,
     required super.stationName,
+    required super.isMyRoute,
   });
 
   factory BusModel.fromJson(Map<String, dynamic> json) {
@@ -22,7 +23,7 @@ class BusModel extends BusEntity {
       distance: json['distance'],
       id: json['id'],
       destination: json['destination'],
-      imageUrl: json['imageUrl'],
+      type: json['type'],
       latitude: json['latitude'],
       longitude: json['longitude'],
       number: json['number'],
@@ -30,6 +31,7 @@ class BusModel extends BusEntity {
       routes: json['routes'],
       start: json['start'],
       stationName: json['stationName'],
+      isMyRoute: json['isMyRoute'] == 'True' ? true : false
     );
   }
 
@@ -39,7 +41,7 @@ class BusModel extends BusEntity {
       'distance': distance,
       'id': id,
       'destination': destination,
-      'imageUrl': imageUrl,
+      'type': type,
       'latitude': latitude,
       'longitude': longitude,
       'number': number,

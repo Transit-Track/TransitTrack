@@ -36,7 +36,7 @@ class CustomAppBarWidget extends StatelessWidget  implements PreferredSizeWidget
                       child: IconButton(
                           icon: const Icon(Icons.notifications_none_outlined),
                           onPressed: () {
-                            (context).goNamed(AppPath.notification);
+                            (context).push(AppPath.notification);
                           }),
                     ),
                     Padding(
