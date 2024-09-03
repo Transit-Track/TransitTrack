@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
@@ -67,96 +68,157 @@ class _PaymentPageState extends State<PaymentPage> {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
             0.5),
         backgroundColor: Colors.white,
-        onPressed: () => {(context).goNamed(AppPath.realTimeVehicleTracking)},
+        onPressed: () => {(context).pop()},
         child: const Icon(Icons.arrow_back),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                color: primary,
-              ),
-              child: Row(
-                children: [
-                  Column(
-                    children: [
-                      Image.asset(
-                        'assets/images/anbessa.png',
-                        width: 100.w,
-                        height: 80.h,
-                      ),
-                      Text('Anbessa Bus', style: TextStyle(fontSize: 10.sp)),
-                    ],
-                  ),
-                  SizedBox(width: 10.w),
-                  Padding(
-                    padding: EdgeInsets.only(top: 12.h),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Mexico --> Shiro Meda',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.bold,
+      body: Stack(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              color: primary,
+            ),
+            child: Column(
+              
+              children: [
+                 SizedBox(
+                            height: 50.h,
                           ),
+                Center(
+                  child: Text(
+                    'Paymnet',
+                    style: TextStyle(
+                        color: white,
+                        fontSize: 32.sp,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                 SizedBox(
+                            height: 50.h,
+                          ),
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                       
+                        Image.asset(
+                          'assets/images/anbessa.png',
+                          width: 100.w,
+                          height: 80.h,
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              '01',
-                              style: TextStyle(
-                                fontSize: 20.sp,
-                              ),
-                            ),
-                            SizedBox(width: 125.w),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  'assets/images/time.png',
-                                  width: 30.w,
-                                  height: 30.h,
-                                ),
-                                Text('45 min')
-                              ],
-                            )
-                          ],
-                        ),
-                        Text('10 stops'),
+                        Text('Anbessa Bus',
+                            style: TextStyle(fontSize: 10.sp, color: white)),
                       ],
                     ),
+                    SizedBox(width: 10.w),
+                    Padding(
+                      padding: EdgeInsets.only(top: 12.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.67,
+                            child: Text(
+                              'From ${widget.bus.start} to ${widget.bus.destination}',
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                                color: white,
+                              ),
+                              overflow: TextOverflow.fade,
+                            ),
+                          ),
+                          SizedBox(height: 15.h),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.67,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Bus Number: ${widget.bus.number}',
+                                  style:
+                                      TextStyle(fontSize: 16.sp, color: white),
+                                ),
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/time.png',
+                                      width: 30.w,
+                                      height: 30.h,
+                                      color: white,
+                                    ),
+                                    Text(
+                                      '${widget.bus.arrivalTime} min',
+                                      style: TextStyle(
+                                          fontSize: 16.sp, color: white),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Text(
+                            '${widget.bus.price}ETB',
+                            style: TextStyle(fontSize: 16.sp, color: white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.6,
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                color: white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(45),
+                  topRight: Radius.circular(45),
+                ),
+              ),
+              child: Column(
+                children: [
+                  SizedBox(height: 30.h),
+                  Text(
+                    'Pay By',
+                    style: TextStyle(
+                        fontSize: 32.sp,
+                        fontWeight: FontWeight.bold,
+                        color: secondary),
+                  ),
+                  SizedBox(height: 30.h),
+                  SizedBox(
+                    height: 300.h,
+                    child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.all(8.h),
+                            child: PaymentMethodCardWidget(
+                                color: colors[index],
+                                imagePath: paymentMethodImagePaths[index],
+                                onPressed: () {
+                                  index == 0
+                                      ? startTransaction(10.0, '254712345678')
+                                      : null;
+                                }),
+                          );
+                        }),
                   ),
                 ],
               ),
             ),
-            Positioned(
-              bottom: 0.0,
-              child: SizedBox(
-                height: 300.h,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.all(8.h),
-                        child: PaymentMethodCardWidget(
-                            color: colors[index],
-                            imagePath: paymentMethodImagePaths[index],
-                            onPressed: () {
-                              index == 0
-                                  ? startTransaction(10.0, '254712345678')
-                                  : null;
-                            }),
-                      );
-                    }),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

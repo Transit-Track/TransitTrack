@@ -28,6 +28,7 @@ class _TicketPageState extends State<TicketPage> {
       price: 30.0,
       expiryDate: DateTime.now().add(Duration(hours: 24)),
       status: 'active',
+      arrivalTime: '20 min',
     ),
     Ticket(
       ticketId: '2',
@@ -39,6 +40,7 @@ class _TicketPageState extends State<TicketPage> {
       price: 50.0,
       expiryDate: DateTime.now().add(Duration(hours: 24)),
       status: 'active',
+      arrivalTime: '14 min',
     ),
   ];
 
@@ -84,7 +86,7 @@ class _TicketPageState extends State<TicketPage> {
                         TextFormField(
                           controller: _fromController,
                           decoration: InputDecoration(
-                            hintText: '',
+                            hintText: 'start',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -94,7 +96,7 @@ class _TicketPageState extends State<TicketPage> {
                         TextFormField(
                           controller: _toController,
                           decoration: InputDecoration(
-                            hintText: '',
+                            hintText: 'destination',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -176,7 +178,7 @@ class _TicketPageState extends State<TicketPage> {
                                                 width: 30.w,
                                                 height: 30.w),
                                             Text(
-                                              "45 min",
+                                              ticket.arrivalTime,
                                               style: TextStyle(fontSize: 16.sp),
                                             ),
                                           ],
@@ -184,7 +186,7 @@ class _TicketPageState extends State<TicketPage> {
                                       ],
                                     ),
                                     Text(
-                                      "Amount: 3",
+                                      "Amount: ${ticket.price.toString()}",
                                       style: TextStyle(fontSize: 16.sp),
                                     ),
                                   ],

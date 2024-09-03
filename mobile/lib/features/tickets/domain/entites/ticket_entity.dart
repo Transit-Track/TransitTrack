@@ -1,4 +1,6 @@
-class Ticket {
+import 'package:equatable/equatable.dart';
+
+class Ticket extends Equatable {
   final String ticketId;
   final String userId;
   final String busId;
@@ -8,8 +10,9 @@ class Ticket {
   final double price;
   final DateTime expiryDate;
   final String status;
+  final String arrivalTime;
 
-  Ticket({
+  const Ticket({
     required this.ticketId,
     required this.userId,
     required this.busId,
@@ -19,23 +22,20 @@ class Ticket {
     required this.price,
     required this.expiryDate,
     required this.status,
+    required this.arrivalTime,
   });
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-  
-    return other is Ticket &&
-      other.ticketId == ticketId &&
-      other.userId == userId &&
-      other.busId == busId &&
-      other.issueDate == issueDate &&
-      other.start == start &&
-      other.destination == destination &&
-      other.price == price &&
-      other.expiryDate == expiryDate &&
-      other.status == status;
-  }
-
-
+ @override
+  List<Object?> get props => [
+    ticketId,
+    userId,
+    busId,
+    issueDate,
+    start,
+    destination,
+    price,
+    expiryDate,
+    status,
+    arrivalTime,
+  ];
 }
