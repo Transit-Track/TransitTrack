@@ -16,36 +16,46 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-          shape: ShapeBorder.lerp(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-              0.5),
-          backgroundColor: Colors.white,
-          onPressed: () => {(context).pop()},
-          child: const Icon(Icons.arrow_back),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.r)),
+        backgroundColor: Colors.white,
+        onPressed: () => context.pop(),
+        child: const Icon(Icons.arrow_back, color: Colors.black),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          Row(
-            children: [
-              const Icon(Icons.notifications),
-              SizedBox(
-                width: 23.w,
-              ),
-              Text('Notifications'),
-            ],
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: notifications.length,
-              itemBuilder: (context, index) {
-                return NotificationCardWidget(bus: notifications[index]);
-              },
+      body: Padding(
+        padding: EdgeInsets.all(16.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const Icon(Icons.notifications, color: Colors.black),
+                SizedBox(width: 16.w),
+                Text(
+                  'Notifications',
+                  style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
-          )
-        ],
+            SizedBox(height: 16.h),
+            Expanded(
+              child: notifications.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: notifications.length,
+                      itemBuilder: (context, index) {
+                        return NotificationCardWidget(bus: notifications[index]);
+                      },
+                    )
+                  : Center(
+                      child: Text(
+                        'No notifications available',
+                        style: TextStyle(fontSize: 18.sp),
+                      ),
+                    ),
+            ),
+          ],
+        ),
       ),
     );
   }

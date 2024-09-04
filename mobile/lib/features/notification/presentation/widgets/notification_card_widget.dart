@@ -10,36 +10,69 @@ class NotificationCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(45),
-        ),
-        color: white,
+      margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.r),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10.r,
+            offset: Offset(0, 4.h),
+          ),
+        ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'From ${bus.start} to ${bus.destination}',
-            style: TextStyle(fontSize: 14.sp),
+            'From ${bus.start} To ${bus.destination}',
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          SizedBox(height: 8.h),
           Row(
             children: [
-              Container(
-                color: primary,
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: Text('Bus Number: ${bus.number}'),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.3,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [Image.asset('assets/images/time.png'), Text(bus.arrivalTime)],
+              Expanded(
+                child: Text(
+                  'Bus Number: ${bus.number}',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.black87,
+                  ),
                 ),
               ),
-
+              Row(
+                children: [
+                  Image.asset(
+                    'assets/images/time.png',
+                    width: 20.w,
+                    height: 20.h,
+                  ),
+                  SizedBox(width: 5.w),
+                  Text(
+                    bus.arrivalTime,
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-          Text('Approaching to: ${bus.stationName}')
+          SizedBox(height: 8.h),
+          Text(
+            'Approaching to: ${bus.stationName}',
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: Colors.black87,
+            ),
+          ),
         ],
       ),
     );
