@@ -12,9 +12,9 @@ class User(BaseModel):
 class UserOut(BaseModel):
     full_name: str
     phone_number: str
-    email: Optional[EmailStr]
+    email: Optional[EmailStr]  = None
     role:str
-    image_url: Optional[str]
+    image_url: Optional[str] = None
 
 class UserInDB(BaseModel):
     id: str
