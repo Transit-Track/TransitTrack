@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
-import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/features/home/domain/entities/bus.dart';
 import 'package:transittrack/features/tickets/presentation/widget/payment_method_card_widget.dart';
@@ -81,11 +79,10 @@ class _PaymentPageState extends State<PaymentPage> {
               color: primary,
             ),
             child: Column(
-              
               children: [
-                 SizedBox(
-                            height: 50.h,
-                          ),
+                SizedBox(
+                  height: 50.h,
+                ),
                 Center(
                   child: Text(
                     'Paymnet',
@@ -95,14 +92,13 @@ class _PaymentPageState extends State<PaymentPage> {
                         fontWeight: FontWeight.bold),
                   ),
                 ),
-                 SizedBox(
-                            height: 50.h,
-                          ),
+                SizedBox(
+                  height: 50.h,
+                ),
                 Row(
                   children: [
                     Column(
                       children: [
-                       
                         Image.asset(
                           'assets/images/anbessa.png',
                           width: 100.w,
