@@ -1,5 +1,9 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
+from bson import ObjectId
+from validator import PyObjectId
+
+
 
 class User(BaseModel):
     full_name: str
@@ -8,6 +12,7 @@ class User(BaseModel):
     hashed_password: bytes
     role:str
     image_url: Optional[str]
+    payment_transaction: Optional[PyObjectId] = None
 
 class UserOut(BaseModel):
     full_name: str

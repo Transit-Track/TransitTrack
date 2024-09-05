@@ -1,9 +1,10 @@
 from app.models.payment import Payment, Request, Transaction, Ticket, Bus, User
 from bson import ObjectId
 from typing import Optional
+from core.config.mongodb import get_database
 
 class PaymentRepository:
-    def __init__(self, db):
+    def __init__(self, db=get_database()):
         self.db = db
         self.payment_collection = self.db.get_collection("payments")
         self.request_collection = self.db.get_collection("requests")
