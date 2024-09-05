@@ -17,7 +17,7 @@ abstract class AuthenticationRepository {
 
   Future<Either<Failure, void>> logout();
 
-  Future<Either<Failure, UserCredential>> getUserCredential();
+  Future<Either<Failure, UserCredential>> getUserCredential(String token);
 
   Future<Either<Failure, void>> changePassword({
     required String newPassword,

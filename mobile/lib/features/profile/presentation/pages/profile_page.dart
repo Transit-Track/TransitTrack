@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
 import 'package:transittrack/features/authentication/presentation/pages/change_password_page.dart';
@@ -113,6 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
               TextButton(
                 onPressed: () {
                   // Implement logout functionality
+                  context.goNamed(AppPath.login);
                 },
                 child: const Text(
                   'Log out',

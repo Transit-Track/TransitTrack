@@ -9,6 +9,7 @@ class UserCredential extends Equatable {
   final String? otp;
   final String? token;
   final String? profileAvatar;
+  final String? role;
 
   const UserCredential({
     required this.id,
@@ -19,6 +20,7 @@ class UserCredential extends Equatable {
     this.otp,
     this.token,
     this.profileAvatar,
+    this.role,
   });
 
   @override
@@ -27,6 +29,7 @@ class UserCredential extends Equatable {
         email,
         phoneNumber,
         fullName,
+        role
       ];
 
   UserCredential copyWith({

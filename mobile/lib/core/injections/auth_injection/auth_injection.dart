@@ -1,5 +1,6 @@
 import 'package:transittrack/core/injections/injection.dart';
-import 'package:transittrack/features/authentication/data/datasource/auth_remote_datasource.dart';
+import 'package:transittrack/features/authentication/data/data_sources/auth_local_datasource.dart';
+import 'package:transittrack/features/authentication/data/data_sources/auth_remote_datasource.dart';
 import 'package:transittrack/features/authentication/data/repositories/auth_repositiries_impl.dart';
 import 'package:transittrack/features/authentication/domain/repository/authentication_repository.dart';
 import 'package:transittrack/features/authentication/domain/usecases/change_password_usecase.dart';
@@ -21,10 +22,11 @@ class AuthInjection {
     //! Data
     sl.registerLazySingleton<AuthenticationRemoteDatasource>(
         () => AuthenticationRemoteDataSourceImpl(client: sl(), secureStorage: sl()));
+    sl.registerLazySingleton<AuthenticationLocalDataSource>(() => AuthenticationLocalDataSourceImpl(secureStorage: sl()));
 
     //! Repository
     sl.registerLazySingleton<AuthenticationRepository>(() =>
-        AuthenticationRepositoryImpl(networkInfo: sl(), remoteDatasource: sl()));
+        AuthenticationRepositoryImpl(networkInfo: sl(), remoteDatasource: sl(), localDataSource: sl()));
 
     //! usecase
     sl.registerLazySingleton(() => LoginUsecase(repository: sl()));

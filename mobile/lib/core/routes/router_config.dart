@@ -17,7 +17,7 @@ import 'package:transittrack/features/tickets/presentation/pages/ticket_page.dar
 
 class AppRouter {
   static final GoRouter router =
-      GoRouter(initialLocation: AppPath.home, routes: <RouteBase>[
+      GoRouter(initialLocation: AppPath.login, routes: <RouteBase>[
     StatefulShellRoute.indexedStack(
       builder: (BuildContext context, GoRouterState state,
               StatefulNavigationShell navigationShell) =>
