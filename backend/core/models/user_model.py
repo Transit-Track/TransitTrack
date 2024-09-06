@@ -32,6 +32,13 @@ class UserCreate(BaseModel):
     phone_number: str
     email: Optional[EmailStr]
     password: str
+    
+class UserUpdate(BaseModel):
+    full_name: str
+    phone_number: str
+    email: Optional[EmailStr]
+    password: str
+    image_url: Optional[str]
 
 class Token(BaseModel):
     access_token: str
@@ -40,3 +47,4 @@ class Token(BaseModel):
 class LoginRequest(BaseModel):
     phone_number: str
     password: str
+    

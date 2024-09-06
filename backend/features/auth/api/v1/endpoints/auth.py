@@ -31,4 +31,8 @@ async def delete_account(phone_number:str, token:str = Depends(oath2_schema), us
 async def read_users_me(token:str = Depends(oath2_schema), user_service: UserService = Depends(get_userService)):
     # token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMzQiLCJyb2xlIjoidXNlciIsImV4cCI6MTcyNDg1MTA3OX0.gsFmdNP_wF7fbfdldUTzeVrQGMvBRj7Zx4F26oq3pwc'
     return await user_service.read_users_me(token)
+
+@auth.put('/update_user', response_model=UserOut)
+async def update_user(user:UserUpdate, token:str = Depends(oath2_schema), user_service: UserService = Depends(get_userService   )):
+    return await user_service.update_user(user, token)
     
