@@ -1,5 +1,6 @@
 
 class AppPath {
+  // User's Routes
   static const home = '/';
   static const onboarding = '/onboarding';
   static const login = '/login';
@@ -9,10 +10,14 @@ class AppPath {
   static const changePassword = '/changePassword';
   static const notification = '/notification';
   static const profile = '/profile';
-  static const my_route = '/my_route';
+  static const myRoute = '/my_route';
   static const ticket = '/ticket';
   static const busTracking = '/busTracking';
   static const realTimeVehicleTracking = '/realTimeVehicleTracking';
   static const payment = '/payment';
-  static const favorites = '/favorites';
+  static const qrPage = '/qrPage';
+
+
+  // Driver's Routes
+  static const driverTracking = '/driverTracking';
 }

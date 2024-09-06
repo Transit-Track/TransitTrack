@@ -10,14 +10,16 @@ class MultipleBlocProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider<AuthenticationBloc>(
-        create: (context) => di.sl<AuthenticationBloc>(),
-      ),
-      
-      BlocProvider<HomeBloc>(
-        create: (context) => di.sl<HomeBloc>(),
-      )
-    ], child: child);
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationBloc>(
+          create: (context) => di.sl<AuthenticationBloc>(),
+        ),
+        BlocProvider<HomeBloc>(
+          create: (context) => di.sl<HomeBloc>(),
+        )
+      ],
+      child: child,
+    );
   }
 }
