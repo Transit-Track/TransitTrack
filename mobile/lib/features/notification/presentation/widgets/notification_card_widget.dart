@@ -9,7 +9,7 @@ class NotificationCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
+      margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 14.w),
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
@@ -48,12 +48,12 @@ class NotificationCardWidget extends StatelessWidget {
                 children: [
                   Image.asset(
                     'assets/images/time.png',
-                    width: 20.w,
-                    height: 20.h,
+                    width: 25.w,
+                    height: 25.h,
                   ),
                   SizedBox(width: 5.w),
                   Text(
-                    bus.arrivalTime,
+                    '${bus.arrivalTime} min',
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,

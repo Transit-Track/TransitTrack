@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
@@ -108,17 +109,17 @@ class _OnboardingPageState extends State<OnboardingPage> {
   Widget getStarted(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        // final pres = await SharedPreferences.getInstance();
-        // pres.setBool('onboarding', true);
+        final pres = await SharedPreferences.getInstance();
+        pres.setBool('onboarding', true);
 
-        // if (!mounted) return;
+        if (!mounted) return;
         (context).pushReplacementNamed(AppPath.login);
         // Navigator.pushReplacement(
         //     context, MaterialPageRoute(builder: (context) => LoginPage()));
       },
       child: Container(
-        width: 150,
-        height: 65,
+        width: 140,
+        height: 55,
         decoration: BoxDecoration(
           color: primary,
           borderRadius: BorderRadius.circular(100),

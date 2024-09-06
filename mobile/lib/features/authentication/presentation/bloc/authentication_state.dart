@@ -14,10 +14,10 @@ class LoggedInState extends AuthenticationState {
   LoggedInState({required this.user});
 }
 
-class LoginErrorState extends AuthenticationState {
+class UnAuthenticatedState extends AuthenticationState {
   final String message;
 
-  LoginErrorState({required this.message});
+  UnAuthenticatedState({required this.message});
 }
 
 //! sign up

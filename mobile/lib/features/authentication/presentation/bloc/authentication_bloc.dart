@@ -55,7 +55,7 @@ class AuthenticationBloc
     print('resulttttttttttttttttttttttttttt $result');
 
     result.fold(
-      (failure) => emit(LoginErrorState(message: failure.errorMessage)),
+      (failure) => emit(UnAuthenticatedState(message: failure.errorMessage)),
       (user) => emit(LoggedInState(user: user)),
     );
   }

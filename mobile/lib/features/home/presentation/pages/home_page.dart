@@ -273,7 +273,7 @@ class _HomePageState extends State<HomePage> {
                                     padding: EdgeInsets.only(top: 15.h),
                                     child: InkWell(
                                       onTap: () {
-                                        (context).goNamed(
+                                        (context).pushNamed(
                                             AppPath.realTimeVehicleTracking,
                                             extra: {
                                               "bus": buses[index],

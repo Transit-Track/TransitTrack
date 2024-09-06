@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
-        if (state is LoginErrorState) {
+        if (state is UnAuthenticatedState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
@@ -48,13 +48,13 @@ class _LoginPageState extends State<LoginPage> {
             ),
           );
         } else if (state is LoggedInState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Succesfluy Loged in'),
-              backgroundColor: Colors.green,
-            ),
-          );
-          (context).goNamed(AppPath.home);
+          if (state.user.role == 'user') {
+            context.goNamed(AppPath.home);
+          } else if (state.user.role == 'driver') {
+            context.goNamed(AppPath.driverTracking);
+          }
+        } else {
+          context.goNamed(AppPath.login);
         }
       },
       child: Scaffold(
