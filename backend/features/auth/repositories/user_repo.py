@@ -30,6 +30,18 @@ class UserRepository:
         user_dict["id"] = str(result.inserted_id)
         
         return user_dict
+
+    async def update_user(self, user_dict, token):
+        user = await self.read_users_me(token)
+        if user['role'] == 'driver':
+            updated_user = await self.db.drivers.update_one({"phone_number": user['phone_number']}, {"$set": user_dict})
+        elif user['role'] == 'conductor':
+            updated_user = await self.db.conductors.update_one({"phone_number": user['phone_number']}, {"$set": user_dict})
+        else:
+            updated_user = await self.db.commuters.update_one({"phone_number": user['phone_number']}, {"$set": user_dict})
+        if updated_user:
+            return user_dict
+        return
     
     async def get_user_by_phone(self,phone_number: str):
         user = await self.db.commuters.find_one({"phone_number": phone_number})

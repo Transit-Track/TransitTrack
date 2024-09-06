@@ -4,7 +4,8 @@ from .location_model import Location
 from pydantic import BaseModel
 
 class Driver(User):
-    driver_id: int
+    bus_id: int = None
+    state: int = None # to keep the station that the driver is on
     license_number: str
     location: Location
 
