@@ -16,6 +16,9 @@ class AppPath {
   static const realTimeVehicleTracking = '/realTimeVehicleTracking';
   static const payment = '/payment';
   static const qrPage = '/qrPage';
+  static const sendFeedback = '/sendFeedback';
+  static const paymentHistory = '/paymentHistory';
+  
 
 
   // Driver's Routes
