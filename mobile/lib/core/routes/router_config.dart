@@ -6,20 +6,23 @@ import 'package:transittrack/features/authentication/presentation/pages/change_p
 import 'package:transittrack/features/authentication/presentation/pages/login_page.dart';
 import 'package:transittrack/features/authentication/presentation/pages/signup_page.dart';
 import 'package:transittrack/features/driver/presentation/pages/driver_tracking_page.dart';
-import 'package:transittrack/features/home/domain/entities/bus.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 import 'package:transittrack/features/my_route/presentation/pages/my_route.dart';
 import 'package:transittrack/features/home/presentation/pages/home_page.dart';
 import 'package:transittrack/features/home/presentation/pages/real_time_vehicle_tracking_page.dart';
 import 'package:transittrack/features/notification/presentation/pages/notification_page.dart';
 import 'package:transittrack/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:transittrack/features/profile/presentation/pages/payment_history_page.dart';
 import 'package:transittrack/features/profile/presentation/pages/profile_page.dart';
+import 'package:transittrack/features/profile/presentation/pages/send_feedback_page.dart';
 import 'package:transittrack/features/tickets/presentation/pages/QR_page.dart';
 import 'package:transittrack/features/tickets/presentation/pages/payment_page.dart';
 import 'package:transittrack/features/tickets/presentation/pages/ticket_page.dart';
 
 class AppRouter {
-  static GoRouter router = GoRouter(
-    initialLocation: AppPath.login,
+  static GoRouter router(bool onboarding) => GoRouter(
+    initialLocation:  onboarding ? AppPath.login : AppPath.onboarding,
+    // initialLocation: AppPath.login,
     routes: <RouteBase>[
       StatefulShellRoute.indexedStack(
         builder: (BuildContext context, GoRouterState state,
@@ -141,6 +144,21 @@ class AppRouter {
           return const QRCodePage();
         },
       ),
+       GoRoute(
+        path: AppPath.sendFeedback,
+        name: AppPath.sendFeedback,
+        builder: (BuildContext context, GoRouterState state) {
+          return const SendFeedbackPage();
+        },
+      ),
+      GoRoute(
+        path: AppPath.paymentHistory,
+        name: AppPath.paymentHistory,
+        builder: (BuildContext context, GoRouterState state) {
+          return const PaymentHistoryPage();
+        },
+      ),
     ],
+
   );
 }
