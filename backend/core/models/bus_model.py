@@ -12,6 +12,7 @@ class Bus (BaseModel):
     capacity: int
     driver: DriverOnBus
     idle: bool
+    is_my_route: bool
     route: Route
     
     class Config:
