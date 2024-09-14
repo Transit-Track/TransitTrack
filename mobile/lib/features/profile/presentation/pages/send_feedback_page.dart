@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:transittrack/core/routes/route_path.dart';
+import 'package:transittrack/core/theme.dart';
 
 class SendFeedbackPage extends StatefulWidget {
   const SendFeedbackPage({super.key});
@@ -19,87 +23,96 @@ class _FeedbackPageState extends State<SendFeedbackPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        elevation: 0,
-        backgroundColor: Colors.white,
-      ),
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        shape: ShapeBorder.lerp(
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+            0.5),
+        backgroundColor: Colors.white,
+        onPressed: () => {
+          print("preseesssssssddddddddddddddddddddddddddddddd"),
+          (context).goNamed(AppPath.profile)
+          },
+        child: const Icon(Icons.arrow_back),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.fromLTRB(16.0.w, 130.h, 16.0.w, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              children: const [
-                Icon(
-                  Icons.waving_hand,
-                  color: Colors.orange,
-                  size: 30,
+              children: [
+                Text(
+                  '👋',
+                  style: TextStyle(fontSize: 20.w),
                 ),
-                SizedBox(width: 8),
+                SizedBox(width: 8.w),
                 Expanded(
                   child: Text(
-                    'Hi there, you can easily share your thoughts, ideas, and any issues you\'ve encountered.',
-                    style: TextStyle(fontSize: 16),
+                    'Hi there, you can easily share your thoughts, ideas, and any issues you have encountered.',
+                    style: TextStyle(fontSize: 16.sp),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 20),
-            const Text(
+            SizedBox(height: 20.h),
+            Text(
               "Feedback",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 26.sp, fontWeight: FontWeight.w600,),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 20.h),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.blueAccent),
+                border: Border.all(color: const Color.fromARGB(255, 108, 162, 255)),
               ),
               child: TextField(
                 controller: _feedbackController,
                 maxLines: 5,
-                decoration: const InputDecoration(
-                  contentPadding: EdgeInsets.all(16.0),
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(16.0.h),
                   border: InputBorder.none,
                   hintText: 'Write your feedback here...',
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            SizedBox(height: 30.h),
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  backgroundColor: Colors.blue,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 15.h),
+                  backgroundColor: primary,
                 ),
                 onPressed: () {
                   // Handle feedback submission
                   if (_feedbackController.text.isNotEmpty) {
                     // Example submission
-                    print("Feedback sent: ${_feedbackController.text}");
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Thank you for your feedback!')),
+                      const SnackBar(
+                          content: Text('Thank you for your feedback!'),
+                          backgroundColor: success,),
                     );
                     _feedbackController.clear();
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Please enter some feedback.')),
+                      const SnackBar(
+                          content: Text('Please enter some feedback.')),
                     );
                   }
                 },
-                child: const Text(
+                child: Text(
                   'Send',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: white,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
               ),
             ),

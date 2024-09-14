@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/button_widget.dart';
-import 'package:transittrack/features/home/domain/entities/bus.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 
 class ButtomSheetContentWidget extends StatefulWidget {
   final BusEntity bus;

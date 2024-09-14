@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:transittrack/features/home/domain/entities/bus.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 
 class NotificationCardWidget extends StatelessWidget {
   final BusEntity bus;

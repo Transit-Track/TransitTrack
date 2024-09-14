@@ -1,41 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:transittrack/core/theme.dart';
-import 'package:transittrack/features/home/domain/entities/bus.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 
-class CardWidget extends StatelessWidget {
+class CardWidget extends StatefulWidget {
   final BusEntity bus;
 
   const CardWidget({super.key, required this.bus});
 
   @override
+  State<CardWidget> createState() => _CardWidgetState();
+}
+
+class _CardWidgetState extends State<CardWidget> {
+  bool isMyRoute = false;
+
+  @override
+  void initState() {
+    isMyRoute = widget.bus.isMyRoute;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(bus.isMyRoute);
+    print(widget.bus.isMyRoute);
+    print('tttttttttttttttttttttttttt $isMyRoute');
     return Container(
       height: 130.h,
-      decoration: BoxDecoration(color: white, borderRadius: BorderRadius.circular(10), boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.5),
-          spreadRadius: 1,
-          blurRadius: 5,
-          offset: const Offset(0, 3), // changes position of shadow
-        ),
-      ]),
+      decoration: BoxDecoration(
+          color: white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ]),
       child: Padding(
         padding: EdgeInsets.fromLTRB(5.0.w, 5.0.h, 5.0.w, 1.0.h),
         child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, 
-            children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(100)),
                 child: Padding(
                   padding: const EdgeInsets.all(1.0),
                   child: Image.asset(
-                    bus.type == 'anbessa'
+                    widget.bus.type == 'anbessa'
                         ? 'assets/images/anbessa.png'
                         : 'assets/images/sheger.png',
                     width: 50.w,
@@ -60,7 +75,7 @@ class CardWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${bus.start} to ${bus.destination}',
+                      '${widget.bus.start} to ${widget.bus.destination}',
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
@@ -71,25 +86,29 @@ class CardWidget extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            bus.number,
+                            widget.bus.number,
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          bus.isMyRoute
-                              ? IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isMyRoute = !isMyRoute;
+                              });
+                            },
+                            icon: isMyRoute
+                                ? const Icon(
                                     Icons.favorite,
                                     color: primary,
+                                  )
+                                : Icon(
+                                    Icons.favorite_border,
+                                    color: const Color.fromARGB(255, 54, 54, 54)
+                                        .withOpacity(0.5),
                                   ),
-                                )
-                              : Icon(
-                                  Icons.favorite_border,
-                                  color: const Color.fromARGB(255, 54, 54, 54)
-                                      .withOpacity(0.5),
-                                ),
+                          )
                         ],
                       ),
                     ),
@@ -99,7 +118,7 @@ class CardWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${bus.distance} meters',
+                      '${widget.bus.distance} meters',
                       style: const TextStyle(),
                     ),
                   ],
@@ -108,7 +127,7 @@ class CardWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Price: ${bus.routes.length}ETB',
+                      'Price: ${widget.bus.routes.length}ETB',
                       style: const TextStyle(),
                     ),
                     SizedBox(

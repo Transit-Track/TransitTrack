@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
 import 'package:transittrack/core/theme.dart';
-import 'package:transittrack/features/home/domain/entities/bus.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 import 'package:transittrack/features/tickets/presentation/widget/payment_method_card_widget.dart';
 
 class PaymentPage extends StatefulWidget {

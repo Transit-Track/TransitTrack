@@ -56,62 +56,63 @@ class _TicketPageState extends State<TicketPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Adding the input section for "from" and "to"
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text('from '),
-                          Icon(Icons.circle, color: primary, size: 12.sp),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 2.w,
-                        height: 40.h,
-                      ),
-                      Row(
-                        children: [
-                          Text('to     '),
-                          Icon(Icons.circle, color: Colors.red, size: 12.sp),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 10.w),
-                  Expanded(
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: _fromController,
-                          decoration: InputDecoration(
-                            hintText: 'start',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 10.h),
-                        TextFormField(
-                          controller: _toController,
-                          decoration: InputDecoration(
-                            hintText: 'destination',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              // Row(
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Column(
+              //       children: [
+              //         Row(
+              //           children: [
+              //             Text('from '),
+              //             Icon(Icons.circle, color: primary, size: 12.sp),
+              //           ],
+              //         ),
+              //         SizedBox(
+              //           width: 2.w,
+              //           height: 40.h,
+              //         ),
+              //         Row(
+              //           children: [
+              //             Text('to     '),
+              //             Icon(Icons.circle, color: Colors.red, size: 12.sp),
+              //           ],
+              //         ),
+              //       ],
+              //     ),
+              //     SizedBox(width: 10.w),
+              //     Expanded(
+              //       child: Column(
+              //         children: [
+              //           TextFormField(
+              //             controller: _fromController,
+              //             decoration: InputDecoration(
+              //               hintText: 'start',
+              //               border: OutlineInputBorder(
+              //                 borderRadius: BorderRadius.circular(10),
+              //               ),
+              //             ),
+              //           ),
+              //           SizedBox(height: 10.h),
+              //           TextFormField(
+              //             controller: _toController,
+              //             decoration: InputDecoration(
+              //               hintText: 'destination',
+              //               border: OutlineInputBorder(
+              //                 borderRadius: BorderRadius.circular(10),
+              //               ),
+              //             ),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ],
+              // ),
+             
               SizedBox(
                   height:
                       20.h), // Spacing between the input section and tickets
               Text(
-                "Your Tickets",
+                "My Tickets",
                 style: TextStyle(
                   fontSize: 22.sp,
                   fontWeight: FontWeight.bold,
