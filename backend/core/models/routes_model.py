@@ -18,3 +18,7 @@ class Route (BaseModel):
     def _generate_id(cls):
         cls._id_counter += 1
         return cls._id_counter
+
+class RouteOut(BaseModel):
+    stations: List[Station]
+    distance: float

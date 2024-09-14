@@ -12,7 +12,7 @@ class Bus (BaseModel):
     driver: DriverOnBus = None
     idle: bool
     is_my_route: bool
-    route: Route = None
+    current_route: Route = None
     next_route: Route = None
     _id_counter = 0
 
