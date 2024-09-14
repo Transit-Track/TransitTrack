@@ -8,7 +8,7 @@ from core.models.location_model import Location
 
 class StationRepository:
     def __init__(self):
-        self.db = db.local.transittrack.stations
+        self.db = db.transittrack.stations
         self.db.create_index([("geoLocation", "2dsphere")])
     
     async def get_nearby_station(self, location: Location, radius: int):

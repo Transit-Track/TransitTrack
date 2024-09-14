@@ -11,7 +11,7 @@ class UserRepository:
     ACCESS_TOKEN_EXPIRE_MINUTES = 30
     
     def __init__(self) -> None:
-        self.db = db.local.transittrack.users
+        self.db = db.transittrack.users
     
     
     async def add_user(self, user_dict):
