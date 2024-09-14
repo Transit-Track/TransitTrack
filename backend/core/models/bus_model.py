@@ -11,7 +11,7 @@ class Bus (BaseModel):
     capacity: int
     driver: DriverOnBus = None
     idle: bool
-    route: Route = None
+    current_route: Route = None
     next_route: Route = None
     _id_counter = 0
 
