@@ -3,7 +3,7 @@ import 'package:transittrack/features/driver/domain/entity/driver_location_entit
 
 class DriverEntity extends Equatable {
   final String phoneNumber;
-  final DriverLocationEntity location;
+  final LocationEntity location;
 
   const DriverEntity({
     required this.phoneNumber,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/utils/validation.dart';
@@ -20,9 +21,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final TextEditingController _newPasswordController = TextEditingController();
   final TextEditingController _confirmNewPasswordController =
       TextEditingController();
-  bool _isObsecuredOld = false;
-  bool _isObsecuredNew = false;
-  bool _isObsecuredConfirm = false;
+  bool _isObsecuredOld = true;
+  bool _isObsecuredNew = true;
+  bool _isObsecuredConfirm = true;
 
   @override
   void dispose() {
@@ -59,10 +60,20 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
+        floatingActionButton: FloatingActionButton(
+          shape: ShapeBorder.lerp(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+              0.5),
+          backgroundColor: Colors.white,
+          onPressed: () => (context).goNamed(AppPath.profile),
+          child: const Icon(Icons.arrow_back),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
         body: SingleChildScrollView(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 50.0),
+              padding: EdgeInsets.fromLTRB(30.0.w, 150.0.h, 30.w, 0),
               child: Container(
                 constraints: BoxConstraints(maxWidth: 400),
                 child: Form(
@@ -78,10 +89,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       const SizedBox(height: 15),
                       const Text(
                         "Change Password",
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 20),
-                      
+
                       // Old Password Field
                       InputFieldWidget(
                         hintText: 'Enter Old Password',
@@ -164,7 +176,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                               context.read<AuthenticationBloc>().add(
                                     ChangePasswordEvent(
                                       oldPassword: _oldPasswordController.text,
-                                      confirmPassword: _confirmNewPasswordController.text,
+                                      confirmPassword:
+                                          _confirmNewPasswordController.text,
                                       newPassword: _newPasswordController.text,
                                     ),
                                   );

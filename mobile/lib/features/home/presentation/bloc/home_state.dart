@@ -14,7 +14,7 @@ final class HomeInitial extends HomeState {}
 final class LocationLoadingState extends HomeState {}
 
 final class LocationLoadedState extends HomeState {
-  final List<LocationEntity> locationList;
+  final List<PlaceEntity> locationList;
 
   const LocationLoadedState({required this.locationList});
 }
@@ -72,35 +72,17 @@ final class AvailableBusesErrorState extends HomeState {
   const AvailableBusesErrorState({required this.errorMessage});
 }
 
+//! Get driver location state
+final class GetDriverLocationLoadingState extends HomeState {}
 
-//! Arrival time prediction state
+final class GetDriverLocationLoadedState extends HomeState {
+  final LocationEntity driverLocationEntity;
 
-final class ArrivalTimePredictionLoadingState extends HomeState {}
-
-final class ArrivalTimePredictionLoadedState extends HomeState {
-  final String? arrivalTime;
-
-  const ArrivalTimePredictionLoadedState({required this.arrivalTime});
+  const GetDriverLocationLoadedState({required this.driverLocationEntity});
 }
 
-final class ArrivalTimePredictionErrorState extends HomeState {
+final class GetDriverLocationErrorState extends HomeState {
   final String errorMessage;
 
-  const ArrivalTimePredictionErrorState({required this.errorMessage});
-}
-
-//! Get place id from coordinate state
-
-final class GetPlaceIdFromCoordinateLoadingState extends HomeState {}
-
-final class GetPlaceIdFromCoordinateLoadedState extends HomeState {
-  final String? placeId;
-
-  const GetPlaceIdFromCoordinateLoadedState({required this.placeId});
-}
-
-final class GetPlaceIdFromCoordinateErrorState extends HomeState {
-  final String errorMessage;
-
-  const GetPlaceIdFromCoordinateErrorState({required this.errorMessage});
+  const GetDriverLocationErrorState({required this.errorMessage});
 }

@@ -37,7 +37,7 @@ class AuthenticationRemoteDataSourceImpl
   AuthenticationRemoteDataSourceImpl(
       {required this.client, required this.secureStorage});
 
-  final String baseUrl = 'http://192.168.0.163:8000';
+  final String baseUrl = 'http://192.168.132.143:8000';
 
   @override
   Future<UserCredentialModel> signup({
@@ -51,6 +51,7 @@ class AuthenticationRemoteDataSourceImpl
       'email': email != '' ? email : null,
       'phone_number': phoneNumber,
       'password': password,
+      'role': 'driver'
     };
 
     final response = await client.post(

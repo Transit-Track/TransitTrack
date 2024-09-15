@@ -1,15 +1,16 @@
 import 'dart:convert';
 
+import 'package:transittrack/features/driver/data/model/driver_location_model.dart';
 import 'package:transittrack/features/home/data/datasource/remote/google_map_datasource.dart';
 import 'package:transittrack/features/home/data/model/bus_model.dart';
 import 'package:http/http.dart' as http;
-import 'package:transittrack/features/home/data/model/location_model.dart';
+import 'package:transittrack/features/home/data/model/place_model.dart';
 
 abstract class HomeRemoteDataSource {
   Future<List<BusModel>> getAvailablebuses(
       String startLocation, String destinationLocation);
   Future<List<String>> getNearbyBusStations(String input);
-  Future<String> getDriversLocation(String driverId);
+  Future<LocationModel> getDriverLocation(String driverPhoneNumber);
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -21,7 +22,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     required this.googleMapDatasource,
   });
 
-  String baseUrl = "http://192.168.0.163:8000";
+  String baseUrl = "http://192.168.132.143:8000";
 
   @override
   Future<List<BusModel>> getAvailablebuses(
@@ -53,7 +54,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
     final availableSuggestions =
         await googleMapDatasource.getPlacAutoCompleteSuggestion(input);
-    for (LocationModel location in availableSuggestions) {
+    for (PlaceModel location in availableSuggestions) {
       final latlng =
           await googleMapDatasource.getLatLngFromPlaceId(location.id);
       locationslatlng.add(latlng);
@@ -80,13 +81,15 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<String> getDriversLocation(String driverId) async {
+  Future<LocationModel> getDriverLocation(
+      String driverPhoneNumber) async {
     final url = Uri.parse('$baseUrl/driver');
-    final Map<String, dynamic> queryParam = {"driver_id": driverId};
+    final Map<String, dynamic> queryParam = {"phone_number": driverPhoneNumber};
 
     final response = await client.get(url.replace(queryParameters: queryParam));
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+     
+      return LocationModel.fromJson(json.decode(response.body));
     } else if (response.statusCode == 404) {
       return json.decode(response.body)["detail"];
     } else {

@@ -23,7 +23,6 @@ class DriverRemoteDataSourceImpl implements DriverRemoteDataSource {
       {required double latitude,
       required double longitude,
       required String token}) async {
-    print('tttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $token');
     final response = await client.put(
       Uri.parse('$baseUrl/driver'),
       body: json.encode({
@@ -35,7 +34,6 @@ class DriverRemoteDataSourceImpl implements DriverRemoteDataSource {
         'Authorization': 'Bearer $token'
       },
     );
-    print('response.statusCodeeeeeeeeeeeeeeeeeeeeeeeee ${response.statusCode}');
     if (response.statusCode == 200) {
       return 'Success';
     } else {

@@ -59,7 +59,6 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                           fieldHeight: 50,
                           fieldWidth: 50,
                           onSubmit: (code) {
-                            print('codeeeeeeeeeeeee-------------- $code');
                           }),
                       ButtonWidget(
                           context: context,

@@ -9,6 +9,7 @@ import 'package:transittrack/core/widgets/button_widget.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
 import 'package:transittrack/features/home/presentation/bloc/home_bloc.dart';
 import 'package:transittrack/features/home/presentation/pages/dummy_data.dart';
+// import 'package:transittrack/features/home/presentation/pages/dummy_data.dart';
 import 'package:transittrack/features/home/presentation/widgets/card_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,9 +28,7 @@ class _HomePageState extends State<HomePage> {
   bool destinationPressed = false;
 
   void searchNearbyBusesForStart(String input) async {
-    context
-        .read<HomeBloc>()
-        .add(GetNearbyBusesForStartEvent(input: input));
+    context.read<HomeBloc>().add(GetNearbyBusesForStartEvent(input: input));
   }
 
   void searchNearbyBusesForDestination(String input) async {
@@ -43,12 +42,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    _startController.dispose();
-    _destinationController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _startController.dispose();
+  //   _destinationController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +61,7 @@ class _HomePageState extends State<HomePage> {
               .showSnackBar(SnackBar(content: Text(state.message)));
         } else if (state is NearByBusesForStartLoadedState) {
           ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("success")));
+              .showSnackBar(const SnackBar(content: Text("success")));
         } else if (state is LocationLoadedState) {
           startPressed = true;
         } else if (state is NearByBusesForStartLoadedState) {
@@ -105,7 +104,8 @@ class _HomePageState extends State<HomePage> {
                               onPressed: () {
                                 setState(() {
                                   startPressed = true;
-                                  searchNearbyBusesForStart(_startController.text);
+                                  searchNearbyBusesForStart(
+                                      _startController.text);
                                 });
                               },
                             )),
@@ -114,8 +114,10 @@ class _HomePageState extends State<HomePage> {
                       BlocBuilder<HomeBloc, HomeState>(
                         builder: (context, state) {
                           if (state is NearByBusesForStartLoadingState) {
-                            return Padding(padding: EdgeInsets.only(top: 20.h),
-                                child: const Center(child:  CircularProgressIndicator()));
+                            return Padding(
+                                padding: EdgeInsets.only(top: 20.h),
+                                child: const Center(
+                                    child: CircularProgressIndicator()));
                           } else if (state is NearByBusesForStartLoadedState) {
                             if (state.nearByBusesForStartList.isEmpty) {
                               return const SizedBox(
@@ -132,23 +134,14 @@ class _HomePageState extends State<HomePage> {
                                   return GestureDetector(
                                       onTap: () async {
                                         setState(() {
-                                          _startController.text =
-                                              state.nearByBusesForStartList[index];
+                                          _startController.text = state
+                                              .nearByBusesForStartList[index];
                                           startPressed = false;
                                         });
-                                        // List<Location> locations =
-                                        //     await locationFromAddress(
-                                        //         state.locationList[index].name);
-                                        // print(
-                                        //     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${locations}");
-                                        // print(
-                                        //     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${locations[0].latitude}");
-                                        // print(
-                                        //     "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee${locations[0].longitude}");
                                       },
                                       child: ListTile(
-                                        title:
-                                            Text(state.nearByBusesForStartList[index]),
+                                        title: Text(state
+                                            .nearByBusesForStartList[index]),
                                       ));
                                 },
                               ),
@@ -181,7 +174,8 @@ class _HomePageState extends State<HomePage> {
                               onPressed: () {
                                 setState(() {
                                   destinationPressed = true;
-                                  searchNearbyBusesForDestination(_destinationController.text);
+                                  searchNearbyBusesForDestination(
+                                      _destinationController.text);
                                 });
                               },
                             )),
@@ -191,24 +185,29 @@ class _HomePageState extends State<HomePage> {
                           builder: (context, state) {
                         if (state is NearByBusesForDestinationLoadingState) {
                           return const SizedBox(height: 0);
-                        } else if (state is NearByBusesForDestinationErrorState) {
+                        } else if (state
+                            is NearByBusesForDestinationErrorState) {
                           return const SizedBox(height: 0);
-                        } else if (state is NearByBusesForDestinationLoadedState) {
+                        } else if (state
+                            is NearByBusesForDestinationLoadedState) {
                           return Visibility(
                             visible: destinationPressed,
                             child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: state.nearByBusesForDestinationList.length,
+                              itemCount:
+                                  state.nearByBusesForDestinationList.length,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                     onTap: () {
                                       destinationPressed = false;
-                                      _destinationController.text =
-                                          state.nearByBusesForDestinationList[index];
+                                      _destinationController.text = state
+                                          .nearByBusesForDestinationList[index];
                                     },
                                     child: ListTile(
-                                      title: Text(state.nearByBusesForDestinationList[index]),
+                                      title: Text(
+                                          state.nearByBusesForDestinationList[
+                                              index]),
                                     ));
                               },
                             ),
@@ -264,11 +263,39 @@ class _HomePageState extends State<HomePage> {
                           } else if (state is AvailableBusesErrorState) {
                             return Center(child: Text(state.errorMessage));
                           } else if (state is AvailableBusesLoadedState) {
-                            return SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.5,
+                            print(
+                                      "dddddddddddddddddddddddddddddddddddd ${state.availableBusesList}");
+                            return Expanded(
+                              child: ListView.builder(
+                                itemCount: state.availableBusesList.length,
+                                itemBuilder: (context, index) {
+                                  
+                                  return Padding(
+                                    padding: EdgeInsets.only(top: 15.h),
+                                    child: InkWell(
+                                      onTap: () {
+                                        (context).pushNamed(
+                                            AppPath.realTimeVehicleTracking,
+                                            extra: {
+                                              "bus": state.availableBusesList[index],
+                                            });
+                                      },
+                                      child: CardWidget(
+                                          bus: state.availableBusesList[index]),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                          // return const SizedBox(
+                          //   height: 0.0,
+                          // );
+                          return Expanded(
                               child: ListView.builder(
                                 itemCount: buses.length,
                                 itemBuilder: (context, index) {
+                                  
                                   return Padding(
                                     padding: EdgeInsets.only(top: 15.h),
                                     child: InkWell(
@@ -279,16 +306,13 @@ class _HomePageState extends State<HomePage> {
                                               "bus": buses[index],
                                             });
                                       },
-                                      child: CardWidget(bus: buses[index]),
+                                      child: CardWidget(
+                                          bus: buses[index]),
                                     ),
                                   );
                                 },
                               ),
                             );
-                          }
-                          return const SizedBox(
-                            height: 0.0,
-                          );
                         },
                       )
                     ],

@@ -1,188 +1,333 @@
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:transittrack/features/home/domain/entities/bus.dart';
-import 'package:transittrack/features/home/domain/entities/driver_entity.dart';
+import 'package:flutter/material.dart';
+import 'package:transittrack/features/driver/domain/entity/driver_entity.dart';
+import 'package:transittrack/features/driver/domain/entity/driver_location_entity.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
+import 'package:transittrack/features/home/domain/entities/route_entity.dart';
+import 'package:transittrack/features/home/domain/entities/station_entity.dart';
 
 List<BusEntity> buses = [
   const BusEntity(
-      isMyRoute: true,
-      arrivalTime: "1",
-      destination: "Megenagna",
-      id: "",
-      type: "anbessa",
-      latitude: "",
-      longitude: "",
-      number: "17",
-      price: "10",
-      routes: [
-        {'name': 'Shiro Meda', 'latitude': 9.0500, 'longitude': 38.7500},
-        {'name': 'Arat Kilo', 'latitude': 9.0450, 'longitude': 38.7600},
-        {'name': 'Piassa', 'latitude': 9.0400, 'longitude': 38.7700},
-        {'name': 'Stadium', 'latitude': 9.0350, 'longitude': 38.7800},
-        {'name': 'Meskel Square', 'latitude': 9.0300, 'longitude': 38.7900},
-        {'name': 'Mexico', 'latitude': 9.0250, 'longitude': 38.8000},
-      ],
-      start: "4Kilo",
-      stationName: 'Kidist Mariam',
-      distance: '10'),
+    isMyRoute: true,
+    driver: DriverEntity(
+        phoneNumber: "2514567789",
+        location: LocationEntity(longitude: 9.0, latitude: 8.9)),
+    arrivalTime: "1",
+    id: "",
+    type: "anbessa",
+    number: "17",
+    price: "10",
+    route: RouteEntity(distance: 10.3, id: '1',
+    stations: [
+      StationEntity(
+          stationId: '1',
+          name: 'Shiro Meda',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '2',
+          name: '4 Kilo',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '3',
+          name: 'Piassa',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '4',
+          name: 'Stadium',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '5',
+          name: 'Meskel Square',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '6',
+          name: 'Mexico',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+    ],
+    )
+  ),
   const BusEntity(
       isMyRoute: true,
+      driver: DriverEntity(
+          phoneNumber: "2514567789",
+          location: LocationEntity(longitude: 9.0, latitude: 8.9)),
       arrivalTime: "2",
-      destination: "Mexico   ",
       id: "",
       type: "anbessa",
-      latitude: "",
-      longitude: "",
       number: "83",
       price: "15",
-      routes: [
-        {'name': 'Shiro Meda', 'latitude': 9.0500, 'longitude': 38.7500},
-        {'name': 'Arat Kilo', 'latitude': 9.0450, 'longitude': 38.7600},
-        {'name': 'Piassa', 'latitude': 9.0400, 'longitude': 38.7700},
-        {'name': 'Stadium', 'latitude': 9.0350, 'longitude': 38.7800},
-        {'name': 'Meskel Square', 'latitude': 9.0300, 'longitude': 38.7900},
-        {'name': 'Mexico', 'latitude': 9.0250, 'longitude': 38.8000},
-      ],
-      start: "5kilo",
-      stationName: '4 kilo station',
-      distance: '23'),
+        route: RouteEntity(distance: 10.3, id: '1',
+    stations: [
+      StationEntity(
+          stationId: '1',
+          name: 'Shiro Meda',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '2',
+          name: '4 Kilo',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '3',
+          name: 'Piassa',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '4',
+          name: 'Stadium',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '5',
+          name: 'Meskel Square',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '6',
+          name: 'Mexico',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+    ],
+    )
+      ),
   const BusEntity(
       isMyRoute: false,
+      driver: DriverEntity(
+          phoneNumber: "2514567789",
+          location: LocationEntity(longitude: 9.0, latitude: 8.9)),
       arrivalTime: "3",
-      destination: "6kilo    ",
       id: "",
       type: "anbessa",
-      latitude: "",
-      longitude: "",
       number: "16",
       price: "10",
-      routes: [
-        {'name': 'Shiro Meda', 'latitude': 9.0500, 'longitude': 38.7500},
-        {'name': 'Arat Kilo', 'latitude': 9.0450, 'longitude': 38.7600},
-        {'name': 'Piassa', 'latitude': 9.0400, 'longitude': 38.7700},
-        {'name': 'Stadium', 'latitude': 9.0350, 'longitude': 38.7800},
-        {'name': 'Meskel Square', 'latitude': 9.0300, 'longitude': 39.0900},
-        {'name': 'Mexico', 'latitude': 9.0250, 'longitude': 39.8000},
-      ],
-      start: "legehar",
-      stationName: 'yared station',
-      distance: '5'),
+        route: RouteEntity(distance: 10.3, id: '1',
+    stations: [
+      StationEntity(
+          stationId: '1',
+          name: 'Shiro Meda',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '2',
+          name: '4 Kilo',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '3',
+          name: 'Piassa',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '4',
+          name: 'Stadium',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '5',
+          name: 'Meskel Square',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '6',
+          name: 'Mexico',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+    ],
+    )
+      ),
   const BusEntity(
       isMyRoute: false,
+      driver: DriverEntity(
+          phoneNumber: "2514567789",
+          location: LocationEntity(longitude: 9.0, latitude: 8.9)),
       arrivalTime: "4",
-      destination: "Mexico     ",
       id: "",
       type: "anbessa",
-      latitude: "",
-      longitude: "",
       number: "64",
       price: "5",
-      routes: [
-        {'name': 'Shiro Meda', 'latitude': 9.0500, 'longitude': 38.7500},
-        {'name': 'Arat Kilo', 'latitude': 9.0450, 'longitude': 38.7600},
-        {'name': 'Piassa', 'latitude': 9.0400, 'longitude': 38.7700},
-        {'name': 'Stadium', 'latitude': 9.0350, 'longitude': 38.7800},
-        {'name': 'Meskel Square', 'latitude': 9.0300, 'longitude': 38.7900},
-        {'name': 'Mexico', 'latitude': 9.0250, 'longitude': 38.8000},
-      ],
-      start: "Shola",
-      stationName: '6 kilo station',
-      distance: '21'),
+        route: RouteEntity(distance: 10.3, id: '1',
+    stations: [
+      StationEntity(
+          stationId: '1',
+          name: 'Shiro Meda',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '2',
+          name: '4 Kilo',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '3',
+          name: 'Piassa',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '4',
+          name: 'Stadium',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '5',
+          name: 'Meskel Square',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '6',
+          name: 'Mexico',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+    ],
+    )
+      ),
 ];
 
 List<BusEntity> myRoutes = [
   const BusEntity(
       isMyRoute: true,
+      driver: DriverEntity(
+          phoneNumber: "2514567789",
+          location: LocationEntity(longitude: 9.0, latitude: 8.9)),
       arrivalTime: "1",
-      destination: "Megenagna",
       id: "",
       type: "anbessa",
-      latitude: "",
-      longitude: "",
       number: "17",
       price: "10",
-      routes: [
-        {'name': 'Shiro Meda', 'latitude': 9.0500, 'longitude': 38.7500},
-        {'name': 'Arat Kilo', 'latitude': 9.0450, 'longitude': 38.7600},
-        {'name': 'Piassa', 'latitude': 9.0400, 'longitude': 38.7700},
-        {'name': 'Stadium', 'latitude': 9.0350, 'longitude': 38.7800},
-        {'name': 'Meskel Square', 'latitude': 9.0300, 'longitude': 38.7900},
-        {'name': 'Mexico', 'latitude': 9.0250, 'longitude': 38.8000},
-      ],
-      start: "4Kilo",
-      stationName: 'Kidist Mariam',
-      distance: '10'),
+        route: RouteEntity(distance: 10.3, id: '1',
+    stations: [
+      StationEntity(
+          stationId: '1',
+          name: 'Shiro Meda',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '2',
+          name: '4 Kilo',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '3',
+          name: 'Piassa',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '4',
+          name: 'Stadium',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '5',
+          name: 'Meskel Square',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '6',
+          name: 'Mexico',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+    ],
+    )
+      ),
   const BusEntity(
       isMyRoute: true,
+      driver: DriverEntity(
+          phoneNumber: "2514567789",
+          location: LocationEntity(longitude: 9.0, latitude: 8.9)),
       arrivalTime: "2",
-      destination: "Mexico   ",
       id: "",
       type: "anbessa",
-      latitude: "",
-      longitude: "",
       number: "83",
       price: "15",
-      routes: [
-        {'name': 'Shiro Meda', 'latitude': 9.0500, 'longitude': 38.7500},
-        {'name': 'Arat Kilo', 'latitude': 9.0450, 'longitude': 38.7600},
-        {'name': 'Piassa', 'latitude': 9.0400, 'longitude': 38.7700},
-        {'name': 'Stadium', 'latitude': 9.0350, 'longitude': 38.7800},
-        {'name': 'Meskel Square', 'latitude': 9.0300, 'longitude': 38.7900},
-        {'name': 'Mexico', 'latitude': 9.0250, 'longitude': 38.8000},
-      ],
-      start: "5kilo",
-      stationName: '4 kilo station',
-      distance: '23'),
+        route: RouteEntity(distance: 10.3, id: '1',
+    stations: [
+      StationEntity(
+          stationId: '1',
+          name: 'Shiro Meda',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '2',
+          name: '4 Kilo',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '3',
+          name: 'Piassa',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '4',
+          name: 'Stadium',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '5',
+          name: 'Meskel Square',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '6',
+          name: 'Mexico',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+    ],
+    )
+      ),
 ];
-
 
 List<BusEntity> notifications = [
   const BusEntity(
       isMyRoute: true,
+      driver: DriverEntity(
+          phoneNumber: "2514567789",
+          location: LocationEntity(longitude: 9.0, latitude: 8.9)),
       arrivalTime: "1",
-      destination: "Megenagna",
       id: "",
       type: "anbessa",
-      latitude: "",
-      longitude: "",
       number: "17",
       price: "10",
-      routes: [
-        {'name': 'Shiro Meda', 'latitude': 9.0500, 'longitude': 38.7500},
-        {'name': 'Arat Kilo', 'latitude': 9.0450, 'longitude': 38.7600},
-        {'name': 'Piassa', 'latitude': 9.0400, 'longitude': 38.7700},
-        {'name': 'Stadium', 'latitude': 9.0350, 'longitude': 38.7800},
-        {'name': 'Meskel Square', 'latitude': 9.0300, 'longitude': 38.7900},
-        {'name': 'Mexico', 'latitude': 9.0250, 'longitude': 38.8000},
-      ],
-      start: "4Kilo",
-      stationName: 'Kidist Mariam',
-      distance: '10'),
+        route: RouteEntity(distance: 10.3, id: '1',
+    stations: [
+      StationEntity(
+          stationId: '1',
+          name: 'Shiro Meda',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '2',
+          name: '4 Kilo',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '3',
+          name: 'Piassa',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '4',
+          name: 'Stadium',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '5',
+          name: 'Meskel Square',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '6',
+          name: 'Mexico',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+    ],
+    )
+      ),
   const BusEntity(
       isMyRoute: true,
+      driver: DriverEntity(
+          phoneNumber: "2514567789",
+          location: LocationEntity(longitude: 9.0, latitude: 8.9)),
       arrivalTime: "2",
-      destination: "Mexico   ",
       id: "",
       type: "anbessa",
-      latitude: "",
-      longitude: "",
       number: "83",
       price: "15",
-      routes: [
-        {'name': 'Shiro Meda', 'latitude': 9.0500, 'longitude': 38.7500},
-        {'name': 'Arat Kilo', 'latitude': 9.0450, 'longitude': 38.7600},
-        {'name': 'Piassa', 'latitude': 9.0400, 'longitude': 38.7700},
-        {'name': 'Stadium', 'latitude': 9.0350, 'longitude': 38.7800},
-        {'name': 'Meskel Square', 'latitude': 9.0300, 'longitude': 38.7900},
-        {'name': 'Mexico', 'latitude': 9.0250, 'longitude': 38.8000},
-      ],
-      start: "5kilo",
-      stationName: '4 kilo station',
-      distance: '23'),
+        route: RouteEntity(distance: 10.3, id: '1',
+    stations: [
+      StationEntity(
+          stationId: '1',
+          name: 'Shiro Meda',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '2',
+          name: '4 Kilo',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '3',
+          name: 'Piassa',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '4',
+          name: 'Stadium',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '5',
+          name: 'Meskel Square',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+      StationEntity(
+          stationId: '6',
+          name: 'Mexico',
+          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+    ],
+    )
+      ),
 ];
 
-
-DriverEntity driver = const DriverEntity(
-  latitude: 9.0208,
-  longitude: 38.7469,
-);
-LatLng driverLocation = LatLng(driver.latitude, driver.longitude);
+// DriverEntity driver = const DriverEntity(
+//   latitude: 9.0208,
+//   longitude: 38.7469,
+// );
+// LatLng driverLocation = LatLng(driver.latitude, driver.longitude);

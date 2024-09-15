@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:transittrack/features/home/domain/entities/bus.dart';
-import 'package:transittrack/features/home/domain/entities/location.dart';
-import 'package:transittrack/features/home/domain/usecases/get_arrival_time_usecase.dart';
+import 'package:transittrack/features/driver/domain/entity/driver_location_entity.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
+import 'package:transittrack/features/home/domain/entities/place_entity.dart';
 import 'package:transittrack/features/home/domain/usecases/get_available_buses_usecase.dart';
-import 'package:transittrack/features/home/domain/usecases/get_place_id_from_coordinates_usecase.dart';
+import 'package:transittrack/features/home/domain/usecases/get_driver_location_usecase.dart';
 import 'package:transittrack/features/home/domain/usecases/search_location_usecase.dart';
 import 'package:transittrack/features/home/domain/usecases/search_nearby_buses_for_destination_useecase.dart';
 import 'package:transittrack/features/home/domain/usecases/search_nearby_buses_for_start_usecase.dart';
@@ -17,23 +17,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   SearchNearbyBusesForStartUsecase searchNearbyBusesForStartUsecase;
   SearchNearbyBusesForDestinationUsecase searchNearbyBusesForDestinationUsecase;
   GetAvailableBusesUsecase getAvailableBusesUsecase;
-  GetArrivalTimeUsecase getArrivalTimeUsecase;
-  GetPlaceIdFromCoordinatesUsecase getPlaceIdFromCoordinatesUsecase;
+  GetDriverLocationUsecase getDriverLocationUsecase;
 
   HomeBloc({
     required this.searchLocationUsecase,
     required this.searchNearbyBusesForDestinationUsecase,
     required this.searchNearbyBusesForStartUsecase,
     required this.getAvailableBusesUsecase,
-    required this.getArrivalTimeUsecase,
-    required this.getPlaceIdFromCoordinatesUsecase,
+    required this.getDriverLocationUsecase,
   }) : super(HomeInitial()) {
     on<GetLocationEvent>(_getLocation);
     on<GetNearbyBusesForStartEvent>(_getNearbyBusesForStart);
     on<GetNearbyBusesForDestinationEvent>(_getNearbyBusesForDestination);
-    on<GetAvailableBusesEvent>(_getAvailableBusesEvent);
-    on<GetArrivalTime>(_getArrivalTime);
-    on<GetPlaceIdFromCoordinates>(_getPlaceIdFromCoordinates);
+    on<GetAvailableBusesEvent>(_getAvailableBuses);
+    on<GetDriverLocation>(_getDriverLocation);
   }
 
   _getLocation(GetLocationEvent event, Emitter<HomeState> emit) async {
@@ -46,7 +43,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  _getNearbyBusesForStart(GetNearbyBusesForStartEvent event, Emitter<HomeState> emit) async {
+  _getNearbyBusesForStart(
+      GetNearbyBusesForStartEvent event, Emitter<HomeState> emit) async {
     emit(NearByBusesForStartLoadingState());
     final nearByBusesForStartList =
         await searchNearbyBusesForStartUsecase(SearchNearbyBusesForStartParams(
@@ -54,27 +52,32 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ));
 
     nearByBusesForStartList.fold(
-      (failure) => emit(NearByBusesForStartErrorState(message: failure.errorMessage)),
-      (nearByBusesForStartList) =>
-          emit(NearByBusesForStartLoadedState(nearByBusesForStartList: nearByBusesForStartList)),
+      (failure) =>
+          emit(NearByBusesForStartErrorState(message: failure.errorMessage)),
+      (nearByBusesForStartList) => emit(NearByBusesForStartLoadedState(
+          nearByBusesForStartList: nearByBusesForStartList)),
     );
   }
 
-  _getNearbyBusesForDestination(GetNearbyBusesForDestinationEvent event, Emitter<HomeState> emit) async {
+  _getNearbyBusesForDestination(
+      GetNearbyBusesForDestinationEvent event, Emitter<HomeState> emit) async {
     emit(NearByBusesForDestinationLoadingState());
     final nearByBusesForDestinationList =
-        await searchNearbyBusesForDestinationUsecase(SearchNearbyBusesForDestinationParams(
+        await searchNearbyBusesForDestinationUsecase(
+            SearchNearbyBusesForDestinationParams(
       input: event.input,
     ));
 
     nearByBusesForDestinationList.fold(
-      (failure) => emit(NearByBusesForDestinationErrorState(message: failure.errorMessage)),
-      (nearByBusesForDestinationList) =>
-          emit(NearByBusesForDestinationLoadedState(nearByBusesForDestinationList: nearByBusesForDestinationList)),
+      (failure) => emit(
+          NearByBusesForDestinationErrorState(message: failure.errorMessage)),
+      (nearByBusesForDestinationList) => emit(
+          NearByBusesForDestinationLoadedState(
+              nearByBusesForDestinationList: nearByBusesForDestinationList)),
     );
   }
 
-  _getAvailableBusesEvent(
+  _getAvailableBuses(
       GetAvailableBusesEvent event, Emitter<HomeState> emit) async {
     emit(AvailableBusesLoadingState());
     final availableBusesList =
@@ -91,30 +94,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  _getArrivalTime(GetArrivalTime event, Emitter<HomeState> emit) async {
-    emit(ArrivalTimePredictionLoadingState());
-    final arrivalTime = await getArrivalTimeUsecase(GetArrivalTimeParams(
-      startPlaceId: event.startPlaceId,
-      destinationPlaceId: event.destinationPlaceId,
-    ));
+  _getDriverLocation(GetDriverLocation event, Emitter<HomeState> emit) async {
+    final driverLocation = await getDriverLocationUsecase(
+        GetDriverLocationParams(driverPhoneNumber: event.driverPhoneNumber));
 
-    arrivalTime.fold(
-      (failure) => emit(ArrivalTimePredictionErrorState(errorMessage: failure.errorMessage)),
-      (arrivalTime) =>
-          emit(ArrivalTimePredictionLoadedState(arrivalTime: arrivalTime)),
+    driverLocation.fold(
+      (failure) => emit(GetDriverLocationErrorState(errorMessage: failure.errorMessage)),
+      (driveEntity) => emit(GetDriverLocationLoadedState(driverLocationEntity: driveEntity)),
     );
   }
 
-  _getPlaceIdFromCoordinates(GetPlaceIdFromCoordinates event, Emitter<HomeState> emit) async {
-    emit(GetPlaceIdFromCoordinateLoadingState());
-    final placeId = await getPlaceIdFromCoordinatesUsecase(GetPlaceIdFromCoordinatesParams(
-      longitude: event.longitude,
-      latitude: event.latitude,
-    ));
-
-    placeId.fold(
-      (failure) => emit(GetPlaceIdFromCoordinateErrorState(errorMessage: failure.errorMessage)),
-      (placeId) => emit(GetPlaceIdFromCoordinateLoadedState(placeId: placeId)),
-    );
-  }
+ 
 }

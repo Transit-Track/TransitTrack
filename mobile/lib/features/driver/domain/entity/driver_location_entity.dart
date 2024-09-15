@@ -1,13 +1,15 @@
 import 'package:equatable/equatable.dart';
 
-class DriverLocationEntity extends Equatable {
+class LocationEntity extends Equatable {
   final double longitude;
   final double latitude;
 
-  const DriverLocationEntity({
+  const LocationEntity({
     required this.longitude,
     required this.latitude,
   });
   @override
   List<Object?> get props => [longitude, latitude];
+
+  toJson() {}
 }

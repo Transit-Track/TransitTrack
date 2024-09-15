@@ -55,7 +55,6 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
       {required String phoneNumber, required String password}) async {
     if (await networkInfo.isConnected) {
       try {
-
         final token = await remoteDatasource.login(
           phoneNumber: phoneNumber,
           password: password,
@@ -63,15 +62,15 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
 
         await localDataSource.saveToken(token);
 
-          try {
-            final user = await getUserCredential(token);
-            return user;
-          } on UnauthorizedException {
-            return Left(UnauthorizedFailure());
-          } catch (e) {
-            return Left(ServerFailure());
-          }
 
+        try {
+          final user = await getUserCredential(token);
+          return user;
+        } on UnauthorizedException {
+          return Left(UnauthorizedFailure());
+        } catch (e) {
+          return Left(ServerFailure());
+        }
       } on UnauthorizedException {
         return Left(UnauthorizedFailure());
       } catch (e) {

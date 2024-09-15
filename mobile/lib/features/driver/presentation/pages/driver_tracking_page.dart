@@ -41,8 +41,7 @@ class _DriverTrackingPageState extends State<DriverTrackingPage> {
     locationController.onLocationChanged.listen((LocationData currentLocation) {
       if (currentLocation.latitude != null &&
           currentLocation.longitude != null) {
-        print(
-            'yeeeeeeeeeeeeeeeeeeeeeeeee ${currentLocation.latitude} ${currentLocation.longitude}');
+       
         if (currentLocation.latitude != null &&
             currentLocation.longitude != null) {
           // call a bloc to Update the driver's location
