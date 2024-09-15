@@ -26,7 +26,7 @@ class NotificationCardWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'From ${bus.start} To ${bus.destination}',
+            'From ${bus.route.stations[0].name} To ${bus.route.stations[bus.route.stations.length - 1]}',
             style: TextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.bold,
@@ -66,7 +66,7 @@ class NotificationCardWidget extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            'Approaching to: ${bus.stationName}',
+            'Approaching to: ${bus.route.stations[0].name}',
             style: TextStyle(
               fontSize: 14.sp,
               color: Colors.black87,

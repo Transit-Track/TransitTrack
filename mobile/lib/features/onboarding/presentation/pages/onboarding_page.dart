@@ -14,6 +14,13 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
+  
+   Future<void> completeOnboarding(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('onboarding', true);
+    context.goNamed(AppPath.login); // Navigate to login or home based on your logic
+  }
+
   List<OnboardingEntity> onboardingItems = [
     OnboardingEntity(
         title: "Real-time tracking",

@@ -31,7 +31,6 @@ class _FeedbackPageState extends State<SendFeedbackPage> {
             0.5),
         backgroundColor: Colors.white,
         onPressed: () => {
-          print("preseesssssssddddddddddddddddddddddddddddddd"),
           (context).goNamed(AppPath.profile)
           },
         child: const Icon(Icons.arrow_back),
