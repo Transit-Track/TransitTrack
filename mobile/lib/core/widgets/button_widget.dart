@@ -16,8 +16,7 @@ class ButtonWidget extends StatelessWidget {
       required this.onClick,
       this.color = primary,
       this.width = 128,
-      this.height = 43
-      });
+      this.height = 43});
 
   @override
   Widget build(BuildContext context) {

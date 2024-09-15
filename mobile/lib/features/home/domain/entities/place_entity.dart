@@ -1,17 +1,14 @@
 import 'package:equatable/equatable.dart';
 
-class LocationEntity extends Equatable {
+class PlaceEntity extends Equatable {
   final String id;
   final String name;
 
-  const LocationEntity({
+  const PlaceEntity({
     required this.id,
     required this.name,
   });
 
   @override
-  List<Object?> get props => [
-        id,
-        name
-      ];
+  List<Object?> get props => [id, name];
 }

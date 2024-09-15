@@ -4,6 +4,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:transittrack/core/injections/auth_injection/auth_injection.dart';
 import 'package:transittrack/core/injections/driver_injection/driver_injection.dart';
 import 'package:transittrack/core/injections/home_injection/home_injection.dart';
+import 'package:transittrack/core/injections/my_route_injection/my_route_injection.dart';
 import 'package:transittrack/core/usecases/usecases.dart';
 
 import '../network/network.dart';
@@ -15,6 +16,7 @@ Future<void> init() async {
   AuthInjection().init();
   HomeInjection().init();
   DriverInjection().init();
+  MyRouteInjection().init();
 
   //! Core
   sl.registerLazySingleton<NetworkInfo>(
