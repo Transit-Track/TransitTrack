@@ -47,12 +47,10 @@ final class GetArrivalTime extends HomeEvent {
   });
 }
 
-final class GetPlaceIdFromCoordinates extends HomeEvent {
-  final double longitude;
-  final double latitude;
+final class GetDriverLocation extends HomeEvent {
+  final String driverPhoneNumber;
 
-  const GetPlaceIdFromCoordinates({
-    required this.longitude,
-    required this.latitude,
+  const GetDriverLocation({
+    required this.driverPhoneNumber,
   });
 }

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mpesa_flutter_plugin/mpesa_flutter_plugin.dart';
 import 'package:transittrack/core/theme.dart';
-import 'package:transittrack/features/home/domain/entities/bus.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 import 'package:transittrack/features/tickets/presentation/widget/payment_method_card_widget.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -37,8 +37,6 @@ class _PaymentPageState extends State<PaymentPage> {
             "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919",
       );
 
-      print(
-          "ressssssssssssssult: ---->>>> ${transactionInitialisation.toString()}");
     } catch (e) {
       print(e.toString());
     }
@@ -117,7 +115,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.67,
                             child: Text(
-                              'From ${widget.bus.start} to ${widget.bus.destination}',
+                              'From ${widget.bus.route.stations[0].name} to ${widget.bus.route.stations[widget.bus.route.stations.length - 1].name}',
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                 fontSize: 20.sp,

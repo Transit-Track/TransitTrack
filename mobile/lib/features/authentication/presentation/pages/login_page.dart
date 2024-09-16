@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
+import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/utils/validation.dart';
 import 'package:transittrack/core/widgets/button_widget.dart';
+import 'package:transittrack/features/authentication/data/data_sources/auth_local_datasource.dart';
 import 'package:transittrack/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:transittrack/features/authentication/presentation/widget/input_field_widget.dart';
 
@@ -39,22 +41,21 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
-        if (state is LoginErrorState) {
-          // ScaffoldMessenger.of(context).showSnackBar(
-            // SnackBar(
-             //  content: Text(state.message),
-              // backgroundColor: Colors.red,
-            // ),
-          // );
-           (context).goNamed(AppPath.home);
+        if (state is UnAuthenticatedState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: danger,
+            ),
+          );
         } else if (state is LoggedInState) {
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   const SnackBar(
-          //     content: Text('Succesfluy Loged in'),
-          //     backgroundColor: Colors.green,
-          //   ),
-          // );
-          (context).goNamed(AppPath.home);
+          if (state.user.role == 'user') {
+            context.goNamed(AppPath.home);
+          } else if (state.user.role == 'driver') {
+            context.goNamed(AppPath.driverTracking);
+          }
+        } else {
+          context.goNamed(AppPath.login);
         }
       },
       child: Scaffold(

@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/button_widget.dart';
-import 'package:transittrack/features/home/domain/entities/bus.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
+import 'package:transittrack/features/home/domain/entities/station_entity.dart';
 
 class ButtomSheetContentWidget extends StatefulWidget {
   final BusEntity bus;
@@ -62,7 +63,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${widget.bus.start} to ${widget.bus.destination}',
+                        '${widget.bus.route.stations[0].name} to ${widget.bus.route.stations[widget.bus.route.stations.length - 1].name}',
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           fontSize: 20.sp,
@@ -79,7 +80,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Price: ${widget.bus.routes.length}ETB'),
+                          Text('Price: ${widget.bus.route.stations.length}ETB'),
                           // SizedBox(width: 125.w),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -108,7 +109,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              collapsableRoutesWidget(widget.bus.routes),
+              collapsableRoutesWidget(widget.bus.route.stations),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 2.w, 25.h),
                 child: ButtonWidget(
@@ -128,7 +129,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
     );
   }
 
-  Widget collapsableRoutesWidget(List<Map<String, dynamic>> routes) {
+  Widget collapsableRoutesWidget(List<StationEntity> routes) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -161,7 +162,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                         ),
                         child: Center(
                             child: Text(
-                          routes[index]['name'],
+                          routes[index].name,
                           textAlign: TextAlign.center,
                         )),
                       ),
@@ -213,7 +214,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                         ),
                         child: Center(
                           child: Text(
-                            routes[index]['name'],
+                            routes[index].name,
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -253,7 +254,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                           ),
                           child: Center(
                               child: Text(
-                            routes[index]['name'],
+                            routes[index].name,
                             textAlign: TextAlign.center,
                           )),
                         ),

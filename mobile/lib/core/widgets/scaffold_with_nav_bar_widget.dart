@@ -63,13 +63,6 @@ class ScaffoldWithNavBar extends StatelessWidget {
     );
   }
 
-  /// `onTap: (int index) => _onTap(context, index),`
-  void _onTap(BuildContext context, int index) {
-    navigationShell.goBranch(
-      index,
-      initialLocation: index == navigationShell.currentIndex,
-    );
-  }
 }
 
 class RootScreen extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:transittrack/features/home/data/model/location_model.dart';
+import 'package:transittrack/features/home/data/model/place_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 
 abstract class GoogleMapDatasource {
-  Future<List<LocationModel>> getPlacAutoCompleteSuggestion(String input);
+  Future<List<PlaceModel>> getPlacAutoCompleteSuggestion(String input);
   Future<String?> getPlaceIdFromCoordinates(double longitude, double latitude);
   Future<String?> arrivalTimePrediction(
       String? startPlaceId, String? destinationPlaceId);
@@ -18,25 +18,24 @@ class GoogleMapDataSourceImpl implements GoogleMapDatasource {
   final String apiKey = "";
 
   @override
-  Future<List<LocationModel>> getPlacAutoCompleteSuggestion(
+  Future<List<PlaceModel>> getPlacAutoCompleteSuggestion(
       String input) async {
     var uuid = const Uuid();
     String token = uuid.v4();
 
-    final listOfLocations = <LocationModel>[];
+    final listOfLocations = <PlaceModel>[];
     String baseUrl =
         "https://maps.googleapis.com/maps/api/place/autocomplete/json";
 
     String request = '$baseUrl?input=$input&key=$apiKey&sessiontoken=$token';
     var response = await http.get(Uri.parse(request));
-    print("resssssssssssssssssssss ${response.body}");
     var data = json.decode(response.body);
 
     if (response.statusCode == 200) {
       final result = data['predictions'];
 
       for (var location in result) {
-        listOfLocations.add(LocationModel.fromJson(location));
+        listOfLocations.add(PlaceModel.fromJson(location));
       }
     } else {
       throw Exception('Failed to load data');

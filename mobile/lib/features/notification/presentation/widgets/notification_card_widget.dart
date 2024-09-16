@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:transittrack/features/home/domain/entities/bus.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 
 class NotificationCardWidget extends StatelessWidget {
   final BusEntity bus;
@@ -9,7 +9,7 @@ class NotificationCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
+      margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 14.w),
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
@@ -26,7 +26,7 @@ class NotificationCardWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'From ${bus.start} To ${bus.destination}',
+            'From ${bus.route.stations[0].name} To ${bus.route.stations[bus.route.stations.length - 1]}',
             style: TextStyle(
               fontSize: 16.sp,
               fontWeight: FontWeight.bold,
@@ -48,12 +48,12 @@ class NotificationCardWidget extends StatelessWidget {
                 children: [
                   Image.asset(
                     'assets/images/time.png',
-                    width: 20.w,
-                    height: 20.h,
+                    width: 25.w,
+                    height: 25.h,
                   ),
                   SizedBox(width: 5.w),
                   Text(
-                    bus.arrivalTime,
+                    '${bus.arrivalTime} min',
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
@@ -66,7 +66,7 @@ class NotificationCardWidget extends StatelessWidget {
           ),
           SizedBox(height: 8.h),
           Text(
-            'Approaching to: ${bus.stationName}',
+            'Approaching to: ${bus.route.stations[0].name}',
             style: TextStyle(
               fontSize: 14.sp,
               color: Colors.black87,

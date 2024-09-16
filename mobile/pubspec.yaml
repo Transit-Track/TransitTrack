@@ -49,17 +49,6 @@ dependencies:
   # local Storage
   flutter_secure_storage: ^9.2.2
 
-  # core Functionality tools
-#   envied: ^0.5.4+1
-#   uuid: ^4.4.2
-
-
-#   # Google Maps
-#   flutter_google_places_hoc081098: ^2.0.0
-#   flutter_geocoder: ^0.2.2-nullsafety
-#   flutter_google_maps_webservices: ^1.1.1
-#   flutter_styled_toast: ^2.2.1
-#   flutter_svg: ^2.0.10+1
 
 
 dev_dependencies:
@@ -67,6 +56,8 @@ dev_dependencies:
   envied_generator: ^0.5.4+1
   flutter_test:
     sdk: flutter
+  mockito: ^5.4.4
+  mocktail: ^1.0.4
 
 
 

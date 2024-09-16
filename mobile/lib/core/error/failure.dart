@@ -24,12 +24,20 @@ class NetworkFailure extends Failure {
   NetworkFailure({this.errorMessage = 'No internet connection'});
 }
 
-class UnauthorizedRequestFailure extends Failure {
+class UnauthorizedFailure extends Failure {
   @override
   final String errorMessage;
 
-  UnauthorizedRequestFailure({this.errorMessage = 'User not authenticated'});
+  UnauthorizedFailure({this.errorMessage = 'Incorrect phone number or password'});
 }
+
+class AuthenticationFailure extends Failure {
+  @override
+  final String errorMessage;
+
+  AuthenticationFailure({this.errorMessage = 'Authentication failed'});
+}
+
 
 class AnonymousFailure extends Failure {
   @override

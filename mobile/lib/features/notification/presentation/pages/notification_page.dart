@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/features/home/presentation/pages/dummy_data.dart';
 import 'package:transittrack/features/notification/presentation/widgets/notification_card_widget.dart';
+import 'package:transittrack/features/tickets/presentation/pages/QR_page.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
@@ -28,23 +30,33 @@ class _NotificationPageState extends State<NotificationPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                const Icon(Icons.notifications, color: Colors.black),
-                SizedBox(width: 16.w),
-                Text(
-                  'Notifications',
-                  style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
-                ),
-              ],
+            SizedBox(height: 120.h),
+            Center(
+              child: Row(
+                children: [
+                  const Icon(Icons.notifications, color: Colors.black),
+                  SizedBox(width: 16.w),
+                  Text(
+                    'Notifications',
+                    style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: 16.h),
             Expanded(
               child: notifications.isNotEmpty
                   ? ListView.builder(
                       itemCount: notifications.length,
                       itemBuilder: (context, index) {
-                        return NotificationCardWidget(bus: notifications[index]);
+                        return InkWell(
+                          onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => QRCodePage(),
+                            ),
+                          );
+                        },
+                          child: NotificationCardWidget(bus: notifications[index]));
                       },
                     )
                   : Center(

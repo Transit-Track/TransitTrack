@@ -23,6 +23,9 @@ class UserOut(BaseModel):
 
 class UserInDB(BaseModel):
     id: str
+    full_name: str
+    phone_number: str
+    hashed_password: bytes
 
 class UserCreate(BaseModel):
     full_name: str

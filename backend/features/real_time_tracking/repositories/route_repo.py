@@ -4,7 +4,7 @@ from core.config.db import client as db
 
 class RouteRepository:
     def __init__(self):
-        self.db = db.local.transittrack.routes
+        self.db = db.transittrack.routes
     
     
     async def is_route_exist(self, route_id, start_station, end_station):

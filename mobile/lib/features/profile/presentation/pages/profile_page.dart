@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
 import 'package:transittrack/features/authentication/presentation/pages/change_password_page.dart';
-import 'package:transittrack/features/profile/presentation/pages/send_feedback_page.dart';
 import 'package:transittrack/features/profile/presentation/pages/update_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -20,17 +22,44 @@ class _ProfilePageState extends State<ProfilePage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: white,
-        appBar: CustomAppBarWidget(),
+        appBar: const CustomAppBarWidget(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Avatar and Edit Profile
-              const SizedBox(height: 20),
-              CircleAvatar(
+              GestureDetector(
+                onTap: () {
+                  //! handle logout
+                  (context).goNamed(AppPath.login);
+                },
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      const Icon(
+                        Icons.logout,
+                        size: 30,
+                        color: secondary,
+                      ),
+                      Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: secondary,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              const CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/images/avatar_placeholder.png'),
+                backgroundImage:
+                    AssetImage('assets/images/avatar_place_holder.jpg'),
               ),
               const SizedBox(height: 10),
               GestureDetector(
@@ -38,7 +67,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   // Navigate to Edit Profile page
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => UpdateProfilePage()),
+                    MaterialPageRoute(
+                        builder: (context) => UpdateProfilePage()),
                   );
                 },
                 child: const Text(
@@ -56,6 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 leading: const Icon(Icons.notifications),
                 title: const Text('Notifications'),
                 trailing: Switch(
+                  activeColor: primary,
                   value: _notificationsEnabled,
                   onChanged: (value) {
                     setState(() {
@@ -72,10 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 title: const Text('Change Password'),
                 onTap: () {
                   // Navigate to change password page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ChangePasswordPage()),
-                  );
+                  (context).goNamed(AppPath.changePassword);
                 },
               ),
               const Divider(),
@@ -85,11 +113,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 leading: const Icon(Icons.history),
                 title: const Text('Payment History'),
                 onTap: () {
-                  // Navigate to payment history page
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => PaymentHistoryPage()),
-                  // );
+                  (context).goNamed(AppPath.paymentHistory);
+
                 },
               ),
               const Divider(),
@@ -100,29 +125,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 title: const Text('Send Feedback'),
                 onTap: () {
                   // Navigate to send feedback page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SendFeedbackPage()),
-                  );
+                  (context).goNamed(AppPath.sendFeedback);
                 },
               ),
               const Divider(),
-
-              // Logout
-              const Spacer(),
-              TextButton(
-                onPressed: () {
-                  // Implement logout functionality
-                },
-                child: const Text(
-                  'Log out',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
             ],
           ),
         ),

@@ -56,7 +56,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              // Handle logout action
+              
             },
           ),
         ],

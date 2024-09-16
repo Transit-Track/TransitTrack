@@ -5,97 +5,112 @@ import 'package:transittrack/core/widgets/scaffold_with_nav_bar_widget.dart';
 import 'package:transittrack/features/authentication/presentation/pages/change_password_page.dart';
 import 'package:transittrack/features/authentication/presentation/pages/login_page.dart';
 import 'package:transittrack/features/authentication/presentation/pages/signup_page.dart';
-import 'package:transittrack/features/home/domain/entities/bus.dart';
+import 'package:transittrack/features/driver/presentation/pages/driver_tracking_page.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 import 'package:transittrack/features/my_route/presentation/pages/my_route.dart';
 import 'package:transittrack/features/home/presentation/pages/home_page.dart';
 import 'package:transittrack/features/home/presentation/pages/real_time_vehicle_tracking_page.dart';
 import 'package:transittrack/features/notification/presentation/pages/notification_page.dart';
 import 'package:transittrack/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:transittrack/features/profile/presentation/pages/payment_history_page.dart';
 import 'package:transittrack/features/profile/presentation/pages/profile_page.dart';
+import 'package:transittrack/features/profile/presentation/pages/send_feedback_page.dart';
+import 'package:transittrack/features/tickets/presentation/pages/QR_page.dart';
 import 'package:transittrack/features/tickets/presentation/pages/payment_page.dart';
 import 'package:transittrack/features/tickets/presentation/pages/ticket_page.dart';
 
 class AppRouter {
-  static final GoRouter router =
-      GoRouter(initialLocation: AppPath.home, routes: <RouteBase>[
-    StatefulShellRoute.indexedStack(
-      builder: (BuildContext context, GoRouterState state,
-              StatefulNavigationShell navigationShell) =>
-          ScaffoldWithNavBar(navigationShell: navigationShell),
-      branches: [
-        StatefulShellBranch(
-          routes: <RouteBase>[
-            GoRoute(
+  static GoRouter router(bool onboarding) => GoRouter(
+    initialLocation:  onboarding ? AppPath.login : AppPath.onboarding,
+    // initialLocation: AppPath.login,
+    routes: <RouteBase>[
+      StatefulShellRoute.indexedStack(
+        builder: (BuildContext context, GoRouterState state,
+                StatefulNavigationShell navigationShell) =>
+            ScaffoldWithNavBar(navigationShell: navigationShell),
+        branches: [
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
                 path: AppPath.home,
                 name: AppPath.home,
                 builder: (BuildContext context, GoRouterState state) {
                   return const HomePage();
-                }),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: <RouteBase>[
-            GoRoute(
-                path: AppPath.my_route,
-                name: AppPath.my_route,
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: AppPath.myRoute,
+                name: AppPath.myRoute,
                 builder: (BuildContext context, GoRouterState state) {
                   return const MyRoute();
-                }),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: <RouteBase>[
-            GoRoute(
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
                 path: AppPath.ticket,
                 name: AppPath.ticket,
                 builder: (BuildContext context, GoRouterState state) {
                   return const TicketPage();
-                }),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: <RouteBase>[
-            GoRoute(
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
                 path: AppPath.profile,
                 name: AppPath.profile,
                 builder: (BuildContext context, GoRouterState state) {
                   return const ProfilePage();
-                }),
-          ],
-        ),
-      ],
-    ),
-    GoRoute(
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+      GoRoute(
         path: AppPath.onboarding,
         name: AppPath.onboarding,
         builder: (BuildContext context, GoRouterState state) {
           return const OnboardingPage();
-        }),
-    GoRoute(
+        },
+      ),
+      GoRoute(
         path: AppPath.login,
         name: AppPath.login,
         builder: (BuildContext context, GoRouterState state) {
           return const LoginPage();
-        }),
-    GoRoute(
+        },
+      ),
+      GoRoute(
         path: AppPath.signup,
         name: AppPath.signup,
         builder: (BuildContext context, GoRouterState state) {
           return const SignupPage();
-        }),
-    GoRoute(
+        },
+      ),
+      GoRoute(
         path: AppPath.changePassword,
         name: AppPath.changePassword,
         builder: (BuildContext context, GoRouterState state) {
           return const ChangePasswordPage();
-        }),
-    GoRoute(
+        },
+      ),
+      GoRoute(
         path: AppPath.notification,
         name: AppPath.notification,
         builder: (BuildContext context, GoRouterState state) {
           return const NotificationPage();
-        }),
-    GoRoute(
+        },
+      ),
+      GoRoute(
         path: AppPath.realTimeVehicleTracking,
         name: AppPath.realTimeVehicleTracking,
         builder: (BuildContext context, GoRouterState state) {
@@ -103,8 +118,9 @@ class AppRouter {
               state.extra as Map<String, dynamic>;
           final BusEntity bus = extra['bus'] as BusEntity;
           return RealTimeVehicleTrackingPage(bus: bus);
-        }),
-    GoRoute(
+        },
+      ),
+      GoRoute(
         path: AppPath.payment,
         name: AppPath.payment,
         builder: (BuildContext context, GoRouterState state) {
@@ -112,7 +128,37 @@ class AppRouter {
               state.extra as Map<String, dynamic>;
           final BusEntity bus = extra['bus'] as BusEntity;
           return PaymentPage(bus: bus);
-          // return TicketPage();
-        }),
-  ]);
+        },
+      ),
+      GoRoute(
+        path: AppPath.driverTracking,
+        name: AppPath.driverTracking,
+        builder: (BuildContext context, GoRouterState state) {
+          return const DriverTrackingPage();
+        },
+      ),
+      GoRoute(
+        path: AppPath.qrPage,
+        name: AppPath.qrPage,
+        builder: (BuildContext context, GoRouterState state) {
+          return const QRCodePage();
+        },
+      ),
+       GoRoute(
+        path: AppPath.sendFeedback,
+        name: AppPath.sendFeedback,
+        builder: (BuildContext context, GoRouterState state) {
+          return const SendFeedbackPage();
+        },
+      ),
+      GoRoute(
+        path: AppPath.paymentHistory,
+        name: AppPath.paymentHistory,
+        builder: (BuildContext context, GoRouterState state) {
+          return const PaymentHistoryPage();
+        },
+      ),
+    ],
+
+  );
 }
