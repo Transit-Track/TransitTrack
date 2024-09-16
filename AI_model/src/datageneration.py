@@ -8,8 +8,12 @@ timestamps = pd.date_range(start='2024-01-01', end='2024-10-30', freq='h')
 # List of destination stations and their numeric mappings
 start_station = "Megenagna"
 start_mapping = {"Megenagna": 0}
-destination_stations = ["4 kilo", "Bole", "Piassa", "Mexico"]
-destination_mapping = {"4 kilo": 3, "Bole": 2, "Piassa": 1, "Mexico": 4}
+destination_stations = ["4 kilo", "Bole", "Piassa", "Mexico", "Gurdshola", "British Council", "Kebena", "Stadium", "Estifanos", "Urael", "Hayahulet"]
+destination_mapping = {
+    "4 kilo": 3, "Bole": 2, "Piassa": 1, "Mexico": 4,
+    "Gurdshola": 5, "British Council": 6, "Kebena": 7,
+    "Stadium": 8, "Estifanos": 9, "Urael": 10, "Hayahulet": 11
+}
 
 # List of Ethiopian holiday dates
 holidays = [
@@ -50,7 +54,9 @@ data = pd.DataFrame({
     }), 
     'hour_of_day': timestamps.hour,
     'start_station': 0,  
-    'destination_station': np.random.choice([3, 2, 1, 4], size=len(timestamps)),  
+    'destination_station': np.random.choice(
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], size=len(timestamps)
+    ),  
     'is_weekday': (timestamps.weekday < 5).astype(int), 
     'is_holiday': (timestamps.strftime('%Y-%m-%d').isin(holidays) | timestamps.strftime('%Y-%m-%d').isin(high_demand_days)).astype(int)  
 })
