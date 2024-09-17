@@ -43,6 +43,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     try {
       final UserCredentialModel userCredential =
           await remoteDatasource.getUserCredential(token: token);
+          userCredential.token = token;
       await localDataSource.storeUserCredential(userCredential);
       return Right(userCredential);
     } catch (e) {
@@ -61,8 +62,6 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
         );
 
         await localDataSource.saveToken(token);
-
-
         try {
           final user = await getUserCredential(token);
           return user;

@@ -15,7 +15,8 @@ abstract class AuthenticationLocalDataSource {
   Future<UserCredentialModel?> getUserCredentials();
 }
 
-class AuthenticationLocalDataSourceImpl implements AuthenticationLocalDataSource {
+class AuthenticationLocalDataSourceImpl
+    implements AuthenticationLocalDataSource {
   final FlutterSecureStorage secureStorage;
 
   AuthenticationLocalDataSourceImpl({required this.secureStorage});
@@ -46,7 +47,10 @@ class AuthenticationLocalDataSourceImpl implements AuthenticationLocalDataSource
     final userJson = await secureStorage.read(key: 'user_credentials');
     if (userJson != null) {
       final Map<String, dynamic> userMap = json.decode(userJson);
-      return UserCredentialModel.fromJson(userMap);
+      UserCredentialModel userCredentialModel =
+          UserCredentialModel.fromJson(userMap);
+      print(userCredentialModel);
+      return userCredentialModel;
     }
     return null;
   }

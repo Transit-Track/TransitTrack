@@ -23,8 +23,8 @@ import 'package:transittrack/features/tickets/presentation/pages/payment_page.da
 import 'package:transittrack/features/tickets/presentation/pages/ticket_page.dart';
 
 class AppRouter {
-  static GoRouter router(bool onboarding) => GoRouter(
-    initialLocation:  onboarding ? AppPath.login : AppPath.onboarding,
+  static GoRouter router(bool onboarding, String? role) => GoRouter(
+    initialLocation: role == 'user' ? AppPath.home : role == 'driver' ?  AppPath.driverTracking : onboarding ? AppPath.login : AppPath.onboarding,
     // initialLocation: AppPath.login,
     routes: <RouteBase>[
       StatefulShellRoute.indexedStack(

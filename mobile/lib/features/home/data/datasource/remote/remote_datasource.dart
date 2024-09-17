@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:transittrack/core/constants/constants.dart';
 import 'package:transittrack/features/driver/data/model/driver_location_model.dart';
 import 'package:transittrack/features/home/data/datasource/remote/google_map_datasource.dart';
 import 'package:transittrack/features/home/data/model/bus_model.dart';
@@ -21,8 +22,6 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     required this.client,
     required this.googleMapDatasource,
   });
-
-  String baseUrl = "http://192.168.132.143:8000";
 
   @override
   Future<List<BusModel>> getAvailablebuses(
