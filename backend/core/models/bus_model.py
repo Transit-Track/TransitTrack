@@ -8,7 +8,7 @@ from bson import ObjectId
 class Bus (BaseModel):
     bus_id: int 
     route_id: int
-    driver_id: ObjectId
+    driver_id: int
     bus_type: str
     capacity: int
     driver: DriverOnBus = None

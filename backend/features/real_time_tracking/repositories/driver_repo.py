@@ -77,6 +77,3 @@ class DriverRepository:
         driver["state"] = 0
         return result
     
-    async def find_driver_by_id(self,driver_id: ObjectId):
-        driver = await self.db.find_one({'_id': driver_id})
-        return driver
