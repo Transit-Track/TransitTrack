@@ -9,4 +9,7 @@ class Location(BaseModel):
             "type": "Point",
             "coordinates": [self.longitude, self.latitude]
         }
+class GeoLocation(BaseModel):
+    type: str
+    coordinates: list
     

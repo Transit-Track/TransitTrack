@@ -7,6 +7,8 @@ from bson import ObjectId
 
 class Bus (BaseModel):
     bus_id: int 
+    route_id: int
+    driver_id: ObjectId
     bus_type: str
     capacity: int
     driver: DriverOnBus = None
@@ -34,4 +36,6 @@ class Bus (BaseModel):
 
 class BusOut(BaseModel):
     bus_type: str
-    route: Route
+    driver: DriverOnBus
+    current_route: Route
+    arrival_time: float

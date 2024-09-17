@@ -76,3 +76,7 @@ class DriverRepository:
         result = await self.bus_repo.db.update_one({"bus_id": bus['bus_id']}, {"$set": {"route_id": route_id}})
         driver["state"] = 0
         return result
+    
+    async def find_driver_by_id(self,driver_id: ObjectId):
+        driver = await self.db.find_one({'_id': driver_id})
+        return driver
