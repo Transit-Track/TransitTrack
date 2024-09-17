@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mpesa_flutter_plugin/initializer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transittrack/core/keys/keys.dart';
