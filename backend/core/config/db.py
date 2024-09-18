@@ -1,14 +1,19 @@
+# from motor.motor_asyncio import AsyncIOMotorClient
+
+# client = AsyncIOMotorClient('mongodb://localhost:27017/')
 from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
 
-MONGODB_URL: str = "mongodb+srv://WizardTi:75YUkDYZp4aYITFP@cluster0.rfbjo.mongodb.net/"
-MONGODB_NAME: str = "payment_db"
-client = AsyncIOMotorClient(MONGODB_URL, tls=True, tlsAllowInvalidCertificates=True)
-database = client[MONGODB_NAME]
+uri = "mongodb+srv://tmel67763:DVbOJAHPYTZwvv4U@cluster0.owvt1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
-transactions_collection = database["transactions"]
-tickets_collection = database["tickets"]
-buses_collection = database["buses"]
-users_collection = database["users"]
+# Create a new client and connect to the server
+# client = MongoClient(uri, server_api=ServerApi('1'))
+client = AsyncIOMotorClient(uri)
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command('ping')
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print('rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr:',e)
 
-def get_database():
-    return database
