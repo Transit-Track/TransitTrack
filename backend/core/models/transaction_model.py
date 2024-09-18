@@ -4,7 +4,7 @@ from typing import Optional
 from validator import PyObjectId
 from datetime import datetime
 
-class Payment(BaseModel):
+class Transaction(BaseModel):
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
     user_id: str
     amount: float
@@ -15,6 +15,10 @@ class Payment(BaseModel):
     start_station: str
     destination_station: str
     number_of_tickets: int
+    ticket_id: PyObjectId
+    start_time: datetime
+    commit_time: Optional[datetime] = None
+    rollback_time: Optional[datetime] = None
 
     class Config:
         populate_by_name = True
