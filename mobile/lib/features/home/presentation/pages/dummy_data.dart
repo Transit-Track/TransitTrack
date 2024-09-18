@@ -6,44 +6,45 @@ import 'package:transittrack/features/home/domain/entities/station_entity.dart';
 
 List<BusEntity> buses = [
   const BusEntity(
-    isMyRoute: true,
-    driver: DriverEntity(
-        phoneNumber: "2514567789",
-        location: LocationEntity(longitude: 9.0, latitude: 8.9)),
-    arrivalTime: "1",
-    id: "",
-    type: "anbessa",
-    number: "17",
-    price: 10,
-    route: RouteEntity(distance: 10.3, id: '1',
-    stations: [
-      StationEntity(
-          stationId: '1',
-          name: 'Shiro Meda',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '2',
-          name: '4 Kilo',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '3',
-          name: 'Piassa',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '4',
-          name: 'Stadium',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '5',
-          name: 'Meskel Square',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '6',
-          name: 'Mexico',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-    ],
-    )
-  ),
+      isMyRoute: true,
+      driver: DriverEntity(
+          phoneNumber: "2514567789",
+          location: LocationEntity(longitude: 9.0, latitude: 8.9)),
+      arrivalTime: "1",
+      id: "",
+      type: "anbessa",
+      number: "17",
+      price: 10,
+      route: RouteEntity(
+        distance: 10.3,
+        id: '1',
+        stations: [
+          StationEntity(
+              stationId: '1',
+              name: 'Shiro Meda',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '2',
+              name: '4 Kilo',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '3',
+              name: 'Piassa',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '4',
+              name: 'Stadium',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '5',
+              name: 'Meskel Square',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '6',
+              name: 'Mexico',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+        ],
+      )),
   const BusEntity(
       isMyRoute: true,
       driver: DriverEntity(
@@ -54,35 +55,36 @@ List<BusEntity> buses = [
       type: "anbessa",
       number: "83",
       price: 15,
-        route: RouteEntity(distance: 10.3, id: '1',
-    stations: [
-      StationEntity(
-          stationId: '1',
-          name: 'Shiro Meda',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '2',
-          name: '4 Kilo',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '3',
-          name: 'Piassa',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '4',
-          name: 'Stadium',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '5',
-          name: 'Meskel Square',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '6',
-          name: 'Mexico',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-    ],
-    )
-      ),
+      route: RouteEntity(
+        distance: 10.3,
+        id: '1',
+        stations: [
+          StationEntity(
+              stationId: '1',
+              name: 'Shiro Meda',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '2',
+              name: '4 Kilo',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '3',
+              name: 'Piassa',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '4',
+              name: 'Stadium',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '5',
+              name: 'Meskel Square',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '6',
+              name: 'Mexico',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+        ],
+      )),
   const BusEntity(
       isMyRoute: false,
       driver: DriverEntity(
@@ -93,35 +95,36 @@ List<BusEntity> buses = [
       type: "anbessa",
       number: "16",
       price: 10,
-        route: RouteEntity(distance: 10.3, id: '1',
-    stations: [
-      StationEntity(
-          stationId: '1',
-          name: 'Shiro Meda',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '2',
-          name: '4 Kilo',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '3',
-          name: 'Piassa',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '4',
-          name: 'Stadium',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '5',
-          name: 'Meskel Square',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '6',
-          name: 'Mexico',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-    ],
-    )
-      ),
+      route: RouteEntity(
+        distance: 10.3,
+        id: '1',
+        stations: [
+          StationEntity(
+              stationId: '1',
+              name: 'Shiro Meda',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '2',
+              name: '4 Kilo',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '3',
+              name: 'Piassa',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '4',
+              name: 'Stadium',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '5',
+              name: 'Meskel Square',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '6',
+              name: 'Mexico',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+        ],
+      )),
   const BusEntity(
       isMyRoute: false,
       driver: DriverEntity(
@@ -132,35 +135,36 @@ List<BusEntity> buses = [
       type: "anbessa",
       number: "64",
       price: 5,
-        route: RouteEntity(distance: 10.3, id: '1',
-    stations: [
-      StationEntity(
-          stationId: '1',
-          name: 'Shiro Meda',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '2',
-          name: '4 Kilo',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '3',
-          name: 'Piassa',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '4',
-          name: 'Stadium',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '5',
-          name: 'Meskel Square',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '6',
-          name: 'Mexico',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-    ],
-    )
-      ),
+      route: RouteEntity(
+        distance: 10.3,
+        id: '1',
+        stations: [
+          StationEntity(
+              stationId: '1',
+              name: 'Shiro Meda',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '2',
+              name: '4 Kilo',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '3',
+              name: 'Piassa',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '4',
+              name: 'Stadium',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '5',
+              name: 'Meskel Square',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '6',
+              name: 'Mexico',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+        ],
+      )),
 ];
 
 List<BusEntity> myRoutes = [
@@ -174,35 +178,36 @@ List<BusEntity> myRoutes = [
       type: "anbessa",
       number: "17",
       price: 10,
-        route: RouteEntity(distance: 10.3, id: '1',
-    stations: [
-      StationEntity(
-          stationId: '1',
-          name: 'Shiro Meda',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '2',
-          name: '4 Kilo',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '3',
-          name: 'Piassa',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '4',
-          name: 'Stadium',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '5',
-          name: 'Meskel Square',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '6',
-          name: 'Mexico',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-    ],
-    )
-      ),
+      route: RouteEntity(
+        distance: 10.3,
+        id: '1',
+        stations: [
+          StationEntity(
+              stationId: '1',
+              name: 'Shiro Meda',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '2',
+              name: '4 Kilo',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '3',
+              name: 'Piassa',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '4',
+              name: 'Stadium',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '5',
+              name: 'Meskel Square',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '6',
+              name: 'Mexico',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+        ],
+      )),
   const BusEntity(
       isMyRoute: true,
       driver: DriverEntity(
@@ -213,35 +218,36 @@ List<BusEntity> myRoutes = [
       type: "anbessa",
       number: "83",
       price: 15,
-        route: RouteEntity(distance: 10.3, id: '1',
-    stations: [
-      StationEntity(
-          stationId: '1',
-          name: 'Shiro Meda',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '2',
-          name: '4 Kilo',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '3',
-          name: 'Piassa',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '4',
-          name: 'Stadium',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '5',
-          name: 'Meskel Square',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '6',
-          name: 'Mexico',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-    ],
-    )
-      ),
+      route: RouteEntity(
+        distance: 10.3,
+        id: '1',
+        stations: [
+          StationEntity(
+              stationId: '1',
+              name: 'Shiro Meda',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '2',
+              name: '4 Kilo',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '3',
+              name: 'Piassa',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '4',
+              name: 'Stadium',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '5',
+              name: 'Meskel Square',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '6',
+              name: 'Mexico',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+        ],
+      )),
 ];
 
 List<BusEntity> notifications = [
@@ -255,35 +261,36 @@ List<BusEntity> notifications = [
       type: "anbessa",
       number: "17",
       price: 10,
-        route: RouteEntity(distance: 10.3, id: '1',
-    stations: [
-      StationEntity(
-          stationId: '1',
-          name: 'Shiro Meda',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '2',
-          name: '4 Kilo',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '3',
-          name: 'Piassa',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '4',
-          name: 'Stadium',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '5',
-          name: 'Meskel Square',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '6',
-          name: 'Mexico',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-    ],
-    )
-      ),
+      route: RouteEntity(
+        distance: 10.3,
+        id: '1',
+        stations: [
+          StationEntity(
+              stationId: '1',
+              name: 'Shiro Meda',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '2',
+              name: '4 Kilo',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '3',
+              name: 'Piassa',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '4',
+              name: 'Stadium',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '5',
+              name: 'Meskel Square',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '6',
+              name: 'Mexico',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+        ],
+      )),
   const BusEntity(
       isMyRoute: true,
       driver: DriverEntity(
@@ -294,39 +301,55 @@ List<BusEntity> notifications = [
       type: "anbessa",
       number: "83",
       price: 15,
-        route: RouteEntity(distance: 10.3, id: '1',
-    stations: [
-      StationEntity(
-          stationId: '1',
-          name: 'Shiro Meda',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '2',
-          name: '4 Kilo',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '3',
-          name: 'Piassa',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '4',
-          name: 'Stadium',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '5',
-          name: 'Meskel Square',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-      StationEntity(
-          stationId: '6',
-          name: 'Mexico',
-          geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
-    ],
-    )
-      ),
+      route: RouteEntity(
+        distance: 10.3,
+        id: '1',
+        stations: [
+          StationEntity(
+              stationId: '1',
+              name: 'Shiro Meda',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '2',
+              name: '4 Kilo',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '3',
+              name: 'Piassa',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '4',
+              name: 'Stadium',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '5',
+              name: 'Meskel Square',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+          StationEntity(
+              stationId: '6',
+              name: 'Mexico',
+              geoLocation: LocationEntity(longitude: 9.087, latitude: 31.875)),
+        ],
+      )),
 ];
 
-// DriverEntity driver = const DriverEntity(
-//   latitude: 9.0208,
-//   longitude: 38.7469,
-// );
-// LatLng driverLocation = LatLng(driver.latitude, driver.longitude);
+class StateService {
+  static final List<String> states = [
+    'Arada',
+    '4 kilo',
+    'Piyasa',
+    'Megenagna',
+    '5 kilo',
+    '6 kilo',
+    'CMC',
+    'Ayat',
+    'Mexico',
+  ];
+
+  static List<String> getSuggestions(String query) {
+    List<String> matches = [];
+    matches.addAll(states);
+    matches.retainWhere((s) => s.toLowerCase().contains(query.toLowerCase()));
+    return matches;
+  }
+}

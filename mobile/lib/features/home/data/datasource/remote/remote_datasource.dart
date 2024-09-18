@@ -35,6 +35,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
     final response =
         await client.get(url.replace(queryParameters: queryParams));
+
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       final List<BusModel> buses =
@@ -80,14 +81,12 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<LocationModel> getDriverLocation(
-      String driverPhoneNumber) async {
+  Future<LocationModel> getDriverLocation(String driverPhoneNumber) async {
     final url = Uri.parse('$baseUrl/driver');
     final Map<String, dynamic> queryParam = {"phone_number": driverPhoneNumber};
 
     final response = await client.get(url.replace(queryParameters: queryParam));
     if (response.statusCode == 200) {
-     
       return LocationModel.fromJson(json.decode(response.body));
     } else if (response.statusCode == 404) {
       return json.decode(response.body)["detail"];

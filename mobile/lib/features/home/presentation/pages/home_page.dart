@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
@@ -69,9 +70,6 @@ class _HomePageState extends State<HomePage> {
         } else if (state is AvailableBusesErrorState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.errorMessage)));
-        } else if (state is AvailableBusesLoadedState) {
-          // ScaffoldMessenger.of(context)
-          //     .showSnackBar(SnackBar(content: Text("loaded....")));
         }
       },
       child: SafeArea(
@@ -88,133 +86,201 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextFormField(
+                      TypeAheadField(
                         controller: _startController,
-                        decoration: InputDecoration(
-                            labelText: 'Start',
-                            hintText: 'Enter start location',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            prefixIcon: const Icon(
-                              Icons.location_on,
-                              color: secondary,
-                            ),
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.search, color: primary),
-                              onPressed: () {
-                                setState(() {
-                                  startPressed = true;
-                                  searchNearbyBusesForStart(
-                                      _startController.text);
-                                });
-                              },
-                            )),
-                        validator: canNotBeNull,
-                      ),
-                      BlocBuilder<HomeBloc, HomeState>(
-                        builder: (context, state) {
-                          if (state is NearByBusesForStartLoadingState) {
-                            return Padding(
-                                padding: EdgeInsets.only(top: 20.h),
-                                child: const Center(
-                                    child: CircularProgressIndicator()));
-                          } else if (state is NearByBusesForStartLoadedState) {
-                            if (state.nearByBusesForStartList.isEmpty) {
-                              return const SizedBox(
-                                height: 0,
-                              );
-                            }
-                            return Visibility(
-                              visible: startPressed,
-                              child: ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: state.nearByBusesForStartList.length,
-                                itemBuilder: (context, index) {
-                                  return GestureDetector(
-                                      onTap: () async {
-                                        setState(() {
-                                          _startController.text = state
-                                              .nearByBusesForStartList[index];
-                                          startPressed = false;
-                                        });
-                                      },
-                                      child: ListTile(
-                                        title: Text(state
-                                            .nearByBusesForStartList[index]),
-                                      ));
-                                },
+                        hideOnEmpty: true,
+                        hideOnLoading: true,
+                        hideOnUnfocus: true,
+                        itemBuilder: (context, state) {
+                          return ListTile(
+                            tileColor: white,
+                            title: Text(state.toString()),
+                          );
+                        },
+                        onSelected: (val) {
+                          _startController.text = val;
+                        },
+                        suggestionsCallback: (search) =>
+                            StateService.getSuggestions(search),
+                        builder: (context, controller, focusNode) {
+                          return TextFormField(
+                            controller: _startController,
+                            focusNode: focusNode,
+                            decoration: InputDecoration(
+                              labelText: 'Start',
+                              hintText: 'Enter start location',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              prefixIcon: const Icon(
+                                Icons.location_on,
+                                color: secondary,
                               ),
-                            );
-                          } else if (state is LocationErrorState) {
-                            return const SizedBox(
-                              height: 0,
-                            );
-                          }
-                          return const SizedBox(
-                            height: 0,
+                            ),
+                            validator: canNotBeNull,
                           );
                         },
                       ),
-                      const SizedBox(height: 20),
-                      TextFormField(
-                        controller: _destinationController,
-                        decoration: InputDecoration(
-                            labelText: 'Destination',
-                            prefixIcon: const Icon(
-                              Icons.location_on,
-                              color: secondary,
-                            ),
-                            hintText: 'Enter your destination',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            suffixIcon: IconButton(
-                              icon: const Icon(Icons.search, color: danger),
-                              onPressed: () {
-                                setState(() {
-                                  destinationPressed = true;
-                                  searchNearbyBusesForDestination(
-                                      _destinationController.text);
-                                });
-                              },
-                            )),
-                        validator: canNotBeNull,
-                      ),
-                      BlocBuilder<HomeBloc, HomeState>(
-                          builder: (context, state) {
-                        if (state is NearByBusesForDestinationLoadingState) {
-                          return const SizedBox(height: 0);
-                        } else if (state
-                            is NearByBusesForDestinationErrorState) {
-                          return const SizedBox(height: 0);
-                        } else if (state
-                            is NearByBusesForDestinationLoadedState) {
-                          return Visibility(
-                            visible: destinationPressed,
-                            child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount:
-                                  state.nearByBusesForDestinationList.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                    onTap: () {
-                                      destinationPressed = false;
-                                      _destinationController.text = state
-                                          .nearByBusesForDestinationList[index];
-                                    },
-                                    child: ListTile(
-                                      title: Text(
-                                          state.nearByBusesForDestinationList[
-                                              index]),
-                                    ));
-                              },
-                            ),
+                      SizedBox(height: 20.h),
+
+                      TypeAheadField(
+                        itemBuilder: (context, state) {
+                          return ListTile(
+                            tileColor: white,
+                            title: Text(state.toString()),
                           );
-                        }
-                        return const SizedBox(height: 0);
-                      }),
+                        },
+                        onSelected: (val) {
+                          _destinationController.text = val.toString();
+                        },
+                        suggestionsCallback: (search) =>
+                            StateService.getSuggestions(search),
+                        builder: (context, controller, focusNode) {
+                          return TextFormField(
+                            controller: controller,
+                            focusNode: focusNode,
+                            decoration: InputDecoration(
+                              labelText: 'Destination',
+                              hintText: 'Enter destination location',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              prefixIcon: const Icon(
+                                Icons.location_on,
+                                color: secondary,
+                              ),
+                            ),
+                            validator: canNotBeNull,
+                          );
+                        },
+                      ),
+
+                      // TextFormField(
+                      //   controller: _startController,
+                      //   decoration: InputDecoration(
+                      //       labelText: 'Start',
+                      //       hintText: 'Enter start location',
+                      //       border: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(10)),
+                      //       prefixIcon: const Icon(
+                      //         Icons.location_on,
+                      //         color: secondary,
+                      //       ),
+                      //       suffixIcon: IconButton(
+                      //         icon: const Icon(Icons.search, color: primary),
+                      //         onPressed: () {
+                      //           setState(() {
+                      //             startPressed = true;
+                      //             searchNearbyBusesForStart(
+                      //                 _startController.text);
+                      //           });
+                      //         },
+                      //       )),
+                      //   validator: canNotBeNull,
+                      // ),
+                      // BlocBuilder<HomeBloc, HomeState>(
+                      //   builder: (context, state) {
+                      //     if (state is NearByBusesForStartLoadingState) {
+                      //       return Padding(
+                      //           padding: EdgeInsets.only(top: 20.h),
+                      //           child: const Center(
+                      //               child: CircularProgressIndicator()));
+                      //     } else if (state is NearByBusesForStartLoadedState) {
+                      //       if (state.nearByBusesForStartList.isEmpty) {
+                      //         return const SizedBox(
+                      //           height: 0,
+                      //         );
+                      //       }
+                      //       return Visibility(
+                      //         visible: startPressed,
+                      //         child: ListView.builder(
+                      //           physics: const NeverScrollableScrollPhysics(),
+                      //           shrinkWrap: true,
+                      //           itemCount: state.nearByBusesForStartList.length,
+                      //           itemBuilder: (context, index) {
+                      //             return GestureDetector(
+                      //                 onTap: () async {
+                      //                   setState(() {
+                      //                     _startController.text = state
+                      //                         .nearByBusesForStartList[index];
+                      //                     startPressed = false;
+                      //                   });
+                      //                 },
+                      //                 child: ListTile(
+                      //                   title: Text(state
+                      //                       .nearByBusesForStartList[index]),
+                      //                 ));
+                      //           },
+                      //         ),
+                      //       );
+                      //     } else if (state is LocationErrorState) {
+                      //       return const SizedBox(
+                      //         height: 0,
+                      //       );
+                      //     }
+                      //     return const SizedBox(
+                      //       height: 0,
+                      //     );
+                      //   },
+                      // ),
+
+                      // TextFormField(
+                      //   controller: _destinationController,
+                      //   decoration: InputDecoration(
+                      //       labelText: 'Destination',
+                      //       prefixIcon: const Icon(
+                      //         Icons.location_on,
+                      //         color: secondary,
+                      //       ),
+                      //       hintText: 'Enter your destination',
+                      //       border: OutlineInputBorder(
+                      //         borderRadius: BorderRadius.circular(10),
+                      //       ),
+                      //       suffixIcon: IconButton(
+                      //         icon: const Icon(Icons.search, color: danger),
+                      //         onPressed: () {
+                      //           setState(() {
+                      //             destinationPressed = true;
+                      //             searchNearbyBusesForDestination(
+                      //                 _destinationController.text);
+                      //           });
+                      //         },
+                      //       )),
+                      //   validator: canNotBeNull,
+                      // ),
+                      // BlocBuilder<HomeBloc, HomeState>(
+                      //     builder: (context, state) {
+                      //   if (state is NearByBusesForDestinationLoadingState) {
+                      //     return const SizedBox(height: 0);
+                      //   } else if (state
+                      //       is NearByBusesForDestinationErrorState) {
+                      //     return const SizedBox(height: 0);
+                      //   } else if (state
+                      //       is NearByBusesForDestinationLoadedState) {
+                      //     return Visibility(
+                      //       visible: destinationPressed,
+                      //       child: ListView.builder(
+                      //         physics: const NeverScrollableScrollPhysics(),
+                      //         shrinkWrap: true,
+                      //         itemCount:
+                      //             state.nearByBusesForDestinationList.length,
+                      //         itemBuilder: (context, index) {
+                      //           return GestureDetector(
+                      //               onTap: () {
+                      //                 destinationPressed = false;
+                      //                 _destinationController.text = state
+                      //                     .nearByBusesForDestinationList[index];
+                      //               },
+                      //               child: ListTile(
+                      //                 title: Text(
+                      //                     state.nearByBusesForDestinationList[
+                      //                         index]),
+                      //               ));
+                      //         },
+                      //       ),
+                      //     );
+                      //   }
+                      //   return const SizedBox(height: 0);
+                      // }),
+
                       const SizedBox(height: 30),
                       Center(
                         child: BlocBuilder<HomeBloc, HomeState>(
@@ -264,12 +330,11 @@ class _HomePageState extends State<HomePage> {
                             return Center(child: Text(state.errorMessage));
                           } else if (state is AvailableBusesLoadedState) {
                             print(
-                                      "dddddddddddddddddddddddddddddddddddd ${state.availableBusesList}");
+                                "dddddddddddddddddddddddddddddddddddd ${state.availableBusesList}");
                             return Expanded(
                               child: ListView.builder(
                                 itemCount: state.availableBusesList.length,
                                 itemBuilder: (context, index) {
-                                  
                                   return Padding(
                                     padding: EdgeInsets.only(top: 15.h),
                                     child: InkWell(
@@ -277,7 +342,8 @@ class _HomePageState extends State<HomePage> {
                                         (context).pushNamed(
                                             AppPath.realTimeVehicleTracking,
                                             extra: {
-                                              "bus": state.availableBusesList[index],
+                                              "bus": state
+                                                  .availableBusesList[index],
                                             });
                                       },
                                       child: CardWidget(
@@ -292,27 +358,25 @@ class _HomePageState extends State<HomePage> {
                           //   height: 0.0,
                           // );
                           return Expanded(
-                              child: ListView.builder(
-                                itemCount: buses.length,
-                                itemBuilder: (context, index) {
-                                  
-                                  return Padding(
-                                    padding: EdgeInsets.only(top: 15.h),
-                                    child: InkWell(
-                                      onTap: () {
-                                        (context).pushNamed(
-                                            AppPath.realTimeVehicleTracking,
-                                            extra: {
-                                              "bus": buses[index],
-                                            });
-                                      },
-                                      child: CardWidget(
-                                          bus: buses[index]),
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
+                            child: ListView.builder(
+                              itemCount: buses.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(top: 15.h),
+                                  child: InkWell(
+                                    onTap: () {
+                                      (context).pushNamed(
+                                          AppPath.realTimeVehicleTracking,
+                                          extra: {
+                                            "bus": buses[index],
+                                          });
+                                    },
+                                    child: CardWidget(bus: buses[index]),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
                         },
                       )
                     ],
