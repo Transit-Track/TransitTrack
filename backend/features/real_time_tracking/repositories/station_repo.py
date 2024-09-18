@@ -38,3 +38,7 @@ class StationRepository:
     #         station['geoLocation'] = Location(**station['location']).to_geojson()
     #         print(station)
     #         await self.db.replace_one({'_id': station['_id']}, station)
+
+    async def get_all_stations(self):
+        stations = await self.db.find().to_list(length=None)
+        return stations
