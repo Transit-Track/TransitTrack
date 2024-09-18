@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
-from validator import PyObjectId
+from core.models.validator import PyObjectId
 
 class Ticket(BaseModel):
     id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
@@ -13,3 +13,4 @@ class Ticket(BaseModel):
     price: float
     expiry_date: datetime
     status: str
+    qr_code: Optional[str] = None

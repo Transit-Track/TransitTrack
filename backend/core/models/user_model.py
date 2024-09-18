@@ -1,8 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
-from bson import ObjectId
-from validator import PyObjectId
-
+from core.models.validator import PyObjectId
 
 
 class User(BaseModel):

@@ -1,136 +1,77 @@
-from app.repositories.payment_repository import PaymentRepository
-from app.core.config import settings
-import random
-import string
 import requests
-import base64
-import qrcode
-import io
 from datetime import datetime
+from core.models.transaction_model import Transaction
+from core.models.ticket_model import Ticket
+from core.models.bus_model import Bus
+from core.models.user_model import User
+from features.payment_feature.repositories.payment_repository import PaymentRepository
+import qrcode
+from bson import ObjectId
 
 class PaymentService:
     def __init__(self, payment_repository: PaymentRepository):
         self.payment_repository = payment_repository
 
-    async def initiate_payment(self, user_id: str, amount: float, number_of_tickets: int, start_station: str, destination_station: str) -> str:
-        mpesa_code = self._generate_mpesa_code()
-        payment_data = {
-            "user_id": user_id,
-            "amount": amount,
-            "mpesa_code": mpesa_code,
-            "status": "pending",
-            "number_of_tickets": number_of_tickets,
-            "start_station": start_station,
-            "destination_station": destination_station
-        }
-        payment = await self.payment_repository.create_payment(payment_data)
-        return payment.mpesa_code
-    
-    async def confirm_payment(self, mpesa_code: str):
-        payment = await self.payment_repository.get_payment_by_code(mpesa_code)
-        if payment and payment.status == "pending":
-            payment_status = self._check_mpesa_payment_status(mpesa_code)
-            if payment_status == "success":
-                qr_code = self._generate_qr_code(payment.amount, payment.number_of_tickets, payment.start_station, payment.destination_station)
-                await self.payment_repository.update_payment_status(payment.id, "completed", qr_code)
-                ticket_data = {
-                    "user_id": payment.user_id,
-                    "start_station": payment.start_station,
-                    "destination_station": payment.destination_station,
-                    "price": payment.amount,
-                    "status": "active"
-                }
-                await self.payment_repository.create_ticket(ticket_data)
-                return qr_code
-            else:
-                await self.payment_repository.update_payment_status(payment.id, "failed")
-        return None
-
-    def _generate_mpesa_code(self):
-        return ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
-
-    def _get_mpesa_access_token(self) -> str:
-        url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
-        response = requests.get(url, auth=(settings.MPESA_CONSUMER_KEY, settings.MPESA_CONSUMER_SECRET))
-        response_data = response.json()
-        return response_data['access_token']
-
-    def _check_mpesa_payment_status(self, mpesa_code: str) -> str:
-        access_token = self._get_mpesa_access_token()
-        url = "https://apisandbox.safaricom.et/mpesa/b2c/simulatetransaction/v1/request"
-        headers = {
-            "Authorization": f"Bearer {access_token}",
-            "Content-Type": "application/json"
-        }
-        payload = {
-            "CommandID": "CustomerPayBillOnline",
-            "Amount": "10",  # Replace with actual amount
-            "Msisdn": "254724628580",  # Replace with actual customer phone number
-            "BillRefNumber": mpesa_code,
-            "ShortCode": settings.MPESA_SHORTCODE
-        }
-
-        response = requests.post(url, headers=headers, json=payload)
-        response_data = response.json()
-
-        if response_data.get("ResponseDescription") == "Accept the service request successfully.":
-            return "success"
-        else:
-            return "failed"
-
-    def _generate_qr_code(self, amount, number_of_tickets, start_station, destination_station):
-        qr = qrcode.QRCode(
-            version=1,
-            error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=10,
-            border=4,
+    async def initiate_payment(self, user_id: str, amount: float, number_of_tickets: int, start_station: str, destination_station: str, bus_id: str):
+        transaction = Transaction(
+            user_id=user_id,
+            amount=amount,
+            start_station=start_station,
+            destination_station=destination_station,
+            number_of_tickets=number_of_tickets,
+            start_time=datetime.utcnow(),
+            bus_id=bus_id
         )
+        await self.payment_repository.save_transaction(transaction)
+        await self.send_stk_push(transaction)
 
-        qr_data = f"Payment Amount: {amount}, Tickets: {number_of_tickets}, Start: {start_station}, Destination: {destination_station}"
-        qr.add_data(qr_data)
-        qr.make(fit=True)
-
-        img = qr.make_image(fill_color='blue', back_color='black')
-
-        buffer = io.BytesIO()
-        img.save(buffer, format="PNG")
-        buffer.seek(0)
-
-        # Convert the image to a base64 string
-        img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
-        return img_base64
-
-    def register_mpesa_urls(self):
-        access_token = self._get_mpesa_access_token()
-        url = "https://apisandbox.safaricom.et/v1/c2b-register-url/register"
+    async def send_stk_push(self, transaction: Transaction):
+        url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
         headers = {
-            "Authorization": f"Bearer {access_token}",
+            "Authorization": "Bearer [access_token]",
             "Content-Type": "application/json"
         }
         payload = {
-            "ShortCode": settings.MPESA_SHORTCODE,
-            "ResponseType": "Completed",
-            "ConfirmationURL": "https://mydomain.com/confirmation",
-            "ValidationURL": "https://mydomain.com/validation"
+            "BusinessShortCode": "174379",
+            "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjQwOTE4MTQyNDI1",
+            "Timestamp": datetime.now().strftime("%Y%m%d%H%M%S"),
+            "TransactionType": "CustomerPayBillOnline",
+            "Amount": transaction.amount,
+            "PartyA": transaction.user_id,
+            "PartyB": "174379",
+            "PhoneNumber": transaction.user_id,
+            "CallBackURL": "https://yourdomain.com/api/v1/payment/callback",
+            "AccountReference": "account",
+            "TransactionDesc": "test"
         }
-
         response = requests.post(url, headers=headers, json=payload)
         return response.json()
 
-    def simulate_mpesa_payment(self, amount: float, phone_number: str):
-        access_token = self._get_mpesa_access_token()
-        url = "https://apisandbox.safaricom.et/v1/c2b-register-url/register"
-        headers = {
-            "Authorization": f"Bearer {access_token}",
-            "Content-Type": "application/json"
-        }
-        payload = {
-            "CommandID": "CustomerPayBillOnline",
-            "Amount": amount,
-            "Msisdn": phone_number,
-            "BillRefNumber": "00000",
-            "ShortCode": settings.MPESA_SHORTCODE
-        }
+    async def handle_callback(self, data):
+        transaction_id = ObjectId(data['Body']['stkCallback']['CheckoutRequestID'])
+        result_code = data['Body']['stkCallback']['ResultCode']
+        transaction = await self.payment_repository.get_transaction_by_id(transaction_id)
+        
+        if result_code == 0:
+            transaction.status = "completed"
+            transaction.mpesa_code = data['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value']
+            await self.payment_repository.update_transaction(transaction)
+            await self.generate_qr_code(transaction)
+            await self.update_bus_capacity(transaction.bus_id)
+        else:
+            transaction.status = "failed"
+            await self.payment_repository.update_transaction(transaction)
 
-        response = requests.post(url, headers=headers, json=payload)
-        return response.json()
+    async def generate_qr_code(self, transaction: Transaction):
+        qr_data = f"Payment Amount: {transaction.amount}, Tickets: {transaction.number_of_tickets}, Start: {transaction.start_station}, Destination: {transaction.destination_station}"
+        qr = qrcode.make(qr_data)
+        qr_code_path = f"qrcodes/{transaction.id}.png"
+        qr.save(qr_code_path)
+        transaction.qr_code = qr_code_path
+        await self.payment_repository.update_transaction(transaction)
+
+    async def update_bus_capacity(self, bus_id: str):
+        bus = await self.payment_repository.get_bus_by_id(bus_id)
+        if bus:
+            bus.capacity += 1
+            await self.payment_repository.update_bus(bus)
