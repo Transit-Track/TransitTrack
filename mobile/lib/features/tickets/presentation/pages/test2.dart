@@ -53,14 +53,6 @@ class _Test2State extends State<Test2> {
       appBar: AppBar(
         title: const Text('Payment Page'),
       ),
-      // body:  Center(
-      // child: ElevatedButton(
-      // child: const Text('Payment Page'),
-      //  onPressed: () {
-      //    startTransaction(10.0, '254712345678');
-      // },
-      //),
-      // ),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
           return Card(
@@ -78,34 +70,34 @@ class _Test2State extends State<Test2> {
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0)),
+                    height: MediaQuery.of(context).size.height * 0.25,
+                    width: MediaQuery.of(context).size.width * 0.95,
                     child: Image.asset(
                       itemsOnSale[index]["image"],
                       fit: BoxFit.cover,
                     ),
-                    height: MediaQuery.of(context).size.height * 0.25,
-                    width: MediaQuery.of(context).size.width * 0.95,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Container(
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.45,
                         child: Text(
                           itemsOnSale[index]["itemName"],
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 14.0, color: Colors.black),
+                          style: const TextStyle(fontSize: 14.0, color: Colors.black),
                         ),
                       ),
                       Text(
-                        "Ksh. " + itemsOnSale[index]["price"].toString(),
-                        style: TextStyle(
+                        "Ksh. ${itemsOnSale[index]["price"]}",
+                        style: const TextStyle(
                             fontSize: 18.0,
                             color: Colors.white,
                             fontWeight: FontWeight.bold),
                       ),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 5, vertical: 2),
                           ),
                           onPressed: () async {
@@ -124,7 +116,7 @@ class _Test2State extends State<Test2> {
                                     builder: (context) {
                                       return AlertDialog(
                                         title: const Text('Empty Number!'),
-                                        content: Text(
+                                        content: const Text(
                                             "You did not provide a number to be charged."),
                                         actions: <Widget>[
                                           ElevatedButton(
@@ -138,7 +130,7 @@ class _Test2State extends State<Test2> {
                               }
                             }
                           },
-                          child: Text("Checkout"))
+                          child: const Text("Checkout"))
                     ],
                   )
                 ],

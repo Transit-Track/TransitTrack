@@ -15,6 +15,8 @@ import 'package:transittrack/features/onboarding/presentation/pages/onboarding_p
 import 'package:transittrack/features/profile/presentation/pages/payment_history_page.dart';
 import 'package:transittrack/features/profile/presentation/pages/profile_page.dart';
 import 'package:transittrack/features/profile/presentation/pages/send_feedback_page.dart';
+import 'package:transittrack/features/tickets/domain/entites/ticket_entity.dart';
+import 'package:transittrack/features/tickets/domain/usecases/initiate_payment_usecase.dart';
 import 'package:transittrack/features/tickets/presentation/pages/QR_page.dart';
 import 'package:transittrack/features/tickets/presentation/pages/payment_page.dart';
 import 'package:transittrack/features/tickets/presentation/pages/ticket_page.dart';
@@ -126,8 +128,9 @@ class AppRouter {
         builder: (BuildContext context, GoRouterState state) {
           final Map<String, dynamic> extra =
               state.extra as Map<String, dynamic>;
-          final BusEntity bus = extra['bus'] as BusEntity;
-          return PaymentPage(bus: bus);
+          final Ticket ticket = extra['ticket'] as Ticket;
+          final InitiatePaymentUsecase initiatePaymentUsecase = extra['initiatePaymentUsecase'] as InitiatePaymentUsecase;
+          return PaymentPage(ticket: ticket, initiatePaymentUsecase: initiatePaymentUsecase, );
         },
       ),
       GoRoute(

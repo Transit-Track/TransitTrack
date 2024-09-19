@@ -13,8 +13,6 @@ class TicketPage extends StatefulWidget {
 }
 
 class _TicketPageState extends State<TicketPage> {
-  final TextEditingController _fromController = TextEditingController();
-  final TextEditingController _toController = TextEditingController();
 
   // Example list of tickets
   final List<Ticket> tickets = [
@@ -26,7 +24,7 @@ class _TicketPageState extends State<TicketPage> {
       start: 'Mexico',
       destination: 'Shiro Meda',
       price: 30.0,
-      expiryDate: DateTime.now().add(Duration(hours: 24)),
+      expiryDate: DateTime.now().add(const Duration(hours: 24)),
       status: 'active',
       arrivalTime: '20 min',
     ),
@@ -38,7 +36,7 @@ class _TicketPageState extends State<TicketPage> {
       start: 'Mexico',
       destination: 'Shiro Meda',
       price: 50.0,
-      expiryDate: DateTime.now().add(Duration(hours: 24)),
+      expiryDate: DateTime.now().add(const Duration(hours: 24)),
       status: 'active',
       arrivalTime: '14 min',
     ),
@@ -49,68 +47,15 @@ class _TicketPageState extends State<TicketPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: white,
-        appBar: CustomAppBarWidget(),
+        appBar: const CustomAppBarWidget(),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Adding the input section for "from" and "to"
-              // Row(
-              //   crossAxisAlignment: CrossAxisAlignment.center,
-              //   children: [
-              //     Column(
-              //       children: [
-              //         Row(
-              //           children: [
-              //             Text('from '),
-              //             Icon(Icons.circle, color: primary, size: 12.sp),
-              //           ],
-              //         ),
-              //         SizedBox(
-              //           width: 2.w,
-              //           height: 40.h,
-              //         ),
-              //         Row(
-              //           children: [
-              //             Text('to     '),
-              //             Icon(Icons.circle, color: Colors.red, size: 12.sp),
-              //           ],
-              //         ),
-              //       ],
-              //     ),
-              //     SizedBox(width: 10.w),
-              //     Expanded(
-              //       child: Column(
-              //         children: [
-              //           TextFormField(
-              //             controller: _fromController,
-              //             decoration: InputDecoration(
-              //               hintText: 'start',
-              //               border: OutlineInputBorder(
-              //                 borderRadius: BorderRadius.circular(10),
-              //               ),
-              //             ),
-              //           ),
-              //           SizedBox(height: 10.h),
-              //           TextFormField(
-              //             controller: _toController,
-              //             decoration: InputDecoration(
-              //               hintText: 'destination',
-              //               border: OutlineInputBorder(
-              //                 borderRadius: BorderRadius.circular(10),
-              //               ),
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ],
-              // ),
-             
               SizedBox(
                   height:
-                      20.h), // Spacing between the input section and tickets
+                      20.h), 
               Text(
                 "My Tickets",
                 style: TextStyle(
@@ -131,7 +76,7 @@ class _TicketPageState extends State<TicketPage> {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => QRCodePage(),
+                              builder: (context) => const QRCodePage(),
                             ),
                           );
                         },

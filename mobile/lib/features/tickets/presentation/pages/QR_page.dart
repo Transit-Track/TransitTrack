@@ -8,7 +8,7 @@ class QRCodePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop(); // Go back to the previous page
           },
@@ -21,8 +21,8 @@ class QRCodePage extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.asset('assets/images/qr_code.png'), // Replace with your QR code image path
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               "Here is your QR code",
               style: TextStyle(
                 fontSize: 20,
