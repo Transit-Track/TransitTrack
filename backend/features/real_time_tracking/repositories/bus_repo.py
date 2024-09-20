@@ -13,10 +13,8 @@ class BusRepository:
         
     async def search_bus_by_route(self, start_station, end_station):
         all_buses = await self.db.find().to_list(length=None)
-        # print(start_station, end_station)
         buses = []
         for bus in all_buses:
-            print("Bus: ", bus)
             if await self.route_repo.is_route_exist(bus['route_id'], start_station, end_station):
                 
                 if bus['capacity'] > 0 and bus['current_route']:
