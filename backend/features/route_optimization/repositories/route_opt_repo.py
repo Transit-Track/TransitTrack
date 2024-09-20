@@ -5,8 +5,8 @@ from features.route_optimization.repositories.scheduler import Scheduler
 
 class RouteOptRepo:
     def __init__(self) -> None:
-        self.route_repo = client.local.transittrack.routes
-        self.bus_repo = client.local.transittrack.buses
+        self.route_repo = client.transittrack.routes
+        self.bus_repo = client.transittrack.buses
         self.scheduler = Scheduler()
         
     async def get_next_route(self, bus_id: int):

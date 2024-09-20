@@ -57,15 +57,13 @@ class Scheduler:
             total_demand_satisfied += demand_satisfied
                         
             # Calculate the time spent using Google Maps API
-            origin = route_info['stations'][0]
-            destination = route_info['stations'][-1]
-            waypoints = '|'.join(route_info['stations'][1:-1])
-            total_time_spent += self.google_maps_api.get_route_time(origin, destination, waypoints)
+            total_time_spent += self.google_maps_api.get_arrival_time_through_waypoints(route_info['stations'])
             
             # Calculate the arrival time to the start station
             latitude = self.idle_buses[bus_id]['driver']['location']['latitude']
             longitude = self.idle_buses[bus_id]['driver']['location']['longitude']
-            arrival_time = self.google_maps_api.get_arrival_time(latitude, longitude, origin)
+            origin, destination = f"{latitude},{longitude}", route_info['stations'][0]['name']
+            arrival_time = self.google_maps_api.general_arrival_time(origin, destination)
             total_time_spent += arrival_time
         
         # Fitness is demand satisfied minus time spent
