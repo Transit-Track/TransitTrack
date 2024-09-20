@@ -83,7 +83,7 @@ class _MyRouteState extends State<MyRoute> {
                   BlocBuilder<MyRouteBloc, MyRouteState>(
                     builder: (context, state) {
                       if (state is GetMyRouteLoadingState) {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       } else if (state is GetMyRouteErrorState) {

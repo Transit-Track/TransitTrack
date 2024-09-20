@@ -24,9 +24,9 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
         (context).goNamed(AppPath.login)
       },
       backgroundColor:Colors.white,
-      child: const Icon(Icons.arrow_back),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(100),)
+        borderRadius: BorderRadius.circular(100),),
+      child: const Icon(Icons.arrow_back)
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,
@@ -43,7 +43,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                     width: 430,
                     height: screenHeight*0.3,
                   ),
-                  Container(
+                  SizedBox(
                     height: screenHeight*0.4,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

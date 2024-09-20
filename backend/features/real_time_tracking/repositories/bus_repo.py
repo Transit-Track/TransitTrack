@@ -1,6 +1,5 @@
-from cairo import Status
 from fastapi import HTTPException
-from features.real_time_tracking.repositories.driver_repo import DriverRepository
+# from features.real_time_tracking.repositories.driver_repo import DriverRepository
 from features.real_time_tracking.repositories.route_repo import RouteRepository
 from features.route_optimization.repositories.traffic_status import GoogleMapsAPI
 from core.config.db import client as db

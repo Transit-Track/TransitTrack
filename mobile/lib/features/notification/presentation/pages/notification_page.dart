@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/features/home/presentation/pages/dummy_data.dart';
 import 'package:transittrack/features/notification/presentation/widgets/notification_card_widget.dart';
 import 'package:transittrack/features/tickets/presentation/pages/QR_page.dart';
@@ -52,7 +51,7 @@ class _NotificationPageState extends State<NotificationPage> {
                           onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => QRCodePage(),
+                              builder: (context) => const QRCodePage(),
                             ),
                           );
                         },

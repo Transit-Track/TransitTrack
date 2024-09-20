@@ -13,10 +13,11 @@ class StationModel extends StationEntity {
       stationId: json['station_id'].toString(),
       name: json['name'] ?? '',
       geoLocation: LocationModel.fromJson(json['geoLocation']) ??
-          LocationModel(latitude: 0.0, longitude: 0.0),
+          const LocationModel(latitude: 0.0, longitude: 0.0),
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'station_id': stationId,

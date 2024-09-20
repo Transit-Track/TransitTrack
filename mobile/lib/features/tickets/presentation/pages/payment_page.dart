@@ -1,19 +1,27 @@
+// For base64 decoding
+// For Uint8List
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/features/tickets/domain/entites/ticket_entity.dart';
 import 'package:transittrack/features/tickets/domain/usecases/initiate_payment_usecase.dart';
+import 'package:transittrack/features/tickets/domain/usecases/handle_callback_usecase.dart'; // Added callback usecase
 import 'package:transittrack/features/tickets/presentation/widget/payment_method_card_widget.dart';
+import 'package:transittrack/features/tickets/presentation/widget/pin_dialog.dart';
+import 'package:transittrack/features/tickets/presentation/widget/success_dialog.dart';
 
 class PaymentPage extends StatefulWidget {
   final Ticket ticket;
   final InitiatePaymentUsecase initiatePaymentUsecase;
+  final HandleCallbackUseCase handleCallbackUsecase;
 
   const PaymentPage({
-    Key? key,
+    super.key,
     required this.ticket,
     required this.initiatePaymentUsecase,
-  }) : super(key: key);
+    required this.handleCallbackUsecase,
+  });
 
   @override
   State<PaymentPage> createState() => _PaymentPageState();
@@ -22,13 +30,14 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   final TextEditingController _ticketAmountController = TextEditingController();
   final TextEditingController _pinController = TextEditingController();
+  String? _qrCodeUrl; // To store QR code URL
 
   Future<void> initiatePayment(double amount, int numOfTickets) async {
     try {
       // Simulate payment initiation
       final result = await widget.initiatePaymentUsecase(
         InitiatePaymentParams(
-          userId: "12345",  // Replace with actual user ID
+          userId: "12345", // Replace with actual user ID
           amount: amount,
           numberOfTickets: numOfTickets,
           startLocation: widget.ticket.start,
@@ -39,7 +48,6 @@ class _PaymentPageState extends State<PaymentPage> {
 
       // After initiating the payment, ask for PIN
       showPinDialog();
-
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: ${e.toString()}')),
@@ -51,59 +59,68 @@ class _PaymentPageState extends State<PaymentPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          title: const Text("Enter PIN"),
-          content: TextFormField(
-            controller: _pinController,
-            keyboardType: TextInputType.number,
-            obscureText: true,
-            maxLength: 4,
-            decoration: const InputDecoration(
-              hintText: 'Enter your 4-digit PIN',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text("Confirm"),
-              onPressed: () {
-                if (_pinController.text == "1234") { // Assume PIN is '1234' for now
-                  Navigator.of(context).pop();  // Close the PIN dialog
-                  showSuccessDialog();
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Incorrect PIN')),
-                  );
-                }
-              },
-            ),
-          ],
+        return PinDialog(
+          pinController: _pinController,
+          onConfirm: () async {
+            Navigator.of(context).pop(); // Close the dialog
+            // Handle the PIN confirmation here
+            await _handlePaymentCallback(); // Proceed with handling payment callback
+          },
         );
       },
     );
+  }
+
+  Future<void> _handlePaymentCallback() async {
+    try {
+      // Prepare callback data to match the expected structure
+      Map<String, dynamic> callbackData = {
+        "Body": {
+          "stkCallback": {
+            "CheckoutRequestID": "64f20e4a47b5f75c21b69eb3", // A valid ObjectId
+            "ResultCode": 0,
+            "CallbackMetadata": {
+              "Item": [
+                {"Name": "Amount", "Value": 100},
+                {"Name": "MpesaReceiptNumber", "Value": "ABC123XYZ"},
+                {"Name": "TransactionDate", "Value": 20230920123045},
+                {"Name": "PhoneNumber", "Value": "254700123456"}
+              ]
+            }
+          }
+        }
+      };
+
+      // Call the use case
+      final result = await widget.handleCallbackUsecase(callbackData);
+      result.fold(
+        (failure) {
+          // Handle failure
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Callback error: $failure')),
+          );
+        },
+        (qrCodeBase64) {
+          // On success, show the QR code
+          setState(() {
+            _qrCodeUrl = qrCodeBase64;
+          });
+          showSuccessDialog(); // Show the success dialog with the QR code
+        },
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Unexpected error: ${e.toString()}')),
+      );
+    }
   }
 
   void showSuccessDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          title: const Text("Payment Successful"),
-          content: const Text("Your payment has been successfully processed."),
-          actions: <Widget>[
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();  // Close the success dialog
-              },
-            ),
-          ],
+        return SuccessDialog(
+          qrCodeBase64: _qrCodeUrl, // Pass the base64 QR code string
         );
       },
     );
@@ -194,8 +211,8 @@ class _PaymentPageState extends State<PaymentPage> {
                               children: [
                                 Text(
                                   'Bus Number: ${widget.ticket.busId}',
-                                  style: TextStyle(
-                                      fontSize: 16.sp, color: white),
+                                  style:
+                                      TextStyle(fontSize: 16.sp, color: white),
                                 ),
                                 Row(
                                   children: [
@@ -310,7 +327,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

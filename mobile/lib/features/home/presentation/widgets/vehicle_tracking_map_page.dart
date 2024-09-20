@@ -148,12 +148,12 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
 
   Future<void> _cameraToPosition(LatLng position) async {
     final GoogleMapController controller = await _mapController.future;
-    CameraPosition _newCameraPosition = CameraPosition(
+    CameraPosition newCameraPosition = CameraPosition(
       target: position,
       zoom: 15,
     );
     await controller
-        .animateCamera(CameraUpdate.newCameraPosition(_newCameraPosition));
+        .animateCamera(CameraUpdate.newCameraPosition(newCameraPosition));
   }
 
   // Future<List<LatLng>> getPlolyLinePoints() async {
