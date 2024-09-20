@@ -12,6 +12,7 @@ abstract class HomeRemoteDataSource {
       String startLocation, String destinationLocation);
   Future<List<String>> getNearbyBusStations(String input);
   Future<LocationModel> getDriverLocation(String driverPhoneNumber);
+  Future<List<String>> getStationNames();
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -92,6 +93,23 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       return json.decode(response.body)["detail"];
     } else {
       throw Exception("Failed to load drivers lovation");
+    }
+  }
+
+  @override
+  Future<List<String>> getStationNames() async {
+    final url = Uri.parse('$baseUrl/all_stations');
+    final response = await client.get(url);
+    if (response.statusCode == 200) {
+      final responseBody = json.decode(response.body);
+
+      final List<String> stations = [];
+      for (var station in responseBody) {
+        stations.add(station['name'].toString());
+      }
+      return stations;
+    } else {
+      throw Exception('Failed to load stations');
     }
   }
 }
