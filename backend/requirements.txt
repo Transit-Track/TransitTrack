@@ -8,4 +8,5 @@ fastapi
 requests
 motor
 qrcode
-pydantic
+pydantic[email]
+pymongo
