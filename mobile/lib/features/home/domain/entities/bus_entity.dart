@@ -7,7 +7,7 @@ class BusEntity extends Equatable {
   final String number;
   final String arrivalTime;
   final RouteEntity route;
-  final String price;
+  final double price;
   final String type;
   final bool isMyRoute;
   final bool isIdle;

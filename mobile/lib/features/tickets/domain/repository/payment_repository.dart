@@ -1,4 +1,5 @@
 abstract class PaymentRepository {
+  // Method to initiate the payment process
   Future<void> initiatePayment({
     required String userId,
     required double amount,
@@ -8,5 +9,6 @@ abstract class PaymentRepository {
     required String busId,
   });
 
-  Future<void> handlePaymentCallback(Map<String, dynamic> data);
+  
+  Future<String> handlePaymentCallback(Map<String, dynamic> callbackData);
 }

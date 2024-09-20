@@ -10,7 +10,7 @@ class PaymentRequest(BaseModel):
     number_of_tickets: int
     start: str
     destination: str
-    bus_id: str  # Add bus_id to the model
+    bus_id: str  
 
 router = APIRouter()
 
@@ -25,16 +25,17 @@ def initiate_payment(request: PaymentRequest):  # Use the updated Pydantic model
             request.number_of_tickets, 
             request.start, 
             request.destination,
-            request.bus_id  # Add bus_id to the call
+            request.bus_id  
         )
         return {"message": "Payment initiated successfully"}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
-    
+
 @router.post("/callback")
-def payment_callback(data: dict):
+async def payment_callback(data: dict):
+    print(data)
     try:
-        payment_service.handle_callback(data)
-        return {"message": "Callback handled successfully"}
+        result = await payment_service.handle_callback(data)
+        return result  
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

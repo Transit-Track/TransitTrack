@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:transittrack/features/driver/domain/entity/driver_entity.dart';
 import 'package:transittrack/features/driver/domain/entity/driver_location_entity.dart';
 import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
@@ -15,7 +14,7 @@ List<BusEntity> buses = [
     id: "",
     type: "anbessa",
     number: "17",
-    price: "10",
+    price: 10,
     route: RouteEntity(distance: 10.3, id: '1',
     stations: [
       StationEntity(
@@ -54,7 +53,7 @@ List<BusEntity> buses = [
       id: "",
       type: "anbessa",
       number: "83",
-      price: "15",
+      price: 15,
         route: RouteEntity(distance: 10.3, id: '1',
     stations: [
       StationEntity(
@@ -93,7 +92,7 @@ List<BusEntity> buses = [
       id: "",
       type: "anbessa",
       number: "16",
-      price: "10",
+      price: 10,
         route: RouteEntity(distance: 10.3, id: '1',
     stations: [
       StationEntity(
@@ -132,7 +131,7 @@ List<BusEntity> buses = [
       id: "",
       type: "anbessa",
       number: "64",
-      price: "5",
+      price: 5,
         route: RouteEntity(distance: 10.3, id: '1',
     stations: [
       StationEntity(
@@ -174,7 +173,7 @@ List<BusEntity> myRoutes = [
       id: "",
       type: "anbessa",
       number: "17",
-      price: "10",
+      price: 10,
         route: RouteEntity(distance: 10.3, id: '1',
     stations: [
       StationEntity(
@@ -213,7 +212,7 @@ List<BusEntity> myRoutes = [
       id: "",
       type: "anbessa",
       number: "83",
-      price: "15",
+      price: 15,
         route: RouteEntity(distance: 10.3, id: '1',
     stations: [
       StationEntity(
@@ -255,7 +254,7 @@ List<BusEntity> notifications = [
       id: "",
       type: "anbessa",
       number: "17",
-      price: "10",
+      price: 10,
         route: RouteEntity(distance: 10.3, id: '1',
     stations: [
       StationEntity(
@@ -294,7 +293,7 @@ List<BusEntity> notifications = [
       id: "",
       type: "anbessa",
       number: "83",
-      price: "15",
+      price: 15,
         route: RouteEntity(distance: 10.3, id: '1',
     stations: [
       StationEntity(

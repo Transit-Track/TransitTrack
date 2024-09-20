@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
 class UpdateProfilePage extends StatelessWidget {
+  const UpdateProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: ProfileUpdateScreen(),
     );
   }
 }
 
 class ProfileUpdateScreen extends StatefulWidget {
+  const ProfileUpdateScreen({super.key});
+
   @override
   _ProfileUpdateScreenState createState() => _ProfileUpdateScreenState();
 }
@@ -36,10 +40,11 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-    if (picked != null && picked != _selectedDate)
+    if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
       });
+    }
   }
 
   @override
@@ -47,20 +52,20 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             // Handle back action
           },
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () {
               
             },
           ),
         ],
-        title: Text('Profile Update'),
+        title: const Text('Profile Update'),
         centerTitle: true,
       ),
       body: Padding(
@@ -83,26 +88,26 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 8),
-              Text('Choose Picture'),
-              SizedBox(height: 20),
+              const SizedBox(height: 8),
+              const Text('Choose Picture'),
+              const SizedBox(height: 20),
               _buildTextField(
                 controller: _fullNameController,
                 labelText: 'Full Name',
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildTextField(
                 controller: _emailController,
                 labelText: 'Email',
                 keyboardType: TextInputType.emailAddress,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildTextField(
                 controller: _phoneController,
                 labelText: 'Phone Number',
                 keyboardType: TextInputType.phone,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
@@ -119,19 +124,19 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                           _gender = value!;
                         });
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Gender',
                         border: OutlineInputBorder(),
                       ),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: GestureDetector(
                       onTap: () => _selectDate(context),
                       child: AbsorbPointer(
                         child: TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Date of Birth',
                             border: OutlineInputBorder(),
                             suffixIcon: Icon(Icons.calendar_today),
@@ -147,12 +152,12 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               ElevatedButton(
                 onPressed: () {
                   // Handle profile update logic
                 },
-                child: Text('Done'),
+                child: const Text('Done'),
               ),
             ],
           ),
@@ -171,7 +176,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: labelText,
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
       ),
     );
   }

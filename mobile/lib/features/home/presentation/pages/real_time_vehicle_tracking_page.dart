@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 import 'package:transittrack/features/home/presentation/widgets/vehicle_tracking_map_page.dart';
 import 'package:transittrack/features/home/presentation/widgets/buttom_sheet_content_widget.dart';

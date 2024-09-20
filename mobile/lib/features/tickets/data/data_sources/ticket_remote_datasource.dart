@@ -25,7 +25,7 @@ class PaymentRemoteDataSource {
         'number_of_tickets': numberOfTickets,
         'start': start,
         'destination': destination,
-        'bus_id': busId, // Add bus_id here
+        'bus_id': busId,
       }),
     );
 
@@ -34,16 +34,22 @@ class PaymentRemoteDataSource {
     }
   }
 
-  Future<void> handlePaymentCallback(Map<String, dynamic> data) async {
+  Future<String> handlePaymentCallback(Map<String, dynamic> callbackData) async {
     final Uri url = Uri.parse('http://192.168.56.1:8000/callback');
 
     final response = await client.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(data),
+      body: jsonEncode(callbackData),
     );
-
-    if (response.statusCode != 200) {
+    if (response.statusCode == 200) {
+      final responseBody = jsonDecode(response.body);
+      if (responseBody.containsKey('qr_code_base64')) {
+        return responseBody['qr_code_base64']; 
+      } else {
+        throw Exception('QR code not found in the response');
+      }
+    } else {
       throw Exception('Failed to handle callback');
     }
   }

@@ -14,7 +14,7 @@ class PaymentRepository:
         return None
 
     async def update_transaction(self, transaction: Transaction):
-        await transactions_collection.update_one({"_id": transaction.id}, {"$set": transaction.model_dump(by_alias=True)})
+        await transactions_collection.update_one({"_id": transaction.id}, {"$set": transaction.dict(by_alias=True)})
 
     async def get_bus_by_id(self, bus_id: ObjectId) -> Bus:
         bus_data = await buses_collection.find_one({"_id": bus_id})
@@ -24,3 +24,10 @@ class PaymentRepository:
 
     async def update_bus(self, bus: Bus):
         await buses_collection.update_one({"_id": bus.id}, {"$set": bus.dict(by_alias=True)})
+        
+    async def get_transaction_by_id(self, transaction_id: ObjectId) -> Transaction:
+        transaction_data = await self.db.transactions.find_one({"_id": transaction_id})
+        if transaction_data:
+            return Transaction(**transaction_data)  # Convert to Transaction model
+        else:
+            raise ValueError("Transaction not found")

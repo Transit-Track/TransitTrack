@@ -26,7 +26,13 @@ class PaymentRepositoryImpl implements PaymentRepository {
   }
 
   @override
-  Future<void> handlePaymentCallback(Map<String, dynamic> data) async {
-    return remoteDataSource.handlePaymentCallback(data);
+  Future<String> handlePaymentCallback(Map<String, dynamic> callbackData) async {
+    try {
+      final qrCodeBase64 = await remoteDataSource.handlePaymentCallback(callbackData);
+      return qrCodeBase64;
+    } catch (e) {
+      // Handle error, for example, logging or rethrowing
+      throw Exception('Error handling payment callback: $e');
+    }
   }
 }

@@ -37,9 +37,10 @@ class AuthenticationRemoteDataSourceImpl
   AuthenticationRemoteDataSourceImpl(
       {required this.client, required this.secureStorage});
 
-  final String baseUrl = 'http://192.168.132.143:8000';
+  final String baseUrl = 'http://192.168.56.1:8000';
 
   @override
+
   Future<UserCredentialModel> signup({
     required String fullName,
     required String? email,
@@ -110,7 +111,9 @@ class AuthenticationRemoteDataSourceImpl
   Future<Either<Failure, Unit>> changePassword(
       {required String newPassword, required String confirmPassword}) {
     // TODO: implement changePassword
+    
     throw UnimplementedError();
+    
   }
 
   @override

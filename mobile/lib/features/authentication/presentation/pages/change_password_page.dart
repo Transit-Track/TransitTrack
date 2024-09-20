@@ -75,7 +75,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             child: Padding(
               padding: EdgeInsets.fromLTRB(30.0.w, 150.0.h, 30.w, 0),
               child: Container(
-                constraints: BoxConstraints(maxWidth: 400),
+                constraints: const BoxConstraints(maxWidth: 400),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -161,7 +161,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       BlocBuilder<AuthenticationBloc, AuthenticationState>(
                         builder: (context, state) {
                           if (state is ChangePasswordLoadingState) {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           }
 
                           return ButtonWidget(

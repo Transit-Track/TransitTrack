@@ -1,3 +1,5 @@
+import base64
+from io import BytesIO
 import requests
 from datetime import datetime
 from core.models.transaction_model import Transaction
@@ -6,8 +8,6 @@ from core.models.bus_model import Bus
 from core.models.user_model import User
 from features.payment_feature.repositories.payment_repository import PaymentRepository
 import qrcode
-import base64
-from io import BytesIO
 from bson import ObjectId
 
 class PaymentService:
@@ -50,19 +50,38 @@ class PaymentService:
         return response.json()
 
     async def handle_callback(self, data):
-        transaction_id = ObjectId(data['Body']['stkCallback']['CheckoutRequestID'])
+        # Use a mock transaction instead of fetching it from the repository
+        mock_transaction_id = ObjectId(data['Body']['stkCallback']['CheckoutRequestID'])
         result_code = data['Body']['stkCallback']['ResultCode']
-        transaction = await self.payment_repository.get_transaction_by_id(transaction_id)
-        
+
+        # Create a mock transaction object
+        transaction = Transaction(
+            user_id="254700123456",
+            amount=100.0,
+            start_station="Station A",
+            destination_station="Station B",
+            number_of_tickets=2,
+            start_time=datetime.utcnow(),
+            bus_id="64f20e4a47b5f75c21b69eb3"
+        )
+
         if result_code == 0:
             transaction.status = "completed"
             transaction.mpesa_code = data['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value']
-            await self.payment_repository.update_transaction(transaction)
-            await self.generate_qr_code(transaction)
-            await self.update_bus_capacity(transaction.bus_id)
+
+            qr_code_base64 = await self.generate_qr_code(transaction)
+
+            return {
+                "message": "Payment successful",
+                "qr_code_base64": qr_code_base64
+            }
         else:
             transaction.status = "failed"
-            await self.payment_repository.update_transaction(transaction)
+            return {
+                "message": "Payment failed",
+                "result_code": result_code
+            }
+
 
     async def generate_qr_code(self, transaction: Transaction):
         qr_data = f"Payment Amount: {transaction.amount}, Tickets: {transaction.number_of_tickets}, Start: {transaction.start_station}, Destination: {transaction.destination_station}"
@@ -71,10 +90,20 @@ class PaymentService:
         qr.save(buffered, format="PNG")
         qr_code_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
         transaction.qr_code = qr_code_base64
-        await self.payment_repository.update_transaction(transaction)
+        # await self.payment_repository.update_transaction(transaction)
+        
+        return qr_code_base64  
+
 
     async def update_bus_capacity(self, bus_id: str):
         bus = await self.payment_repository.get_bus_by_id(bus_id)
         if bus:
             bus.capacity += 1
             await self.payment_repository.update_bus(bus)
+    
+    async def get_transaction_by_id(self, transaction_id: ObjectId) -> Transaction:
+        transaction_data = await self.db.transactions.find_one({"_id": transaction_id})
+        if not transaction_data:
+            raise ValueError("Transaction not found")
+        return Transaction(**transaction_data)
+    

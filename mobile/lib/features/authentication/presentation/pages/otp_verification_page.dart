@@ -38,7 +38,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                   width: 430,
                   height: screenHeight * 0.3,
                 ),
-                Container(
+                SizedBox(
                   height: screenHeight * 0.5,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,7 +68,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                           }),
                       Container(
                           child: Column(
-                        children: [resend(), Text('Resend')],
+                        children: [resend(), const Text('Resend')],
                       )),
                     ],
                   ),
@@ -81,15 +81,15 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
 
   Widget resend() {
     return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25), color: primary),
+      child: const Padding(
+        padding: EdgeInsets.all(8.0),
         child: Icon(
           Icons.refresh,
           color: white,
         ),
       ),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25), color: primary),
     );
   }
 }
