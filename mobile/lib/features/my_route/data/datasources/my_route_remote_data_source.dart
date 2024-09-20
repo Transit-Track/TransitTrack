@@ -18,6 +18,7 @@ class MyRouteRemoteDataSourceImpl implements MyRouteRemoteDataSource {
   Future<List<BusModel>> getMyRoute() async {
     final url = Uri.parse('$baseUrl/get_my_route_buses');
     final response = await client.get(url);
+    print('resssssssssssss ${response.statusCode}');
 
     if (response.statusCode == 200) {
       final List<dynamic> datas = json.decode(response.body);
