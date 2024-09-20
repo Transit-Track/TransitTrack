@@ -24,8 +24,6 @@ class _RealTimeVehicleTrackingPageState
   
   final PanelController _panelController = PanelController();
 
-
-
   @override
   void initState() {
     super.initState();
@@ -41,7 +39,9 @@ class _RealTimeVehicleTrackingPageState
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
               0.5),
           backgroundColor: Colors.white,
-          onPressed: () => {(context).pop()},
+          onPressed: () => {
+            (context).pop()
+            },
           child: const Icon(Icons.arrow_back),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,

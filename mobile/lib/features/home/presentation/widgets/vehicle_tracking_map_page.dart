@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:transittrack/core/keys/keys.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 import 'package:transittrack/features/home/presentation/bloc/home_bloc.dart';
@@ -62,8 +64,11 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
         return a.longitude.compareTo(b.longitude);
       }
     });
-    // driverLocation = routes[0];
-    generatePolyLineFromPoints(routes);
+    getPlolyLinePoints().then((coordinates) {
+      print(coordinates);
+      generatePolyLineFromPoints(coordinates);
+    });
+
     super.initState();
     initializeDriverLocation(context, '251912457812');
   }
@@ -85,7 +90,7 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
         body: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is GetDriverLocationErrorState) {
-              return  Center(
+              return Center(
                 child: Text(state.errorMessage),
               );
             } else if (state is GetDriverLocationLoadingState) {
@@ -102,7 +107,7 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
                           _mapController.complete(controller),
                       initialCameraPosition: CameraPosition(
                         target: routes[routes.length - 1],
-                        zoom: 13,
+                        zoom: 10,
                       ),
                       markers: {
                         Marker(
@@ -146,39 +151,30 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
     );
   }
 
-  Future<void> _cameraToPosition(LatLng position) async {
-    final GoogleMapController controller = await _mapController.future;
-    CameraPosition newCameraPosition = CameraPosition(
-      target: position,
-      zoom: 15,
-    );
-    await controller
-        .animateCamera(CameraUpdate.newCameraPosition(newCameraPosition));
+  Future<List<LatLng>> getPlolyLinePoints() async {
+    List<LatLng> polylineCoordinates = [];
+    PolylinePoints polylinePoints = PolylinePoints();
+    for (int i = 0; i < routes.length - 1; i++) {
+      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+          googleApiKey: GOOGLE_MAP_API,
+          request: PolylineRequest(
+            origin: PointLatLng(routes[i].latitude, routes[i].longitude),
+            destination:
+                PointLatLng(routes[i + 1].latitude, routes[i + 1].longitude),
+            mode: TravelMode.driving,
+          ));
+      if (result.points.isNotEmpty) {
+        result.points.forEach((PointLatLng point) {
+          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+        });
+      } else {
+        print(result.errorMessage);
+      }
+    }
+
+    print('polylineCoordinates $polylineCoordinates');
+    return polylineCoordinates;
   }
-
-  // Future<List<LatLng>> getPlolyLinePoints() async {
-  //   List<LatLng> polylineCoordinates = [];
-  //   PolylinePoints polylinePoints = PolylinePoints();
-  //   for (int i = 0; i < routes.length - 1; i++) {
-  //     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-  //         googleApiKey: GOOGLE_MAP_API,
-  //         request: PolylineRequest(
-  //           origin: PointLatLng(routes[i].latitude, routes[i].longitude),
-  //           destination:
-  //               PointLatLng(routes[i + 1].latitude, routes[i + 1].longitude),
-  //           mode: TravelMode.driving,
-  //         ));
-  //     if (result.points.isNotEmpty) {
-  //       result.points.forEach((PointLatLng point) {
-  //         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-  //       });
-  //     } else {
-  //       print(result.errorMessage);
-  //     }
-  //   }
-
-  //   return polylineCoordinates;
-  // }
 
   void generatePolyLineFromPoints(List<LatLng> polylineCoordinates) async {
     PolylineId id = const PolylineId('poly');
