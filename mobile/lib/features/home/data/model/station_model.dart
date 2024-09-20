@@ -11,9 +11,9 @@ class StationModel extends StationEntity {
   factory StationModel.fromJson(Map<String, dynamic> json) {
     return StationModel(
       stationId: json['station_id'].toString(),
-      name: json['name'] ?? '',
-      geoLocation: LocationModel.fromJson(json['geoLocation']) ??
-          const LocationModel(latitude: 0.0, longitude: 0.0),
+      name: json['name'].toString(),
+      geoLocation: LocationModel.fromJson(json['geo_location']) ??
+          LocationModel(latitude: 0.0, longitude: 0.0),
     );
   }
 

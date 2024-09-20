@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:transittrack/core/constants/constants.dart';
 import 'package:transittrack/core/error/failure.dart';
 
 abstract class DriverRemoteDataSource {
@@ -9,6 +10,7 @@ abstract class DriverRemoteDataSource {
     required double longitude,
     required String token,
   });
+  Future<String> getNextRoute({required int busId});
 }
 
 class DriverRemoteDataSourceImpl implements DriverRemoteDataSource {
@@ -16,15 +18,13 @@ class DriverRemoteDataSourceImpl implements DriverRemoteDataSource {
 
   DriverRemoteDataSourceImpl({required this.client});
 
-  final baseUrl = 'http://192.168.132.143:8000';
-
   @override
   Future<String> updateDriverLocation(
       {required double latitude,
       required double longitude,
       required String token}) async {
     final response = await client.put(
-      Uri.parse('$baseUrl/driver'),
+      Uri.parse('$baseUrl/set_driver_location'),
       body: json.encode({
         'latitude': latitude,
         'longitude': longitude,
@@ -36,6 +36,24 @@ class DriverRemoteDataSourceImpl implements DriverRemoteDataSource {
     );
     if (response.statusCode == 200) {
       return 'Success';
+    } else {
+      throw ServerFailure();
+    }
+  }
+
+  @override
+  Future<String> getNextRoute({required int busId}) async {
+    final response = await client.get(
+      Uri.parse('$baseUrl/next_route').replace(queryParameters: {
+        'bus_id': busId.toString(),
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      return json.decode(response.body)['route'];
     } else {
       throw ServerFailure();
     }

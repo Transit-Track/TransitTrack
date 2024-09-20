@@ -6,4 +6,5 @@ abstract class DriverRepository {
     required double latitude,
     required double longitude,
   });
+  Future<Either<Failure, String>> getNextRoute({required int busId});
 }
