@@ -10,3 +10,4 @@ motor
 qrcode
 pydantic[email]
 pymongo
+bcrypt
