@@ -11,3 +11,4 @@ qrcode
 pydantic[email]
 pymongo
 bcrypt
+python-jose
