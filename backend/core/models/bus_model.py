@@ -14,7 +14,7 @@ class Bus (BaseModel):
     driver: DriverOnBus = None
     idle: bool
     is_my_route: bool
-    current_route: Route = None
+    route: Route = None
     next_route: Route = None
     _id_counter = 0
 
@@ -36,6 +36,7 @@ class Bus (BaseModel):
 
 class BusOut(BaseModel):
     bus_type: str
+    bus_id: int
     driver: DriverOnBus
-    current_route: Route
-    arrival_time: float
+    route: Route
+    # arrival_time: float
