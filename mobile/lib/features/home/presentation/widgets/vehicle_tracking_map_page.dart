@@ -66,9 +66,9 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
     });
     // driverLocation = routes[0];
     // generatePolyLineFromPoints(routes);
-    getPlolyLinePoints().then((coordinates) {
-      generatePolyLineFromPoints(coordinates);
-    });
+    // getPlolyLinePoints().then((coordinates) {
+    //   generatePolyLineFromPoints(coordinates);
+    // });
     super.initState();
     initializeDriverLocation(context, widget.bus.driver.phoneNumber);
   }

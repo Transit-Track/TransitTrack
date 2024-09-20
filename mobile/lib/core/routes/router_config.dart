@@ -135,9 +135,16 @@ class AppRouter {
             builder: (BuildContext context, GoRouterState state) {
               final Map<String, dynamic> extra =
                   state.extra as Map<String, dynamic>;
-              final BusEntity bus = extra['bus'] as BusEntity;
-              return const QRCodePage();
-              // return PaymentPage(bus: bus);
+              final Ticket ticket = extra['ticket'] as Ticket;
+              final InitiatePaymentUsecase initiatePaymentUsecase =
+                  extra['initiatePaymentUsecase'] as InitiatePaymentUsecase;
+              final handleCallbackUsecase =
+                  extra['handleCallbackUsecase'] as HandleCallbackUseCase;
+              return PaymentPage(
+                ticket: ticket,
+                initiatePaymentUsecase: initiatePaymentUsecase,
+                handleCallbackUsecase: handleCallbackUsecase,
+              );
             },
           ),
           GoRoute(
