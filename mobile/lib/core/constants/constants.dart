@@ -1,1 +1,1 @@
-  final String baseUrl = 'http://192.168.102.143:8000';
+final String baseUrl = 'http://192.168.190.143:8000';

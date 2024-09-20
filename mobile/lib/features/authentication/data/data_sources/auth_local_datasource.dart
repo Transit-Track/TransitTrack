@@ -49,7 +49,6 @@ class AuthenticationLocalDataSourceImpl
       final Map<String, dynamic> userMap = json.decode(userJson);
       UserCredentialModel userCredentialModel =
           UserCredentialModel.fromJson(userMap);
-      print(userCredentialModel);
       return userCredentialModel;
     }
     return null;

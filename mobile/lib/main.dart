@@ -20,7 +20,12 @@ Future main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final localDataSource = di.sl<AuthenticationLocalDataSource>();
   final user = await localDataSource.getUserCredentials();
-  final String? role = user!.role;
+  String? role;
+  if (user == null) {
+    role = '';
+  } else {
+    role = user.role;
+  }
 
   final prefs = await SharedPreferences.getInstance();
   final onboarding = prefs.getBool('onboarding') ?? false;

@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:transittrack/core/theme.dart';
+import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 import 'package:transittrack/features/tickets/domain/entites/ticket_entity.dart';
 import 'package:transittrack/features/tickets/domain/usecases/initiate_payment_usecase.dart';
 import 'package:transittrack/features/tickets/domain/usecases/handle_callback_usecase.dart'; // Added callback usecase
@@ -20,7 +21,7 @@ class PaymentPage extends StatefulWidget {
     super.key,
     required this.ticket,
     required this.initiatePaymentUsecase,
-    required this.handleCallbackUsecase,
+    required this.handleCallbackUsecase, required BusEntity bus,
   });
 
   @override
