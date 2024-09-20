@@ -1,0 +1,12 @@
+tensorflow
+keras
+pandas
+numpy
+scikit-learn
+uvicorn
+fastapi
+requests
+motor
+qrcode
+pydantic
+bson
