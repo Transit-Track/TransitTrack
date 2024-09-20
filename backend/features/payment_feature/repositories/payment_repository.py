@@ -14,7 +14,7 @@ class PaymentRepository:
         return None
 
     async def update_transaction(self, transaction: Transaction):
-        await transactions_collection.update_one({"_id": transaction.id}, {"$set": transaction.dict(by_alias=True)})
+        await transactions_collection.update_one({"_id": transaction.id}, {"$set": transaction.model_dump(by_alias=True)})
 
     async def get_bus_by_id(self, bus_id: ObjectId) -> Bus:
         bus_data = await buses_collection.find_one({"_id": bus_id})
