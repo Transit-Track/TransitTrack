@@ -7,6 +7,7 @@ import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/button_widget.dart';
 import 'package:transittrack/core/widgets/custom_dialog_box_widget.dart';
+import 'package:transittrack/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:transittrack/features/driver/presentation/bloc/driver_bloc.dart';
 
 class DriverTrackingPage extends StatefulWidget {
@@ -23,18 +24,18 @@ class _DriverTrackingPageState extends State<DriverTrackingPage> {
 
   Future<void> updateLocation(BuildContext context) async {
     // Get the current location
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    _serviceEnabled = await locationController.serviceEnabled();
-    if (_serviceEnabled) {
-      _serviceEnabled = await locationController.requestService();
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+    serviceEnabled = await locationController.serviceEnabled();
+    if (serviceEnabled) {
+      serviceEnabled = await locationController.requestService();
     } else {
       return;
     }
-    _permissionGranted = await locationController.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await locationController.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await locationController.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await locationController.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
         return;
       }
     }
@@ -57,7 +58,6 @@ class _DriverTrackingPageState extends State<DriverTrackingPage> {
   }
 
   void stopTracking() {
-    //! to be implemented
     // Stop tracking
   }
 
@@ -107,7 +107,7 @@ class _DriverTrackingPageState extends State<DriverTrackingPage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    //! handle logout
+                    (context).read<AuthenticationBloc>().add(LogoutEvent());
                     (context).goNamed(AppPath.login);
                   },
                   child: Padding(

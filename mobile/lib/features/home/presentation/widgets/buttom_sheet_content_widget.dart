@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
@@ -6,6 +7,11 @@ import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/button_widget.dart';
 import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 import 'package:transittrack/features/home/domain/entities/station_entity.dart';
+import 'package:transittrack/features/tickets/data/data_sources/ticket_remote_datasource.dart';
+import 'package:transittrack/features/tickets/data/repositories/payment_repository_impl.dart';
+import 'package:transittrack/features/tickets/domain/entites/ticket_entity.dart';
+import 'package:transittrack/features/tickets/domain/usecases/handle_callback_usecase.dart';
+import 'package:transittrack/features/tickets/domain/usecases/initiate_payment_usecase.dart';
 
 class ButtomSheetContentWidget extends StatefulWidget {
   final BusEntity bus;
@@ -46,7 +52,9 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                 child: Column(
                   children: [
                     Image.asset(
-                      widget.bus.type == 'anbessa' ? 'assets/images/anbessa.png' : 'assets/images/sheger.png',
+                      widget.bus.type == 'anbessa'
+                          ? 'assets/images/anbessa.png'
+                          : 'assets/images/sheger.png',
                       width: 100.w,
                       height: 80.h,
                     ),
@@ -90,9 +98,10 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                                 width: 30.w,
                                 height: 30.h,
                               ),
-                              Text(
-                                '${widget.bus.arrivalTime} min',
-                                style: const TextStyle(
+                              const Text(
+                                '0 min',
+                                // '${widget.bus.arrivalTime} min',
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               )
@@ -118,8 +127,49 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                     width: 100.w,
                     text: 'Buy',
                     onClick: () {
-                      (context)
-                          .push(AppPath.payment, extra: {'bus': widget.bus});
+                      final Ticket ticket = Ticket(
+                        start: widget.bus.route.stations[0].name,
+                        destination: widget
+                            .bus
+                            .route
+                            .stations[widget.bus.route.stations.length - 1]
+                            .name,
+                        busId: widget
+                            .bus.number, // Assuming busId is the bus number
+                        price: widget.bus.route.stations.length
+                            .toDouble(), // Assuming the price is based on number of stations
+                        arrivalTime: widget.bus.arrivalTime.toString(),
+                        ticketId: 'generated-ticket-id',
+                        userId: 'current-user-id',
+                        issueDate: DateTime.now(),
+                        expiryDate: DateTime.now().add(const Duration(hours: 1)),
+                        status: 'active',
+                      );
+
+                      final InitiatePaymentUsecase initiatePaymentUsecase =
+                          InitiatePaymentUsecase(
+                        PaymentRepositoryImpl(
+                          remoteDataSource:
+                              PaymentRemoteDataSource(client: http.Client()),
+                        ),
+                      );
+                      
+                      final HandleCallbackUseCase handleCallbackUsecase =
+                          HandleCallbackUseCase(
+                        PaymentRepositoryImpl(
+                          remoteDataSource:
+                              PaymentRemoteDataSource(client: http.Client()),
+                        ),
+                      );
+
+                      context.push(
+                        AppPath.payment,
+                        extra: {
+                          'ticket': ticket,
+                          'initiatePaymentUsecase': initiatePaymentUsecase,
+                          'handleCallbackUsecase': handleCallbackUsecase,
+                        },
+                      );
                     }),
               )
             ],
@@ -226,7 +276,7 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                 return Visibility(
                   visible: !_isCollapsed,
                   child: Padding(
-                    padding: EdgeInsets.only(top: 8.0),
+                    padding: const EdgeInsets.only(top: 8.0),
                     child: Row(
                       children: [
                         Padding(

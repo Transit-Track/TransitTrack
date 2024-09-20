@@ -5,7 +5,6 @@ abstract class AuthenticationState {}
 class AuthenticationInitial extends AuthenticationState {}
 
 //! login
-
 class LoginLoadingState extends AuthenticationState {}
 
 class LoggedInState extends AuthenticationState {
@@ -20,7 +19,7 @@ class UnAuthenticatedState extends AuthenticationState {
   UnAuthenticatedState({required this.message});
 }
 
-//! sign up
+// sign up
 
 class SignupLoadingState extends AuthenticationState {}
 
@@ -36,7 +35,7 @@ class SignupErrorState extends AuthenticationState {
   SignupErrorState({required this.message});
 }
 
-//! change password
+// change password
 class ChangePasswordLoadingState extends AuthenticationState {}
 
 class ChangePasswordSuccessState extends AuthenticationState {}
@@ -46,3 +45,6 @@ class ChangePasswordErrorState extends AuthenticationState {
 
   ChangePasswordErrorState({required this.message});
 }
+
+
+class LoggedOutState extends AuthenticationState {}

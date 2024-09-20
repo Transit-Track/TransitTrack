@@ -1,4 +1,3 @@
-from cairo import Status
 from fastapi import HTTPException
 from features.real_time_tracking.repositories.route_repo import RouteRepository
 from features.route_optimization.repositories.traffic_status import GoogleMapsAPI
@@ -13,7 +12,6 @@ class BusRepository:
         
     async def search_bus_by_route(self, start_station, end_station):
         all_buses = await self.db.find().to_list(length=None)
-        # print(start_station, end_station)
         buses = []
         for bus in all_buses:
             # print("Bus: ", bus)

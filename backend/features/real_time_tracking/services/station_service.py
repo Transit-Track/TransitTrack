@@ -7,4 +7,8 @@ class StationService:
     async def get_nearby_station(self, Location, radius):
         stations = await self.repo.get_nearby_station(Location, radius)
         return [StationOut(**station) for station in stations]
+    
+    async def get_all_stations(self):
+        stations = await self.repo.get_all_stations()
+        return [StationOut(**station) for station in stations]
    

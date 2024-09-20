@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:transittrack/core/constants/constants.dart';
 import 'package:transittrack/core/error/exceptions.dart';
 import 'package:transittrack/core/error/failure.dart';
 import 'package:transittrack/features/authentication/data/model/user_credential_model.dart';
@@ -37,9 +38,8 @@ class AuthenticationRemoteDataSourceImpl
   AuthenticationRemoteDataSourceImpl(
       {required this.client, required this.secureStorage});
 
-  final String baseUrl = 'http://192.168.132.143:8000';
-
   @override
+
   Future<UserCredentialModel> signup({
     required String fullName,
     required String? email,
@@ -51,7 +51,6 @@ class AuthenticationRemoteDataSourceImpl
       'email': email != '' ? email : null,
       'phone_number': phoneNumber,
       'password': password,
-      'role': 'driver'
     };
 
     final response = await client.post(
@@ -110,7 +109,9 @@ class AuthenticationRemoteDataSourceImpl
   Future<Either<Failure, Unit>> changePassword(
       {required String newPassword, required String confirmPassword}) {
     // TODO: implement changePassword
+    
     throw UnimplementedError();
+    
   }
 
   @override

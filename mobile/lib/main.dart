@@ -6,33 +6,44 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transittrack/core/keys/keys.dart';
 import 'package:transittrack/core/routes/router_config.dart';
 import 'package:transittrack/core/utils/multiple_bloc_provider.dart';
+import 'package:transittrack/features/authentication/data/data_sources/auth_local_datasource.dart';
 import 'package:transittrack/firebase_options.dart';
 import 'core/injections/injection.dart' as di;
 
 Future main() async {
   MpesaFlutterPlugin.setConsumerKey(mConsumerKey);
   MpesaFlutterPlugin.setConsumerSecret(mConsumerSecret);
-    
+
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  final localDataSource = di.sl<AuthenticationLocalDataSource>();
+  final user = await localDataSource.getUserCredentials();
+  String? role;
+  if (user == null) {
+    role = '';
+  } else {
+    role = user.role;
+  }
 
   final prefs = await SharedPreferences.getInstance();
   final onboarding = prefs.getBool('onboarding') ?? false;
   runApp(MultipleBlocProvider(
     child: MyApp(
       onboarding: onboarding,
+      role: role,
     ),
   ));
 }
 
 class MyApp extends StatelessWidget {
   final bool onboarding;
+  final String? role;
   const MyApp({
     super.key,
     this.onboarding = false,
-
+    this.role,
   });
 
   @override
@@ -41,7 +52,8 @@ class MyApp extends StatelessWidget {
       builder: (context) {
         ScreenUtil.init(
           context,
-          designSize: Size(375, 812), // Set the design size according to your design
+          designSize:
+              Size(375, 812), // Set the design size according to your design
           minTextAdapt: true,
           splitScreenMode: true,
         );
@@ -54,7 +66,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             fontFamily: 'Laila',
           ),
-          routerConfig: AppRouter.router(onboarding),
+          routerConfig: AppRouter.router(onboarding, role),
         );
       },
     );
