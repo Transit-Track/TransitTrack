@@ -6,6 +6,8 @@ from core.models.bus_model import Bus
 from core.models.user_model import User
 from features.payment_feature.repositories.payment_repository import PaymentRepository
 import qrcode
+import base64
+from io import BytesIO
 from bson import ObjectId
 
 class PaymentService:
@@ -65,9 +67,10 @@ class PaymentService:
     async def generate_qr_code(self, transaction: Transaction):
         qr_data = f"Payment Amount: {transaction.amount}, Tickets: {transaction.number_of_tickets}, Start: {transaction.start_station}, Destination: {transaction.destination_station}"
         qr = qrcode.make(qr_data)
-        qr_code_path = f"qrcodes/{transaction.id}.png"
-        qr.save(qr_code_path)
-        transaction.qr_code = qr_code_path
+        buffered = BytesIO()
+        qr.save(buffered, format="PNG")
+        qr_code_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
+        transaction.qr_code = qr_code_base64
         await self.payment_repository.update_transaction(transaction)
 
     async def update_bus_capacity(self, bus_id: str):
