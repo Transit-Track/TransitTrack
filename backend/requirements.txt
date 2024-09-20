@@ -12,3 +12,4 @@ pydantic[email]
 pymongo
 bcrypt
 python-jose
+pycairo
