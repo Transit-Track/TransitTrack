@@ -1,4 +1,3 @@
-# 🚍 TransitTrack: Revolutionizing Public Transportation in Addis Ababa
 
 Welcome to the **TransitTrack** repository! 🎉 TransitTrack is an innovative mobile application designed to transform the public transportation experience in Addis Ababa, with the potential to expand to other developing cities. 
 
