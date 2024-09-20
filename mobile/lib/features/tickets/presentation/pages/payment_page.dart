@@ -224,7 +224,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                       color: white,
                                     ),
                                     Text(
-                                      '${widget.ticket.arrivalTime} min',
+                                      '0 min',
                                       style: TextStyle(
                                           fontSize: 16.sp, color: white),
                                     ),
