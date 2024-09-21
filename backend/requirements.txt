@@ -1,0 +1,14 @@
+tensorflow
+keras
+pandas
+numpy
+scikit-learn
+uvicorn
+fastapi
+requests
+motor
+qrcode
+pydantic[email]
+pymongo
+bcrypt
+python-jose
