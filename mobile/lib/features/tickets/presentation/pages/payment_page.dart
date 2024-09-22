@@ -21,7 +21,7 @@ class PaymentPage extends StatefulWidget {
     super.key,
     required this.ticket,
     required this.initiatePaymentUsecase,
-    required this.handleCallbackUsecase, required BusEntity bus,
+    required this.handleCallbackUsecase,
   });
 
   @override

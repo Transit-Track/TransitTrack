@@ -156,7 +156,7 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
     PolylinePoints polylinePoints = PolylinePoints();
     for (int i = 0; i < routes.length - 1; i++) {
       PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-          googleApiKey: GOOGLE_MAP_API,
+          googleApiKey: 'GOOGLE_MAP_API',
           request: PolylineRequest(
             origin: PointLatLng(routes[i].latitude, routes[i].longitude),
             destination:
