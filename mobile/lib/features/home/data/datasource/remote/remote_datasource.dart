@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:transittrack/core/constants/constants.dart';
 import 'package:transittrack/features/driver/data/model/driver_location_model.dart';
 import 'package:transittrack/features/home/data/datasource/remote/google_map_datasource.dart';
 import 'package:transittrack/features/home/data/model/bus_model.dart';
@@ -12,7 +11,6 @@ abstract class HomeRemoteDataSource {
       String startLocation, String destinationLocation);
   Future<List<String>> getNearbyBusStations(String input);
   Future<LocationModel> getDriverLocation(String driverPhoneNumber);
-  Future<List<String>> getStationNames();
 }
 
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
@@ -23,6 +21,8 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
     required this.client,
     required this.googleMapDatasource,
   });
+
+  String baseUrl = "http://192.168.132.143:8000";
 
   @override
   Future<List<BusModel>> getAvailablebuses(
@@ -36,7 +36,6 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
     final response =
         await client.get(url.replace(queryParameters: queryParams));
-
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
       final List<BusModel> buses =
@@ -82,34 +81,19 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<LocationModel> getDriverLocation(String driverPhoneNumber) async {
+  Future<LocationModel> getDriverLocation(
+      String driverPhoneNumber) async {
     final url = Uri.parse('$baseUrl/driver');
     final Map<String, dynamic> queryParam = {"phone_number": driverPhoneNumber};
 
     final response = await client.get(url.replace(queryParameters: queryParam));
     if (response.statusCode == 200) {
+     
       return LocationModel.fromJson(json.decode(response.body));
     } else if (response.statusCode == 404) {
       return json.decode(response.body)["detail"];
     } else {
       throw Exception("Failed to load drivers lovation");
-    }
-  }
-
-  @override
-  Future<List<String>> getStationNames() async {
-    final url = Uri.parse('$baseUrl/all_stations');
-    final response = await client.get(url);
-    if (response.statusCode == 200) {
-      final responseBody = json.decode(response.body);
-
-      final List<String> stations = [];
-      for (var station in responseBody) {
-        stations.add(station['name'].toString());
-      }
-      return stations;
-    } else {
-      throw Exception('Failed to load stations');
     }
   }
 }

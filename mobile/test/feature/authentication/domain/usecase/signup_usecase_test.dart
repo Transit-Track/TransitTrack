@@ -22,12 +22,10 @@ void main() {
     "password": 'password',
   };
 
-  UserCredential tUserCredentialResponse = UserCredential(
-    id: '',
+  const tUserCredentialResponse = UserCredential(
+    id: '1',
     fullName: 'John Doe',
     phoneNumber: '08123456789',
-    email: '',
-    password: 'password',
   );
 
   test('should signup a user succesfuly', () async {
@@ -37,10 +35,10 @@ void main() {
             phoneNumber: tUserCredential['phone_number'],
             email: tUserCredential['email'],
             password: tUserCredential['password']))
-        .thenAnswer((_) async =>  Right(tUserCredentialResponse));
-
+        .thenAnswer((_) async => const Right(tUserCredentialResponse));
+    
     // act
-    final result = await signupUsecase(SignupParams(
+    final result = await signupUsecase( SignupParams(
       fullName: tUserCredential['full_name'] as String,
       phoneNumber: tUserCredential['phone_number'] as String,
       email: tUserCredential['email'] as String,
@@ -48,6 +46,6 @@ void main() {
     ));
 
     // assert
-    expect(result, Right(tUserCredentialResponse));
+    expect(result, const Right(tUserCredentialResponse));
   });
 }

@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:transittrack/core/usecases/usecases.dart';
 import 'package:transittrack/features/authentication/domain/entities/userCredential.dart';
 import 'package:transittrack/features/authentication/domain/usecases/change_password_usecase.dart';
 import 'package:transittrack/features/authentication/domain/usecases/login_usecase.dart';
@@ -26,7 +25,6 @@ class AuthenticationBloc
     on<SignUpEvent>(_onSignup);
     on<LogInEvent>(_login);
     on<ChangePasswordEvent>(_changePassword);
-    on<LogoutEvent>(_logout);
   }
 
   void _onSignup(SignUpEvent event, Emitter<AuthenticationState> emit) async {
@@ -73,15 +71,6 @@ class AuthenticationBloc
       (failure) =>
           emit(ChangePasswordErrorState(message: failure.errorMessage)),
       (user) => emit(ChangePasswordSuccessState()),
-    );
-  }
-
-  void _logout(LogoutEvent event, Emitter<AuthenticationState> emit) async {
-    final result = await logoutUsecase(NoParams());
-
-    result.fold(
-      (failure) => emit(UnAuthenticatedState(message: failure.errorMessage)),
-      (user) => emit(LoggedOutState()),
     );
   }
 }

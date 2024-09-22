@@ -17,7 +17,6 @@ import 'package:transittrack/features/profile/presentation/pages/profile_page.da
 import 'package:transittrack/features/profile/presentation/pages/send_feedback_page.dart';
 import 'package:transittrack/features/tickets/domain/entites/ticket_entity.dart';
 import 'package:transittrack/features/tickets/domain/usecases/handle_callback_usecase.dart';
-import 'package:transittrack/features/tickets/domain/usecases/handle_callback_usecase.dart';
 import 'package:transittrack/features/tickets/domain/usecases/initiate_payment_usecase.dart';
 import 'package:transittrack/features/tickets/presentation/pages/QR_page.dart';
 import 'package:transittrack/features/tickets/presentation/pages/payment_page.dart';

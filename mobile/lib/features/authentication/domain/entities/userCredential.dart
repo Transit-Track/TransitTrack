@@ -7,11 +7,11 @@ class UserCredential extends Equatable {
   final String? password;
   final String phoneNumber;
   final String? otp;
-  String? token;
+  final String? token;
   final String? profileAvatar;
   final String? role;
 
-   UserCredential({
+  const UserCredential({
     required this.id,
     required this.fullName,
     required this.phoneNumber,

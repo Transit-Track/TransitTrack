@@ -9,6 +9,53 @@ sealed class HomeState extends Equatable {
 
 final class HomeInitial extends HomeState {}
 
+//! location based search state
+
+final class LocationLoadingState extends HomeState {}
+
+final class LocationLoadedState extends HomeState {
+  final List<PlaceEntity> locationList;
+
+  const LocationLoadedState({required this.locationList});
+}
+
+final class LocationErrorState extends HomeState {
+  final String message;
+
+  const LocationErrorState(this.message);
+}
+
+//! Nearby bus search state
+
+final class NearByBusesForStartLoadingState extends HomeState {}
+
+final class NearByBusesForStartLoadedState extends HomeState {
+  final List<String> nearByBusesForStartList;
+
+  const NearByBusesForStartLoadedState({required this.nearByBusesForStartList});
+}
+
+final class NearByBusesForStartErrorState extends HomeState {
+  final String message;
+
+  const NearByBusesForStartErrorState({required this.message});
+}
+
+final class NearByBusesForDestinationLoadingState extends HomeState {}
+
+final class NearByBusesForDestinationLoadedState extends HomeState {
+  final List<String> nearByBusesForDestinationList;
+
+  const NearByBusesForDestinationLoadedState({required this.nearByBusesForDestinationList});
+}
+
+final class NearByBusesForDestinationErrorState extends HomeState {
+  final String message;
+
+  const NearByBusesForDestinationErrorState({required this.message});
+}
+
+
 //! Available buses search state
 
 final class AvailableBusesLoadingState extends HomeState {}
@@ -38,19 +85,4 @@ final class GetDriverLocationErrorState extends HomeState {
   final String errorMessage;
 
   const GetDriverLocationErrorState({required this.errorMessage});
-}
-
-//! Get Station Names state
-final class GetStationNamesLoadingState extends HomeState {}
-
-final class GetStationNamesLoadedState extends HomeState {
-  final List<String> stationNames;
-
-  const GetStationNamesLoadedState({required this.stationNames});
-}
-
-final class GetStationNamesErrorState extends HomeState {
-  final String errorMessage;
-
-  const GetStationNamesErrorState({required this.errorMessage});
 }

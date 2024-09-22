@@ -20,8 +20,3 @@ async def get_nearby_stations(latitude: float = Query(..., description="Latitude
 ):
     location = Location(latitude=latitude, longitude=longitude)
     return await station_service.get_nearby_station(location, radius)
-
-
-@station.get('/all_stations', response_model=List[StationOut])
-async def get_all_stations(service: StationService = Depends(get_station_service)):
-    return await station_service.get_all_stations()

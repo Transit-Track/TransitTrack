@@ -7,6 +7,28 @@ sealed class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
+final class GetLocationEvent extends HomeEvent {
+  final String input;
+
+  const GetLocationEvent({required this.input});
+}
+
+final class GetNearbyBusesForStartEvent extends HomeEvent {
+  final String input;
+
+  const GetNearbyBusesForStartEvent({
+    required this.input,
+  });
+}
+
+final class GetNearbyBusesForDestinationEvent extends HomeEvent {
+  final String input;
+
+  const GetNearbyBusesForDestinationEvent({
+    required this.input,
+  });
+}
+
 final class GetAvailableBusesEvent extends HomeEvent {
   final String startStation;
   final String destinationStation;
@@ -32,5 +54,3 @@ final class GetDriverLocation extends HomeEvent {
     required this.driverPhoneNumber,
   });
 }
-
-final class GetStationNames extends HomeEvent {}

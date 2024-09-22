@@ -11,5 +11,4 @@ abstract class HomeRepository {
       String startStation, String destinationStation);
   Future<Either<Failure, List<String>>> getNearbyBusStations(String input);
   Future<Either<Failure, LocationEntity>> getDriverLocation(String driverPhoneNumber);
-  Future<Either<Failure, List<String>>> getStationNames();
 }

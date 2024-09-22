@@ -16,14 +16,16 @@ class BusRepository:
         # print(start_station, end_station)
         buses = []
         for bus in all_buses:
-            # print("Bus: ", bus)
+            print("Bus: ", bus)
             if await self.route_repo.is_route_exist(bus['route_id'], start_station, end_station):
                 
                 if bus['capacity'] > 0 and bus['current_route']:
                     driver = await self.find_driver_by_id(bus['driver_id'])
                     if driver:
-                        waypoints = bus['current_route']['stations'][driver['state']:-1]
-                        arrival_time = self.google_maps.get_arrival_time_through_waypoints(waypoints)
+                        origin = ",".join([driver['location']['latitude'], driver['location']['longitude']])
+                        destination = bus['current_route']['stations'][-1]
+                        waypoints = "|".join([station['name'] for station in bus['current_route']['stations'][driver['state']:-1]])
+                        arrival_time = self.google_maps.get_route_time(origin, destination, waypoints)
                         bus['arrival_time'] = arrival_time
                         buses.append(bus)
         return sorted(buses, key=lambda bus: bus['arrival_time'])

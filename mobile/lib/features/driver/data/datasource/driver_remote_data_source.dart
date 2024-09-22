@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:transittrack/core/constants/constants.dart';
 import 'package:transittrack/core/error/failure.dart';
 
 abstract class DriverRemoteDataSource {
@@ -16,6 +15,8 @@ class DriverRemoteDataSourceImpl implements DriverRemoteDataSource {
   final http.Client client;
 
   DriverRemoteDataSourceImpl({required this.client});
+
+  final baseUrl = 'http://192.168.132.143:8000';
 
   @override
   Future<String> updateDriverLocation(

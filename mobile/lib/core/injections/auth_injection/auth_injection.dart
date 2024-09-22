@@ -1,7 +1,7 @@
 import 'package:transittrack/core/injections/injection.dart';
 import 'package:transittrack/features/authentication/data/data_sources/auth_local_datasource.dart';
 import 'package:transittrack/features/authentication/data/data_sources/auth_remote_datasource.dart';
-import 'package:transittrack/features/authentication/data/repositoriies/auth_repositiries_impl.dart';
+import 'package:transittrack/features/authentication/data/repositories/auth_repositiries_impl.dart';
 import 'package:transittrack/features/authentication/domain/repository/authentication_repository.dart';
 import 'package:transittrack/features/authentication/domain/usecases/change_password_usecase.dart';
 import 'package:transittrack/features/authentication/domain/usecases/login_usecase.dart';

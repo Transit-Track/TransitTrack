@@ -50,7 +50,7 @@ class ResendOtpVerificationEvent extends AuthenticationEvent {
   List<Object> get props => [phoneNumber];
 }
 
-class LogoutEvent extends AuthenticationEvent {
+class SignOutEvent extends AuthenticationEvent {
   @override
   List<Object> get props => [];
 }
