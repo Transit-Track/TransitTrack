@@ -100,11 +100,15 @@ class _PaymentPageState extends State<PaymentPage> {
             SnackBar(content: Text('Callback error: $failure')),
           );
         },
-        (qrCodeBase64) {
+        (qrCodeBase64) async {
+          // Simulate a loading time before showing the QR code
+          await Future.delayed(const Duration(seconds: 2));
+
           // On success, show the QR code
           setState(() {
             _qrCodeUrl = qrCodeBase64;
           });
+
           showSuccessDialog(); // Show the success dialog with the QR code
         },
       );

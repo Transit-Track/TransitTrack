@@ -7,16 +7,16 @@ class ForwardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 30,
+      height: 30,
+      decoration:
+          BoxDecoration(color: color, borderRadius: BorderRadius.circular(30)),
       child: const Center(
           child: Icon(
         Icons.arrow_forward_ios_outlined,
         color: Colors.white,
         size: 25,
       )),
-      width: 30,
-      height: 30,
-      decoration:
-          BoxDecoration(color: color, borderRadius: BorderRadius.circular(30)),
     );
   }
 }
