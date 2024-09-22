@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:transittrack/core/constants/constants.dart';
 import 'package:transittrack/features/home/data/model/bus_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,12 +14,11 @@ class MyRouteRemoteDataSourceImpl implements MyRouteRemoteDataSource {
   final http.Client client;
   MyRouteRemoteDataSourceImpl({required this.client});
 
-  String baseUrl = "http://192.168.31.143:8000";
-
   @override
   Future<List<BusModel>> getMyRoute() async {
     final url = Uri.parse('$baseUrl/get_my_route_buses');
     final response = await client.get(url);
+    print('resssssssssssss ${response.statusCode}');
 
     if (response.statusCode == 200) {
       final List<dynamic> datas = json.decode(response.body);

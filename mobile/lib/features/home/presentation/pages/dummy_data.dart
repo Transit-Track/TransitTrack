@@ -330,3 +330,4 @@ List<BusEntity> notifications = [
 //   longitude: 38.7469,
 // );
 // LatLng driverLocation = LatLng(driver.latitude, driver.longitude);
+

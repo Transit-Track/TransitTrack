@@ -4,8 +4,7 @@ abstract class AuthenticationState {}
 
 class AuthenticationInitial extends AuthenticationState {}
 
-// login
-
+//! login
 class LoginLoadingState extends AuthenticationState {}
 
 class LoggedInState extends AuthenticationState {
@@ -46,3 +45,6 @@ class ChangePasswordErrorState extends AuthenticationState {
 
   ChangePasswordErrorState({required this.message});
 }
+
+
+class LoggedOutState extends AuthenticationState {}

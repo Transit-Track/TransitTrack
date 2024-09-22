@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
+import 'package:transittrack/features/authentication/presentation/pages/login_page.dart';
 import 'package:transittrack/features/onboarding/domain/onboarding_entity.dart';
+import 'package:transittrack/features/onboarding/presentation/widget/onboarding_widget.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -14,102 +17,85 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
-  
-   Future<void> completeOnboarding(BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('onboarding', true);
-    context.goNamed(AppPath.login); // Navigate to login or home based on your logic
-  }
-
-  List<OnboardingEntity> onboardingItems = [
-    OnboardingEntity(
-        title: "Real-time tracking",
-        image: 'assets/images/onboarding1.jpeg',
-        description:
-            "Stay connected to your ride always know where your bus is and when it'll be there."),
-    OnboardingEntity(
-        title: "Arrival time estimation",
-        image: 'assets/images/onboarding2.png',
-        description:
-            "Our advanced algorithms provide you with highly accurate arrival time predictions."),
-    OnboardingEntity(
-        title: "Digital payment",
-        image: 'assets/images/onboarding3.png',
-        description:
-            "Leave the cash at home. Pay for your rides with a simple tap.")
-  ];
+  //  Future<void> completeOnboarding(BuildContext context) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.setBool('onboarding', true);
+  //   context.goNamed(AppPath.login); // Navigate to login or home based on your logic
+  // }
 
   @override
   Widget build(BuildContext context) {
     final pageController = PageController();
     var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
 
+    List<OnboardingWidget> pages = [
+      OnboardingWidget(
+        onboardingEntity: OnboardingEntity(
+          title: "Real-time Vehicle tracking",
+          image: 'assets/images/location.json',
+          description:
+              "Stay connected to your ride always know where your bus is and when it'll be there.",
+          bgColor: Colors.white,
+        ),
+      ),
+      OnboardingWidget(
+        onboardingEntity: OnboardingEntity(
+          title: "Arrival time estimation",
+          image: 'assets/images/arrival_time.json',
+          description:
+              "Our advanced algorithms provide you with highly accurate arrival time predictions.",
+          bgColor: Color.fromARGB(255, 235, 245, 250),
+        ),
+      ),
+      OnboardingWidget(
+          onboardingEntity: OnboardingEntity(
+        title: "Digital payment",
+        image: 'assets/images/succes.json',
+        description:
+            "Leave the cash at home. Pay for your rides with a simple tap.",
+        bgColor: Color.fromARGB(255, 226, 242, 255),
+      )),
+      OnboardingWidget(
+          onboardingEntity: OnboardingEntity(
+        title: "Dynamic Re-reouting",
+        image: 'assets/images/dynamic_rerouting.json',
+        description:
+            "With our dynamic re-routing feature, eliminate unused buses and reduce wait times for your ride.",
+        bgColor:  Color.fromARGB(255, 235, 245, 250),
+      ))
+    ];
     return Scaffold(
         backgroundColor: Colors.white,
-        bottomSheet: Container(
-          color: Colors.white,
-          height: screenHeight*0.2,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                getStarted(context),
-                SmoothPageIndicator(
-                  controller: pageController,
-                  count: onboardingItems.length,
-                  onDotClicked: (index) => pageController.animateToPage(index,
-                      duration: const Duration(microseconds: 600),
-                      curve: Curves.easeIn),
-                  effect: WormEffect(
-                      activeDotColor: Theme.of(context).primaryColor,
-                      dotWidth: 10,
-                      dotHeight: 10),
-                ),
-              ],
+        body: Stack(
+          children: [
+            LiquidSwipe(
+              pages: pages,
+              enableSideReveal: true,
+              enableLoop: true,
+              slideIconWidget: const Icon(Icons.arrow_back_ios),
             ),
-          ),
-        ),
-        body: Padding(
-          // padding: EdgeInsets.fromLTRB(2.w, 7.h, 2.w, 0.h),
-          padding: const EdgeInsets.all(12),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 12),
-              child: PageView.builder(
-                itemCount: onboardingItems.length,
+            Positioned(
+              bottom: screenHeight * 0.1,
+              left: screenWidth * 0.3,
+              child: getStarted(context),
+            ),
+            Positioned(
+              bottom: screenHeight * 0.05,
+              left: screenWidth * 0.43,
+              child: SmoothPageIndicator(
                 controller: pageController,
-                itemBuilder: (context, index) {
-                  return Column(children: [
-                     SizedBox(
-                      height: screenHeight*0.1,
-                    ),
-                    Image.asset(onboardingItems[index].image, height: screenHeight * 0.3,),
-                    const SizedBox(
-                      height: 26,
-                    ),
-                    Text(
-                      onboardingItems[index].title,
-                      style: const TextStyle(fontFamily: 'Laila', fontSize: 32),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    Center(
-                      child: Text(
-                        onboardingItems[index].description,
-                        style:
-                            const TextStyle(fontFamily: 'Laila', fontSize: 18),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ]);
-                },
+                count: pages.length,
+                onDotClicked: (index) => pageController.animateToPage(index,
+                    duration: const Duration(microseconds: 600),
+                    curve: Curves.easeIn),
+                effect: WormEffect(
+                    activeDotColor: Theme.of(context).primaryColor,
+                    dotWidth: 10,
+                    dotHeight: 10),
               ),
             ),
-          ),
+          ],
         ));
   }
 
@@ -121,8 +107,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
         if (!mounted) return;
         (context).pushReplacementNamed(AppPath.login);
-        // Navigator.pushReplacement(
-        //     context, MaterialPageRoute(builder: (context) => LoginPage()));
+        // Navigator.pushReplacement(context,
+        //     MaterialPageRoute(builder: (context) => const LoginPage()));
       },
       child: Container(
         width: 140,
@@ -135,7 +121,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
           child: Text('Get Started',
               style: TextStyle(
                 color: Colors.white,
-                fontFamily: 'Laila',
                 fontSize: 18,
               )),
         ),

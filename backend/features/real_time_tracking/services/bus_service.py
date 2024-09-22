@@ -26,6 +26,7 @@ class BusService:
     
     async def get_bus_by_id(self, bus_id):
         bus = await self.repo.get_bus_by_id(int(bus_id))
-        driver = await self.driver_repo.get_driver_by_id(bus['driver'])
-        bus['driver'] = driver
+        # driver = await self.driver_repo.get_driver_by_id(bus['driver'])
+        # print(driver)
+        # bus['driver'] = driver
         return Bus(**bus)

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/custom_appbar_widget.dart';
+import 'package:transittrack/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:transittrack/features/authentication/presentation/pages/change_password_page.dart';
 import 'package:transittrack/features/profile/presentation/pages/update_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -30,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
               // Avatar and Edit Profile
               GestureDetector(
                 onTap: () {
-                  //! handle logout
+                  (context).read<AuthenticationBloc>().add(LogoutEvent());
                   (context).goNamed(AppPath.login);
                 },
                 child: SizedBox(

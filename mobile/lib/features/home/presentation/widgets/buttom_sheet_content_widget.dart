@@ -98,9 +98,10 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
                                 width: 30.w,
                                 height: 30.h,
                               ),
-                              Text(
-                                '${widget.bus.arrivalTime} min',
-                                style: const TextStyle(
+                              const Text(
+                                '0 min',
+                                // '${widget.bus.arrivalTime} min',
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               )

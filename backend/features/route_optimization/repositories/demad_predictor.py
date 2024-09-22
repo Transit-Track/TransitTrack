@@ -4,7 +4,7 @@ from datetime import datetime
 
 class DemandPredictor:
     def __init__(self, model_path):
-        self.model = load_model(model_path='')
+        self.model = load_model(model_path='AI_model\models\trained_model.keras')
         self.column_mapping = {
             'timestamp': '1001',
             'day_of_week': '1002',
