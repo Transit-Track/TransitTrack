@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData transittrack = ThemeData(
   // define primary color
-  primaryColor: const Color.fromRGBO(63, 35, 185, 1),
+  primaryColor: Color.fromRGBO(63, 35, 185, 1),
 );
 
 const Color secondary = Color.fromRGBO(109, 109, 109, 1);
