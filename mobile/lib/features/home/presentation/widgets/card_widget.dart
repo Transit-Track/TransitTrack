@@ -74,68 +74,70 @@ class _CardWidgetState extends State<CardWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${widget.bus.route.stations[0].name} to ${widget.bus.route.stations[widget.bus.route.stations.length - 1].name}',
-                    style: TextStyle(
-                      overflow: TextOverflow.ellipsis,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 18.w,
-                  ),
-                  Row(
-                    // mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        widget.bus.number,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.65,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${widget.bus.route.stations[0].name} to ${widget.bus.route.stations[widget.bus.route.stations.length - 1].name}',
+                      style: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isMyRoute = !isMyRoute;
-                            print(isMyRoute);
-                            if (isMyRoute) {
-                              context.read<MyRouteBloc>().add(
-                                    AddBusToMyRouteEvent(
-                                      busId: widget.bus.number,
-                                    ),
-                                  );
-                              context.read<MyRouteBloc>().add(
-                                    GetMyRouteEvent(),
-                                  );
-                            } else {
-                              context.read<MyRouteBloc>().add(
-                                  RemoveBusToMyRouteEvent(
-                                      busId: widget.bus.number));
-                              context.read<MyRouteBloc>().add(
-                                    GetMyRouteEvent(),
-                                  );
-                            }
-                          });
-                        },
-                        child: isMyRoute
-                            ? const Icon(
-                                Icons.favorite,
-                                color: primary,
-                              )
-                            : Icon(
-                                Icons.favorite_border,
-                                color: const Color.fromARGB(255, 54, 54, 54)
-                                    .withOpacity(0.5),
-                              ),
-                      )
-                    ],
-                  ),
-                ],
+                    ),
+                    SizedBox(
+                      width: 18.w,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.bus.number,
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isMyRoute = !isMyRoute;
+                              if (isMyRoute) {
+                                context.read<MyRouteBloc>().add(
+                                      AddBusToMyRouteEvent(
+                                        busId: widget.bus.number,
+                                      ),
+                                    );
+                                context.read<MyRouteBloc>().add(
+                                      GetMyRouteEvent(),
+                                    );
+                              } else {
+                                context.read<MyRouteBloc>().add(
+                                    RemoveBusToMyRouteEvent(
+                                        busId: widget.bus.number));
+                                context.read<MyRouteBloc>().add(
+                                      GetMyRouteEvent(),
+                                    );
+                              }
+                            });
+                          },
+                          child: isMyRoute
+                              ? const Icon(
+                                  Icons.favorite,
+                                  color: primary,
+                                )
+                              : Icon(
+                                  Icons.favorite_border,
+                                  color: const Color.fromARGB(255, 54, 54, 54)
+                                      .withOpacity(0.5),
+                                ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -2,6 +2,7 @@ import 'package:transittrack/core/injections/injection.dart';
 import 'package:transittrack/features/driver/data/datasource/driver_remote_data_source.dart';
 import 'package:transittrack/features/driver/data/repository/driver_repository_impl.dart';
 import 'package:transittrack/features/driver/domain/repository/driver_repository.dart';
+import 'package:transittrack/features/driver/domain/usecase/get_next_route_usecase.dart';
 import 'package:transittrack/features/driver/domain/usecase/update_driver_location_usecase.dart';
 import 'package:transittrack/features/driver/presentation/bloc/driver_bloc.dart';
 
@@ -11,6 +12,7 @@ class DriverInjection {
     sl.registerFactory(
       () => DriverBloc(
         updateDriverLocationUsecase: sl(),
+        getNextRouteUsecase: sl(),
       ),
     );
     //! Repository
@@ -28,13 +30,11 @@ class DriverInjection {
         client: sl(),
       ),
     );
-    
 
     //! Usecase
     sl.registerLazySingleton(
-      () => UpdateDriverLocationUsecase(
-        repository: sl(),
-      ),
-    );
+        () => UpdateDriverLocationUsecase(repository: sl()));
+        sl.registerLazySingleton(
+        () => GetNextRouteUsecase(repository: sl()));
   }
 }

@@ -47,7 +47,7 @@ class DriverRepository:
         }
     
     async def get_drivers_location(self, phone_number):
-        driver = await self.db.find_one({"phone_number": '+'+phone_number})
+        driver = await self.db.find_one({"phone_number": phone_number})
         if driver is None:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,

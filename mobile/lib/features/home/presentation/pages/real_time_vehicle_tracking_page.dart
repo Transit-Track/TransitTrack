@@ -24,11 +24,6 @@ class _RealTimeVehicleTrackingPageState
   
   final PanelController _panelController = PanelController();
 
-  // void updateLocation(double latitude, double longitude) {
-  //   setState(() {
-  //     currentLocation = LatLng(latitude, longitude);
-  //   });
-  // }
 
 
   @override

@@ -36,5 +36,4 @@ class StationRepository:
        
     #     async for station in stations:
     #         station['geoLocation'] = Location(**station['location']).to_geojson()
-    #         print(station)
     #         await self.db.replace_one({'_id': station['_id']}, station)

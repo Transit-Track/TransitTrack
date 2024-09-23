@@ -88,8 +88,35 @@ class _MyRouteState extends State<MyRoute> {
                         );
                       } else if (state is GetMyRouteErrorState) {
                         return Center(
-                          child: Text(state.errorMessage),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: const BoxDecoration(
+                                      color: primary, shape: BoxShape.circle),
+                                  child: IconButton(
+                                      onPressed: () {
+                                        context
+                                            .read<MyRouteBloc>()
+                                            .add(GetMyRouteEvent());
+                                      },
+                                      icon: const Icon(
+                                        Icons.refresh,
+                                        color: white,
+                                      )),
+                                ),
+                                SizedBox(height: 20.h),
+                                Center(
+                                  child: Text(state.errorMessage,
+                                      style: TextStyle(
+                                        fontSize: 18.sp,
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
                         );
+                      
                       } else if (state is GetMyRouteLoadedState) {
                         return Expanded(
                           child: ListView.builder(

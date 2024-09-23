@@ -80,4 +80,19 @@ class HomeRepositoryImpl implements HomeRepository {
       return Left(NetworkFailure());
     }
   }
+  
+  @override
+  Future<Either<Failure, List<String>>> getStationNames() async {
+      if (await networkInfo.isConnected) {
+      try {
+        final response =
+            await remoteDataSource.getStationNames();
+        return Right(response);
+      } catch (e) {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(NetworkFailure());
+    }
+  }
 }

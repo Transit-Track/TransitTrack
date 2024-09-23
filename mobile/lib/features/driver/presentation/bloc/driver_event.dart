@@ -22,3 +22,16 @@ final class UpdateDriverLocationEvent extends DriverEvent {
         longitude,
       ];
 }
+
+final class GetNextRouteEvent extends DriverEvent {
+  final int busId;
+
+  const GetNextRouteEvent({
+    required this.busId,
+  });
+
+  @override
+  List<Object> get props => [
+        busId,
+      ];
+}

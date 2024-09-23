@@ -1,9 +1,6 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 
-# Use the correct MongoDB URI
-uri = "mongodb://localhost:27017"
-
-# Create a new client and connect to the local MongoDB server
+uri = "mongodb+srv://tmel67763:DVbOJAHPYTZwvv4U@cluster0.owvt1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = AsyncIOMotorClient(uri)
 db = client["transit-track"]
 

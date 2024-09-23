@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:transittrack/core/keys/keys.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/features/home/domain/entities/bus_entity.dart';
 import 'package:transittrack/features/home/presentation/bloc/home_bloc.dart';
@@ -63,9 +65,12 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
       }
     });
     // driverLocation = routes[0];
-    generatePolyLineFromPoints(routes);
+    // generatePolyLineFromPoints(routes);
+    getPlolyLinePoints().then((coordinates) {
+      generatePolyLineFromPoints(coordinates);
+    });
     super.initState();
-    initializeDriverLocation(context, '251912457812');
+    initializeDriverLocation(context, widget.bus.driver.phoneNumber);
   }
 
   @override
@@ -85,8 +90,33 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
         body: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             if (state is GetDriverLocationErrorState) {
-              return  Center(
-                child: Text(state.errorMessage),
+              return Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                            color: primary, shape: BoxShape.circle),
+                        child: IconButton(
+                            onPressed: () {
+                              initializeDriverLocation(
+                                  context, widget.bus.driver.phoneNumber);
+                            },
+                            icon: const Icon(
+                              Icons.refresh,
+                              color: white,
+                            )),
+                      ),
+                      SizedBox(height: 20.h),
+                      Center(
+                        child: Text(state.errorMessage,
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
               );
             } else if (state is GetDriverLocationLoadingState) {
               return const Center(
@@ -95,6 +125,7 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
             } else if (state is GetDriverLocationLoadedState) {
               driverLocation = LatLng(state.driverLocationEntity.latitude,
                   state.driverLocationEntity.longitude);
+              print(driverLocation);
               return driverLocation == null
                   ? const Center(child: CircularProgressIndicator())
                   : GoogleMap(
@@ -146,39 +177,29 @@ class _VehicleTrackingMapPageState extends State<VehicleTrackingMapPage> {
     );
   }
 
-  Future<void> _cameraToPosition(LatLng position) async {
-    final GoogleMapController controller = await _mapController.future;
-    CameraPosition newCameraPosition = CameraPosition(
-      target: position,
-      zoom: 15,
-    );
-    await controller
-        .animateCamera(CameraUpdate.newCameraPosition(newCameraPosition));
+  Future<List<LatLng>> getPlolyLinePoints() async {
+    List<LatLng> polylineCoordinates = [];
+    PolylinePoints polylinePoints = PolylinePoints();
+    for (int i = 0; i < routes.length - 1; i++) {
+      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+          googleApiKey: GOOGLE_MAP_API,
+          request: PolylineRequest(
+            origin: PointLatLng(routes[i].latitude, routes[i].longitude),
+            destination:
+                PointLatLng(routes[i + 1].latitude, routes[i + 1].longitude),
+            mode: TravelMode.driving,
+          ));
+      if (result.points.isNotEmpty) {
+        result.points.forEach((PointLatLng point) {
+          polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+        });
+      } else {
+        print(result.errorMessage);
+      }
+    }
+
+    return polylineCoordinates;
   }
-
-  // Future<List<LatLng>> getPlolyLinePoints() async {
-  //   List<LatLng> polylineCoordinates = [];
-  //   PolylinePoints polylinePoints = PolylinePoints();
-  //   for (int i = 0; i < routes.length - 1; i++) {
-  //     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-  //         googleApiKey: GOOGLE_MAP_API,
-  //         request: PolylineRequest(
-  //           origin: PointLatLng(routes[i].latitude, routes[i].longitude),
-  //           destination:
-  //               PointLatLng(routes[i + 1].latitude, routes[i + 1].longitude),
-  //           mode: TravelMode.driving,
-  //         ));
-  //     if (result.points.isNotEmpty) {
-  //       result.points.forEach((PointLatLng point) {
-  //         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-  //       });
-  //     } else {
-  //       print(result.errorMessage);
-  //     }
-  //   }
-
-  //   return polylineCoordinates;
-  // }
 
   void generatePolyLineFromPoints(List<LatLng> polylineCoordinates) async {
     PolylineId id = const PolylineId('poly');

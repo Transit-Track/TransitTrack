@@ -9,7 +9,10 @@ class BusService:
     
     async def search_bus_by_route(self, start_station, end_station):
         found_buses = await self.repo.search_bus_by_route(start_station, end_station)
-        return [BusOut(**bus) for bus in found_buses]
+        result = []
+        for bus in found_buses:
+            result.append(BusOut(**bus))
+        return result
     
     async def add_bus_to_my_route(self, bus_id):
         return await self.repo.add_bus_to_my_route(bus_id)
@@ -26,6 +29,6 @@ class BusService:
     
     async def get_bus_by_id(self, bus_id):
         bus = await self.repo.get_bus_by_id(int(bus_id))
-        driver = await self.driver_repo.get_driver_by_id(bus['driver'])
-        bus['driver'] = driver
+        if 'driver_id' not in bus:
+            bus['driver_id'] = 21  
         return Bus(**bus)

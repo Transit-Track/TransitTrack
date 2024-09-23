@@ -34,4 +34,19 @@ class DriverRepositoryImpl implements DriverRepository {
       return Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, String>> getNextRoute({required int busId}) async {
+    if (await networkInfo.isConnected) {
+      final user = await localDataSource.getUserCredentials();
+      try {
+        final response = await remoteDataSource.getNextRoute(busId: busId);
+        return Right(response);
+      } catch (e) {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(ServerFailure());
+    }
+  }
 }

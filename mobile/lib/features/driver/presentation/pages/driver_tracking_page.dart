@@ -7,6 +7,7 @@ import 'package:transittrack/core/routes/route_path.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/core/widgets/button_widget.dart';
 import 'package:transittrack/core/widgets/custom_dialog_box_widget.dart';
+import 'package:transittrack/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:transittrack/features/driver/presentation/bloc/driver_bloc.dart';
 
 class DriverTrackingPage extends StatefulWidget {
@@ -41,7 +42,6 @@ class _DriverTrackingPageState extends State<DriverTrackingPage> {
     locationController.onLocationChanged.listen((LocationData currentLocation) {
       if (currentLocation.latitude != null &&
           currentLocation.longitude != null) {
-       
         if (currentLocation.latitude != null &&
             currentLocation.longitude != null) {
           // call a bloc to Update the driver's location
@@ -56,8 +56,11 @@ class _DriverTrackingPageState extends State<DriverTrackingPage> {
     });
   }
 
+  void getNextRoute(int busId) {
+    (context).read<DriverBloc>().add(GetNextRouteEvent(busId: busId));
+  }
+
   void stopTracking() {
-    //! to be implemented
     // Stop tracking
   }
 
@@ -95,143 +98,211 @@ class _DriverTrackingPageState extends State<DriverTrackingPage> {
   }
 
   @override
+  void initState() {
+    getNextRoute(124);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(0.w, 20.h, 0.w, 0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    //! handle logout
-                    (context).goNamed(AppPath.login);
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 20.0.w),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          const Icon(
-                            Icons.logout,
-                            size: 30,
-                            color: secondary,
-                          ),
-                          Text(
-                            'Logout',
-                            style: TextStyle(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold,
+      body: BlocListener<DriverBloc, DriverState>(
+        listener: (context, state) {
+          if (state is UpdateDriverErrorState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: danger,
+              ),
+            );
+          } else if (state is GetNextRouteErrorState) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: danger,
+              ),
+            );
+          }
+        },
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0.w, 20.h, 0.w, 0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      (context).read<AuthenticationBloc>().add(LogoutEvent());
+                      (context).goNamed(AppPath.login);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 20.0.w),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const Icon(
+                              Icons.logout,
+                              size: 30,
                               color: secondary,
                             ),
-                          )
-                        ],
+                            Text(
+                              'Logout',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                color: secondary,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Image.asset(
-                  'assets/images/driverlocationtracking.jpeg',
-                  width: MediaQuery.of(context).size.width,
-                  height: 250.h,
-                ),
-                Center(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    '👋 Hello There\n',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: secondary,
+                  Image.asset(
+                    'assets/images/driverlocationtracking.jpeg',
+                    width: MediaQuery.of(context).size.width,
+                    height: 250.h,
+                  ),
+                  Center(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      '👋 Hello There\n',
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        color: secondary,
+                      ),
                     ),
                   ),
-                ),
-                Center(
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    'Press start to begin tracking',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: secondary,
+                  Center(
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      'Press start to begin tracking',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: secondary,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 35.h,
-                ),
-                // Padding(
-                //   padding:
-                //       EdgeInsets.symmetric(vertical: 1.0, horizontal: 80.w),
-                //   child: InputFieldWidget(
-                //     controller: _busNumberController,
-                //     validation: null,
-                //     keyboardType: TextInputType.number,
-                //     hintText: 'Bus Number',
-                //     context: context,
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 12.h,
-                // ),
-                isTrackerOn
-                    ? Center(
-                        child: ButtonWidget(
-                          context: context,
-                          text: 'Cancel',
-                          onClick: () {
-                            _showCancelCustomDialog(context);
-                          },
-                          color: success,
-                        ),
-                      )
-                    : Center(
-                        child: ButtonWidget(
-                          context: context,
-                          text: 'Start',
-                          onClick: () {
-                            updateLocation(context);
+                  SizedBox(
+                    height: 35.h,
+                  ),
+                  // Padding(
+                  //   padding:
+                  //       EdgeInsets.symmetric(vertical: 1.0, horizontal: 80.w),
+                  //   child: InputFieldWidget(
+                  //     controller: _busNumberController,
+                  //     validation: null,
+                  //     keyboardType: TextInputType.number,
+                  //     hintText: 'Bus Number',
+                  //     context: context,
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   height: 12.h,
+                  // ),
+                  isTrackerOn
+                      ? Center(
+                          child: ButtonWidget(
+                            context: context,
+                            text: 'Cancel',
+                            onClick: () {
+                              _showCancelCustomDialog(context);
+                            },
+                            color: success,
+                          ),
+                        )
+                      : Center(
+                          child: ButtonWidget(
+                            context: context,
+                            text: 'Start',
+                            onClick: () {
+                              updateLocation(context);
 
-                            _showStartCustomDialog(context);
-                            if (isTrackerOn) {
-                              // getLocationUpdate(context);
-                            }
-                          },
-                          color: primary,
+                              _showStartCustomDialog(context);
+                              if (isTrackerOn) {
+                                // getLocationUpdate(context);
+                              }
+                            },
+                            color: primary,
+                          ),
                         ),
-                      ),
-                SizedBox(
-                  height: 25.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(30.w, 0.h, 0.w, 0.h),
-                  child: const Text(
-                    'Next Route',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                  SizedBox(
+                    height: 25.h,
                   ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                // Container(
-                //   decoration: BoxDecoration(
-                //       border: Border.all(
-                //         color: Color.fromARGB(255, 209, 209, 209),
-                //       ),
-                //       borderRadius: BorderRadius.circular(100)),
-                //   child: Padding(
-                //     padding: EdgeInsets.symmetric(
-                //         horizontal: 25.0.w, vertical: 13.h),
-                //     child: const Text(
-                //       textAlign: TextAlign.center,
-                //       'from mexico to megenagna',
-                //     ),
-                //   ),
-                // )
-              ],
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(30.w, 0.h, 0.w, 0.h),
+                    child: const Text(
+                      'Next Route',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  BlocBuilder<DriverBloc, DriverState>(
+                    builder: (context, state) {
+                      if (state is GetNextRouteErrorState) {
+                        return Center(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: const BoxDecoration(
+                                      color: primary, shape: BoxShape.circle),
+                                  child: IconButton(
+                                      onPressed: () {
+                                        getNextRoute(124);
+                                      },
+                                      icon: const Icon(
+                                        Icons.refresh,
+                                        color: white,
+                                      )),
+                                ),
+                                SizedBox(height: 20.h),
+                                Center(
+                                  child: Text(state.message,
+                                      style: TextStyle(
+                                        fontSize: 18.sp,
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      } else if (state is GetNextRouteLoadingState) {
+                        return Center(child: const CircularProgressIndicator());
+                      } else if (state is GetNextRouteSuccessState) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 18.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Color.fromARGB(255, 209, 209, 209),
+                                ),
+                                borderRadius: BorderRadius.circular(100)),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 25.0.w, vertical: 13.h),
+                              child:  Text(
+                                textAlign: TextAlign.center,
+                                state.nextRoute,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      return const SizedBox(
+                        height: 0,
+                      );
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ),

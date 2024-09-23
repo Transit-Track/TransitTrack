@@ -22,7 +22,7 @@ class BusModel extends BusEntity {
       id: json['_id'].toString(),
       type: json['bus_type'].toString(),
       number: json['bus_id'].toString(),
-      price: json['price'].toDouble(),
+      price: json['price'] ?? 0.0,
       isMyRoute: json['is_my_route'] ?? false,
       driver: DriverEntity(
           phoneNumber: json['driver']['phone_number'].toString(),
