@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:transittrack/core/constants/constants.dart';
 
 class PaymentRemoteDataSource {
   final http.Client client;
@@ -14,7 +15,7 @@ class PaymentRemoteDataSource {
     required String destination,
     required String busId, // Include busId
   }) async {
-    final Uri url = Uri.parse('http://192.168.56.1:8000/initiate');
+    final Uri url = Uri.parse('$baseUrl/initiate');
 
     final response = await client.post(
       url,
@@ -35,7 +36,7 @@ class PaymentRemoteDataSource {
   }
 
   Future<String> handlePaymentCallback(Map<String, dynamic> callbackData) async {
-    final Uri url = Uri.parse('http://192.168.56.1:8000/callback');
+    final Uri url = Uri.parse('$baseUrl/callback');
 
     final response = await client.post(
       url,

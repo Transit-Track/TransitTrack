@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:transittrack/core/theme.dart';
 import 'package:transittrack/features/tickets/domain/entites/ticket_entity.dart';
 import 'package:transittrack/features/tickets/domain/usecases/initiate_payment_usecase.dart';
@@ -100,11 +101,15 @@ class _PaymentPageState extends State<PaymentPage> {
             SnackBar(content: Text('Callback error: $failure')),
           );
         },
-        (qrCodeBase64) {
+        (qrCodeBase64) async {
+          // Simulate a loading time before showing the QR code
+          await Future.delayed(const Duration(seconds: 2));
+
           // On success, show the QR code
           setState(() {
             _qrCodeUrl = qrCodeBase64;
           });
+
           showSuccessDialog(); // Show the success dialog with the QR code
         },
       );
@@ -145,7 +150,7 @@ class _PaymentPageState extends State<PaymentPage> {
       floatingActionButton: FloatingActionButton(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
         backgroundColor: Colors.white,
-        onPressed: () => Navigator.of(context).pop(),
+        onPressed: () => (context).pop(),
         child: const Icon(Icons.arrow_back),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniStartTop,

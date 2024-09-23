@@ -121,55 +121,66 @@ class _ButtomSheetContentWidgetState extends State<ButtomSheetContentWidget> {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 2.w, 25.h),
                 child: ButtonWidget(
-                    context: context,
-                    height: 50.h,
-                    width: 100.w,
-                    text: 'Buy',
-                    onClick: () {
+                  context: context,
+                  height: 50.h,
+                  width: 100.w,
+                  text: 'Buy',
+                  // onClick: () {
+                  
+
+                  
+
+                 
+
+                  //   context.push(
+                  //     AppPath.payment,
+                  //     extra: {
+                  //       'ticket': ticket,
+                  //       'initiatePaymentUsecase': initiatePaymentUsecase,
+                  //       'handleCallbackUsecase': handleCallbackUsecase,
+                  //     },
+                  //   );
+                  // }
+                  onClick: () {
                       final Ticket ticket = Ticket(
-                        start: widget.bus.route.stations[0].name,
-                        destination: widget
-                            .bus
-                            .route
-                            .stations[widget.bus.route.stations.length - 1]
-                            .name,
-                        busId: widget
-                            .bus.number, // Assuming busId is the bus number
-                        price: widget.bus.route.stations.length
-                            .toDouble(), // Assuming the price is based on number of stations
-                        arrivalTime: widget.bus.arrivalTime.toString(),
-                        ticketId: 'generated-ticket-id',
-                        userId: 'current-user-id',
-                        issueDate: DateTime.now(),
-                        expiryDate: DateTime.now().add(const Duration(hours: 1)),
-                        status: 'active',
-                      );
-
+                      start: widget.bus.route.stations[0].name,
+                      destination: widget
+                          .bus
+                          .route
+                          .stations[widget.bus.route.stations.length - 1]
+                          .name,
+                      busId: widget
+                          .bus.number, // Assuming busId is the bus number
+                      price: widget.bus.route.stations.length
+                          .toDouble(), // Assuming the price is based on number of stations
+                      arrivalTime: widget.bus.arrivalTime.toString(),
+                      ticketId: 'generated-ticket-id',
+                      userId: 'current-user-id',
+                      issueDate: DateTime.now(),
+                      expiryDate: DateTime.now().add(const Duration(hours: 1)),
+                      status: 'active',
+                    );
                       final InitiatePaymentUsecase initiatePaymentUsecase =
-                          InitiatePaymentUsecase(
-                        PaymentRepositoryImpl(
-                          remoteDataSource:
-                              PaymentRemoteDataSource(client: http.Client()),
-                        ),
-                      );
-                      
-                      final HandleCallbackUseCase handleCallbackUsecase =
-                          HandleCallbackUseCase(
-                        PaymentRepositoryImpl(
-                          remoteDataSource:
-                              PaymentRemoteDataSource(client: http.Client()),
-                        ),
-                      );
-
-                      context.push(
-                        AppPath.payment,
-                        extra: {
-                          'ticket': ticket,
-                          'initiatePaymentUsecase': initiatePaymentUsecase,
-                          'handleCallbackUsecase': handleCallbackUsecase,
-                        },
-                      );
-                    }),
+                        InitiatePaymentUsecase(
+                      PaymentRepositoryImpl(
+                        remoteDataSource:
+                            PaymentRemoteDataSource(client: http.Client()),
+                      ),
+                    );
+                       final HandleCallbackUseCase handleCallbackUsecase =
+                        HandleCallbackUseCase(
+                      PaymentRepositoryImpl(
+                        remoteDataSource:
+                            PaymentRemoteDataSource(client: http.Client()),
+                      ),
+                    );
+                    context.goNamed(AppPath.payment, extra: {
+      'ticket': ticket,
+      'initiatePaymentUsecase': initiatePaymentUsecase,
+      'handleCallbackUsecase': handleCallbackUsecase,
+    },);
+                  },
+                ),
               )
             ],
           )
